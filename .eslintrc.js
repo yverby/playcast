@@ -15,6 +15,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    'no-restricted-exports': 'off',
     'react/react-in-jsx-scope': 'off',
   },
 };
