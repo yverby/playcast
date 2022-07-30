@@ -1,13 +1,15 @@
 import type { AppProps } from 'next/app';
 
-import { AppContext, ThemeContext } from 'src/context';
+import { ThemeContext, LocaleContext } from 'src/context';
 
-export default function App({ Component, pageProps }: AppProps) {
+import 'src/assets/styles/global.css';
+
+export default function App({ pageProps, Component }: AppProps) {
   return (
-    <AppContext>
-      <ThemeContext>
+    <ThemeContext>
+      <LocaleContext>
         <Component {...pageProps} />
-      </ThemeContext>
-    </AppContext>
+      </LocaleContext>
+    </ThemeContext>
   );
 }
