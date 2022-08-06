@@ -1,5 +1,7 @@
 import type { ColorScheme, MantineThemeOverride } from '@mantine/core';
 
+import * as variables from './variables';
+
 export function configureTheme({
   colorScheme,
 }: {
@@ -12,6 +14,10 @@ export function configureTheme({
       dark: 6,
       light: 5,
     },
+    breakpoints: {
+      md: 880,
+      sm: 760,
+    },
     radius: {
       md: 9,
     },
@@ -20,12 +26,17 @@ export function configureTheme({
     headings: {
       fontFamily: 'Gilroy, sans-serif',
       sizes: {
-        h1: { fontSize: 28 },
-        h2: { fontSize: 22 },
-        h3: { fontSize: 18 },
-        h4: { fontSize: 16 },
-        h5: { fontSize: 15 },
+        h1: { fontSize: 30 },
+        h2: { fontSize: 24 },
+        h3: { fontSize: 20 },
+        h4: { fontSize: 18 },
+        h5: { fontSize: 16 },
         h6: { fontSize: 14 },
+      },
+    },
+    other: {
+      var(theme, variable) {
+        return variables[variable][colorScheme](theme);
       },
     },
   };
