@@ -1,1 +1,7 @@
-{}
+{
+  "ui.search": "Search",
+  "ui.explore": "Explore",
+  "ui.settings": "Settings",
+  "ui.playlists": "Playlists",
+  "ui.playingNow": "Playing Now"
+}

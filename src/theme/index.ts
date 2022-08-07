@@ -1,6 +1,7 @@
 import type { ColorScheme, MantineThemeOverride } from '@mantine/core';
 
 import * as variables from './variables';
+import * as components from './components';
 
 export function configureTheme({
   colorScheme,
@@ -8,11 +9,12 @@ export function configureTheme({
   colorScheme: ColorScheme;
 }): MantineThemeOverride {
   return {
+    components,
     colorScheme,
     primaryColor: 'teal',
     primaryShade: {
       dark: 6,
-      light: 5,
+      light: 6,
     },
     breakpoints: {
       md: 880,

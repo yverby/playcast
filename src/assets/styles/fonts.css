@@ -2,13 +2,6 @@
   font-family: 'Gilroy';
   font-style: normal;
   font-weight: normal;
-  src: url('../fonts/Gilroy/Gilroy-Regular.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Gilroy';
-  font-style: normal;
-  font-weight: 500;
   src: url('../fonts/Gilroy/Gilroy-Medium.woff2') format('woff2');
 }
 

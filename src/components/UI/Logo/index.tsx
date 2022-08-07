@@ -1,16 +1,18 @@
 import { Text, Title } from '@mantine/core';
 
+import type { TitleProps } from '@mantine/core';
+
 import { useStyles } from './styles';
 
-interface LogoProps {
+interface LogoProps extends TitleProps {
   short?: boolean;
 }
 
-export function Logo({ short }: LogoProps) {
+export function Logo({ short, ...props }: LogoProps) {
   const { classes } = useStyles();
 
   return (
-    <Title>
+    <Title {...props}>
       <Text component="span" className={classes.play}>
         {short ? 'P' : 'Play'}
       </Text>
