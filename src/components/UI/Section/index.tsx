@@ -1,29 +1,43 @@
 import { Box } from '@mantine/core';
 
 import type { ReactNode } from 'react';
+import type { DefaultProps } from '@mantine/core';
 
 import { useStyles } from './styles';
 
-interface SectionProps {
+interface SectionProps extends DefaultProps {
   children: ReactNode;
-  className?: string;
 }
 
-export function Section({ children, className }: SectionProps) {
+export function Section({ children, className, ...props }: SectionProps) {
   const { cx, classes } = useStyles();
 
   return (
-    <Box component="section" className={cx(classes.box, className)}>
+    <Box
+      component="section"
+      className={cx(classes.section, className)}
+      {...props}
+    >
       {children}
     </Box>
   );
 }
 
-Section.Header = function SectionHeader({ children, className }: SectionProps) {
+Section.Header = function SectionHeader({
+  children,
+  className,
+  ...props
+}: SectionProps) {
   const { cx, classes } = useStyles();
 
   return (
-    <Box p="xs" className={cx(classes.header, className)}>
+    <Box
+      py="xs"
+      px="md"
+      component="header"
+      className={cx(classes.header, className)}
+      {...props}
+    >
       {children}
     </Box>
   );
@@ -32,11 +46,18 @@ Section.Header = function SectionHeader({ children, className }: SectionProps) {
 Section.Content = function SectionContent({
   children,
   className,
+  ...props
 }: SectionProps) {
   const { cx, classes } = useStyles();
 
   return (
-    <Box p="xs" className={cx(classes.box, className)}>
+    <Box
+      py="xs"
+      px="md"
+      component="div"
+      className={cx(classes.section, className)}
+      {...props}
+    >
       {children}
     </Box>
   );
