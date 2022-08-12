@@ -42,8 +42,12 @@ export function ShellNavbar() {
     [router.pathname]
   );
 
-  const renderItem = ({ icon: Icon, active, title, onClick }: any) => (
+  const renderItem = (
+    { icon: Icon, active, title, onClick }: any,
+    key: number
+  ) => (
     <UnstyledButton
+      key={key}
       onClick={onClick}
       aria-label={title}
       className={cx(classes.button, { [classes.active]: active })}
