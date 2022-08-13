@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 
 import { Section } from 'src/components/UI';
 import { searchActions } from 'src/store/search/actions';
-import { searchParamsShape } from 'src/store/search/shapes';
+
+import { SearchForm } from './SearchForm';
 
 export function Search() {
   const { query } = useRouter();
@@ -14,15 +15,7 @@ export function Search() {
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    const params = searchParamsShape.safeParse(query);
-
-    if (params.success) {
-      dispatch(searchActions.results.init(params.data));
-    }
-
-    return () => {
-      dispatch(searchActions.results.cancel());
-    };
+    dispatch(searchActions.results.init(query));
   }, [query]);
 
   return (
@@ -30,6 +23,10 @@ export function Search() {
       <Section.Header>
         <Title order={2}>{formatMessage({ id: 'ui.search' })}</Title>
       </Section.Header>
+
+      <Section.Content>
+        <SearchForm />
+      </Section.Content>
     </Section>
   );
 }

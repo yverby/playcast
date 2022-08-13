@@ -25,7 +25,7 @@ export const useStyles = createStyles((theme) => ({
       color: theme.other.var(theme, 'colorPrimary'),
       backgroundColor: theme.fn.rgba(
         theme.other.var(theme, 'colorPrimary'),
-        0.1
+        0.15
       ),
     },
 
@@ -35,9 +35,6 @@ export const useStyles = createStyles((theme) => ({
   },
   active: {
     color: theme.other.var(theme, 'colorPrimary'),
-    backgroundColor: theme.fn.rgba(
-      theme.other.var(theme, 'colorPrimary'),
-      0.06
-    ),
+    backgroundColor: theme.fn.rgba(theme.other.var(theme, 'colorPrimary'), 0.1),
   },
 }));

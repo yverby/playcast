@@ -3,20 +3,27 @@ import { put, fork, select, takeLatest } from 'redux-saga/effects';
 
 import { createRequestWatcher } from 'src/lib';
 import { searchActions } from 'src/store/search/actions';
+import { searchParamsShape } from 'src/store/search/shapes';
 import { selectSearchParams } from 'src/store/search/selectors';
 
 function* searchResultsInitSaga({
-  payload: params,
+  payload: query,
 }: ReturnType<typeof searchActions.results.init>) {
-  const prevParams: ReturnType<typeof selectSearchParams> = yield select(
-    selectSearchParams
-  );
+  const params = searchParamsShape.safeParse(query);
 
-  if (!isEqual(params, prevParams)) {
-    yield put(searchActions.params.set(params));
+  if (params.success) {
+    const prevParams: ReturnType<typeof selectSearchParams> = yield select(
+      selectSearchParams
+    );
 
+    if (!isEqual(params.data, prevParams)) {
+      yield put(searchActions.params.set(params.data));
+      yield put(searchActions.results.clear());
+      yield put(searchActions.results.request(params.data));
+    }
+  } else {
+    yield put(searchActions.params.reset());
     yield put(searchActions.results.clear());
-    yield put(searchActions.results.request(params));
   }
 }
 

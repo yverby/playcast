@@ -1,5 +1,8 @@
 import { createAction } from '@reduxjs/toolkit';
 
+import type { ParsedUrlQuery } from 'querystring';
+
+import { FIELD } from 'src/constants';
 import { createRequestActions } from 'src/lib';
 
 import type { SearchParams, SearchResults } from './types';
@@ -11,12 +14,13 @@ function withType(type: string) {
 export const searchActions = {
   params: {
     set: createAction<SearchParams>(withType('PARAMS/SET')),
+    reset: createAction(withType('PARAMS/RESET')),
   },
 
-  results: createRequestActions<SearchParams, SearchResults>(
+  results: createRequestActions<SearchParams, SearchResults, ParsedUrlQuery>(
     withType('RESULTS'),
-    ({ limit = 12, ...params }) => ({
-      payload: { url: '/search', params: { ...params, limit } },
+    (params) => ({
+      payload: { url: '/search', params: { ...params, [FIELD.LIMIT]: 12 } },
       meta: { cancelable: true },
     })
   ),
