@@ -1,10 +1,9 @@
 import { z } from 'zod';
 
-import { ENTITY } from 'src/constants';
+import { FIELD, ENTITY } from 'src/constants';
 
 export const searchParamsShape = z.object({
-  term: z.string(),
-  entity: z.nativeEnum(ENTITY),
-  limit: z.number().optional(),
-  offset: z.number().optional(),
+  [FIELD.TERM]: z.string().min(2),
+  [FIELD.ENTITY]: z.nativeEnum(ENTITY),
+  [FIELD.OFFSET]: z.number().optional(),
 });

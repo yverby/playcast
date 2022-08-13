@@ -1,7 +1,9 @@
 {
   "ui.search": "Search",
   "ui.explore": "Explore",
+  "ui.podcast": "Podcast",
   "ui.settings": "Settings",
   "ui.playlists": "Playlists",
-  "ui.playingNow": "Playing Now"
+  "ui.playingNow": "Playing Now",
+  "ui.podcastEpisode": "Episode"
 }
