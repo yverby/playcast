@@ -1,9 +1,12 @@
 {
   "ui.search": "Search",
+  "ui.noData": "No data",
   "ui.explore": "Explore",
   "ui.podcast": "Podcast",
   "ui.settings": "Settings",
   "ui.playlists": "Playlists",
-  "ui.playingNow": "Playing Now",
-  "ui.podcastEpisode": "Episode"
+  "ui.playingNow": "Playing now",
+  "ui.podcastEpisode": "Episode",
+
+  "search.results": "Search results for {entity}: {term}"
 }

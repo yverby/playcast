@@ -1,4 +1,4 @@
-import type { MantineTheme } from '@mantine/core';
+import type { CSSObject, MantineTheme } from '@mantine/core';
 
 import * as variables from 'src/theme/variables';
 
@@ -6,6 +6,8 @@ type SchemeVariable = keyof typeof variables;
 
 declare module '@mantine/core' {
   interface MantineThemeOther {
-    var: (theme: MantineTheme, variable: SchemeVariable) => any;
+    border: (theme: MantineTheme) => string;
+    backdrop: (theme: MantineTheme) => CSSObject;
+    variable: (theme: MantineTheme, variable: SchemeVariable) => any;
   }
 }

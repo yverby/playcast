@@ -20,7 +20,7 @@ export const searchActions = {
   results: createRequestActions<SearchParams, SearchResults, ParsedUrlQuery>(
     withType('RESULTS'),
     (params) => ({
-      payload: { url: '/search', params: { ...params, [FIELD.LIMIT]: 12 } },
+      payload: { url: '/search', params: { ...params, [FIELD.LIMIT]: 24 } },
       meta: { cancelable: true },
     })
   ),

@@ -17,7 +17,8 @@ export function configureTheme({
       light: 6,
     },
     breakpoints: {
-      md: 880,
+      lg: 1220,
+      md: 900,
       sm: 760,
     },
     radius: {
@@ -37,7 +38,16 @@ export function configureTheme({
       },
     },
     other: {
-      var(theme, variable) {
+      border(theme) {
+        return `1px solid ${theme.other.variable(theme, 'colorCard')}`;
+      },
+      backdrop(theme) {
+        return {
+          backgroundColor: theme.other.variable(theme, 'colorBgDrop'),
+          backdropFilter: 'blur(20px) saturate(180%)',
+        };
+      },
+      variable(theme, variable) {
         return variables[variable][colorScheme](theme);
       },
     },

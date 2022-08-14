@@ -1,6 +1,9 @@
 import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
+  header: {
+    borderColor: 'transparent',
+  },
   stack: {
     [theme.fn.smallerThan('md')]: {
       alignItems: 'center',
@@ -17,14 +20,14 @@ export const useStyles = createStyles((theme) => ({
     gap: theme.spacing.xs,
     padding: theme.spacing.sm,
     borderRadius: theme.radius.md,
-    color: theme.fn.rgba(theme.other.var(theme, 'colorText'), 0.5),
+    color: theme.fn.rgba(theme.other.variable(theme, 'colorText'), 0.5),
     fontSize: theme.fontSizes.sm,
     fontWeight: 600,
 
     '&:hover': {
-      color: theme.other.var(theme, 'colorPrimary'),
+      color: theme.other.variable(theme, 'colorPrimary'),
       backgroundColor: theme.fn.rgba(
-        theme.other.var(theme, 'colorPrimary'),
+        theme.other.variable(theme, 'colorPrimary'),
         0.15
       ),
     },
@@ -34,7 +37,10 @@ export const useStyles = createStyles((theme) => ({
     },
   },
   active: {
-    color: theme.other.var(theme, 'colorPrimary'),
-    backgroundColor: theme.fn.rgba(theme.other.var(theme, 'colorPrimary'), 0.1),
+    color: theme.other.variable(theme, 'colorPrimary'),
+    backgroundColor: theme.fn.rgba(
+      theme.other.variable(theme, 'colorPrimary'),
+      0.125
+    ),
   },
 }));

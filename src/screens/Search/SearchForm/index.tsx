@@ -68,6 +68,7 @@ export function SearchForm() {
         <SegmentedControl
           value={entity}
           data={entities}
+          name={FIELD.ENTITY}
           onChange={handleChange(FIELD.ENTITY)}
         />
       </Stack>

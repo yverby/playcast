@@ -20,9 +20,11 @@ export const Input: ThemeComponent<
     input: {
       minHeight: 41,
       border: 'none',
-      backgroundColor: theme.other.var(theme, 'colorCard'),
+      backgroundColor: theme.other.variable(theme, 'colorCard'),
 
-      '&:focus': theme.fn.focusStyles(),
+      '&:focus': {
+        ...theme.fn.focusStyles(),
+      },
     },
   }),
 };
