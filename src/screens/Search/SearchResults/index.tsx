@@ -44,7 +44,8 @@ export function SearchResults() {
     switch (params.entity) {
       case ENTITY.PODCAST: {
         return [
-          { minWidth: 'xs', cols: 3, spacing: 'lg' },
+          { minWidth: 'sm', cols: 3, spacing: 'lg' },
+          { maxWidth: 'sm', cols: 3, spacing: 'sm' },
           { maxWidth: 'xs', cols: 2, spacing: 'sm' },
         ];
       }
