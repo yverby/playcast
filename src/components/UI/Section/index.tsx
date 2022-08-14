@@ -32,8 +32,6 @@ Section.Header = function SectionHeader({
 
   return (
     <Box
-      py="xs"
-      px="md"
       component="header"
       className={cx(classes.header, className)}
       {...props}
@@ -52,10 +50,8 @@ Section.Content = function SectionContent({
 
   return (
     <Box
-      py="xs"
-      px="md"
       component="div"
-      className={cx(classes.section, className)}
+      className={cx(classes.section, classes.content, className)}
       {...props}
     >
       {children}

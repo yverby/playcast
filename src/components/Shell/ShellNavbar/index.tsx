@@ -60,7 +60,7 @@ export function ShellNavbar() {
   return (
     <Section>
       {!isMaxSm && (
-        <Section.Header>
+        <Section.Header className={classes.header}>
           <Logo
             align="center"
             short={isMaxMd}

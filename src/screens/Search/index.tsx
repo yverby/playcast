@@ -8,25 +8,38 @@ import { Section } from 'src/components/UI';
 import { searchActions } from 'src/store/search/actions';
 
 import { SearchForm } from './SearchForm';
+import { SearchResults } from './SearchResults';
+
+import { useStyles } from './styles';
 
 export function Search() {
   const { query } = useRouter();
-  const dispatch = useDispatch();
+  const { classes } = useStyles();
   const { formatMessage } = useIntl();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(searchActions.results.init(query));
   }, [query]);
 
   return (
-    <Section>
-      <Section.Header>
-        <Title order={2}>{formatMessage({ id: 'ui.search' })}</Title>
-      </Section.Header>
+    <>
+      <Section className={classes.sticky}>
+        <Section.Header>
+          <Title order={2}>{formatMessage({ id: 'ui.search' })}</Title>
+        </Section.Header>
 
-      <Section.Content>
-        <SearchForm />
-      </Section.Content>
-    </Section>
+        <Section.Content className={classes.form}>
+          <SearchForm />
+        </Section.Content>
+      </Section>
+
+      <Section>
+        <Section.Content>
+          <SearchResults />
+        </Section.Content>
+      </Section>
+    </>
   );
 }

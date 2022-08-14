@@ -19,12 +19,12 @@ export const SegmentedControl: ThemeComponent<
   },
   styles: (theme) => ({
     root: {
-      backgroundColor: theme.other.var(theme, 'colorCard'),
+      backgroundColor: theme.other.variable(theme, 'colorCard'),
     },
     active: {
       borderRadius: 8,
       boxShadow: 'none',
-      backgroundColor: theme.other.var(theme, 'colorBg'),
+      backgroundColor: theme.other.variable(theme, 'colorBg'),
     },
     label: {
       padding: '8px 14px',

@@ -5,6 +5,11 @@ export const colorBg: SchemeVariable = {
   light: (theme) => theme.white,
 };
 
+export const colorBgDrop: SchemeVariable = {
+  dark: (theme) => theme.fn.rgba(colorBg.dark(theme), 0.96),
+  light: (theme) => theme.fn.rgba(colorBg.light(theme), 0.97),
+};
+
 export const colorText: SchemeVariable = {
   dark: (theme) => theme.colors.dark[0],
   light: (theme) => theme.black,
