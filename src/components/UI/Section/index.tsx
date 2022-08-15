@@ -1,15 +1,17 @@
 import { Box } from '@mantine/core';
 
-import type { ReactNode } from 'react';
-import type { DefaultProps } from '@mantine/core';
+import type { BoxProps } from '@mantine/core';
 
 import { useStyles } from './styles';
 
-interface SectionProps extends DefaultProps {
-  children: ReactNode;
-}
+type SectionProps<C = 'div'> =
+  import('@mantine/utils').PolymorphicComponentProps<C, BoxProps>;
 
-export function Section({ children, className, ...props }: SectionProps) {
+export function Section({
+  children,
+  className,
+  ...props
+}: SectionProps<'section'>) {
   const { cx, classes } = useStyles();
 
   return (
@@ -27,7 +29,7 @@ Section.Header = function SectionHeader({
   children,
   className,
   ...props
-}: SectionProps) {
+}: SectionProps<'header'>) {
   const { cx, classes } = useStyles();
 
   return (
@@ -49,11 +51,7 @@ Section.Content = function SectionContent({
   const { cx, classes } = useStyles();
 
   return (
-    <Box
-      component="div"
-      className={cx(classes.section, classes.content, className)}
-      {...props}
-    >
+    <Box className={cx(classes.section, classes.content, className)} {...props}>
       {children}
     </Box>
   );

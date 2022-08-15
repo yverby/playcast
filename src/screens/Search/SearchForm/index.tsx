@@ -26,7 +26,7 @@ export function SearchForm() {
   });
 
   const entity = form.watch(FIELD.ENTITY);
-  const [term] = useDebouncedValue(form.watch(FIELD.TERM), 800);
+  const [term] = useDebouncedValue(form.watch(FIELD.TERM), 500);
 
   const onSubmit = (query: SearchParams) => {
     if (!isEqual(params, { term, entity })) {

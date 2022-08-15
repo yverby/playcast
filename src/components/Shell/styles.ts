@@ -71,12 +71,19 @@ export const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('lg')]: {
       position: 'fixed',
       right: 0,
-      display: 'none',
+      borderLeft: theme.other.border(theme),
       ...theme.other.backdrop(theme),
     },
 
     [theme.fn.smallerThan('xs')]: {
-      left: 0,
+      width: '100%',
+      border: 'none',
     },
+  },
+  visible: {
+    visibility: 'visible',
+  },
+  invisible: {
+    visibility: 'hidden',
   },
 }));
