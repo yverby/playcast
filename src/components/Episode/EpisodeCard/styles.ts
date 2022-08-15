@@ -22,7 +22,7 @@ export const useStyles = createStyles((theme) => ({
   },
   image: {
     flexShrink: 0,
-    borderRadius: theme.radius.md,
+    borderRadius: 11,
     overflow: 'hidden',
   },
 }));
