@@ -16,7 +16,6 @@ export const useStyles = createStyles((theme) => ({
     paddingBottom: 12,
     paddingLeft: theme.spacing.lg,
     paddingRight: theme.spacing.lg,
-    borderBottom: theme.other.border(theme),
     ...theme.other.backdrop(theme),
   },
   content: {

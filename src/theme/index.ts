@@ -11,6 +11,7 @@ export function configureTheme({
   return {
     components,
     colorScheme,
+    loader: 'dots',
     primaryColor: 'teal',
     primaryShade: {
       dark: 6,

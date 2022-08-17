@@ -5,5 +5,7 @@
   "ui.settings": "Settings",
   "ui.playlists": "Playlists",
   "ui.playingNow": "Playing now",
-  "ui.podcastEpisode": "Episode"
+  "ui.podcastEpisode": "Episode",
+  "ui.topPodcasts": "Top podcasts",
+  "ui.topEpisodes": "Top episodes"
 }

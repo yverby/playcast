@@ -2,11 +2,9 @@ import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Center, Loader, SimpleGrid } from '@mantine/core';
 
-import type { SimpleGridBreakpoint } from '@mantine/core';
-
-import { FIELD, ENTITY } from 'src/constants';
 import { InfiniteList } from 'src/components/UI';
 import { searchActions } from 'src/store/search/actions';
+import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
 import { PodcastCard } from 'src/components/Podcast/PodcastCard';
 import { EpisodeCard } from 'src/components/Episode/EpisodeCard';
 import {
@@ -40,26 +38,7 @@ export function SearchResults() {
     }
   }, [results.data]);
 
-  const breakpoints = useMemo<SimpleGridBreakpoint[]>(() => {
-    switch (params.entity) {
-      case ENTITY.PODCAST: {
-        return [
-          { minWidth: 'sm', cols: 3, spacing: 'lg' },
-          { maxWidth: 'sm', cols: 3, spacing: 'sm' },
-          { maxWidth: 'xs', cols: 2, spacing: 'sm' },
-        ];
-      }
-      case ENTITY.EPISODE: {
-        return [
-          { minWidth: 'sm', cols: 2, spacing: 'lg' },
-          { maxWidth: 'sm', cols: 1, spacing: 'sm' },
-        ];
-      }
-      default: {
-        return [];
-      }
-    }
-  }, [results.data]);
+  const breakpoints = BREAKPOINTS[params.entity];
 
   const loadMore = (offset: number) => {
     const newParams = { ...params, [FIELD.OFFSET]: offset };

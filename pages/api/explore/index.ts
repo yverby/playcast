@@ -4,7 +4,8 @@ import { ENTITY } from 'src/constants';
 import { SCHEMA, ROUTE } from 'src/constants/api';
 import { replaceBy, overrideBy } from 'src/lib/helpers';
 import { request, createRouteHandler } from 'src/lib/api';
-import { Episode, Podcast } from 'src/store/podcasts/types';
+
+import type { Episode, Podcast } from 'src/store/podcasts/types';
 
 const entities = {
   [ENTITY.PODCAST]: 'podcasts',
@@ -23,7 +24,7 @@ export default createRouteHandler({
 
     const feed = await request(
       replaceBy(ROUTE.EXPLORE, {
-        ':amount': query.amount,
+        ':limit': query.limit,
         ':country': query.country,
         ':entity': get(entities, query.entity as string),
       }),

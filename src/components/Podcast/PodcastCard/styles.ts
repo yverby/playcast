@@ -17,7 +17,7 @@ export const useStyles = createStyles((theme) => ({
   image: {
     borderRadius: 13,
   },
-  title: {
+  name: {
     height: 46,
     padding: 10,
   },

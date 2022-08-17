@@ -2,15 +2,11 @@ import Head from 'next/head';
 
 import type { ReactNode } from 'react';
 
-import { usePreserveScroll } from 'src/store/ui/hooks';
-
 interface AppContextProps {
   children: ReactNode;
 }
 
 export function AppContext({ children }: AppContextProps) {
-  usePreserveScroll();
-
   return (
     <>
       <Head>

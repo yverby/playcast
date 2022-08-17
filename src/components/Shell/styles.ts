@@ -35,8 +35,6 @@ export const useStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    borderLeft: theme.other.border(theme),
-    borderRight: theme.other.border(theme),
 
     [theme.fn.smallerThan('xs')]: {
       border: 'none',
@@ -53,7 +51,6 @@ export const useStyles = createStyles((theme) => ({
       bottom: 0,
       width: '100%',
       height: 'auto',
-      border: theme.other.border(theme),
       ...theme.other.backdrop(theme),
     },
 
@@ -62,7 +59,6 @@ export const useStyles = createStyles((theme) => ({
       width: '100%',
       height: 'auto',
       border: 'none',
-      borderTop: theme.other.border(theme),
     },
   },
   sidebar: {
@@ -71,7 +67,6 @@ export const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('lg')]: {
       position: 'fixed',
       right: 0,
-      borderLeft: theme.other.border(theme),
       ...theme.other.backdrop(theme),
     },
 
