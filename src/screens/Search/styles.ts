@@ -6,7 +6,6 @@ export const useStyles = createStyles((theme) => ({
     top: 0,
     zIndex: 9999,
     flex: 0,
-    borderBottom: theme.other.border(theme),
   },
   form: {
     ...theme.other.backdrop(theme),

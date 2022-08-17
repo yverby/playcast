@@ -25,11 +25,11 @@ function* requestSaga(action: RequestAction, actions: RequestActions): any {
       cancelToken: source.token,
     });
 
-    yield put(actions.success(data));
+    yield put(actions.success({ ...data }));
   } catch (e) {
-    const data = e instanceof AxiosError ? e.response?.data : e;
+    const error = e instanceof AxiosError ? e.response?.data : e;
 
-    yield put(actions.error(data));
+    yield put(actions.error({ error }));
   } finally {
     if (yield cancelled() && cancelable) {
       yield call(source.cancel);

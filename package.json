@@ -26,6 +26,7 @@
     "@next/bundle-analyzer": "^12.1.4",
     "@reduxjs/toolkit": "^1.8.4",
     "axios": "^0.27.2",
+    "date-fns": "^2.29.1",
     "lodash": "^4.17.21",
     "next": "12.2.2",
     "react": "18.1.0",

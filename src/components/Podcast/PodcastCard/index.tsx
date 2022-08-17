@@ -1,21 +1,31 @@
-import { Box, Text, Image, AspectRatio } from '@mantine/core';
+import { Box, Text, Image, Skeleton, AspectRatio } from '@mantine/core';
 
 import type { Podcast } from 'src/store/podcasts/types';
 
 import { useStyles } from './styles';
 
-export function PodcastCard({ name, image }: Podcast) {
+interface PodcastCardProps extends Podcast {
+  loading?: boolean;
+}
+
+export function PodcastCard({
+  name,
+  image,
+  loading = false,
+}: PodcastCardProps) {
   const { classes } = useStyles();
 
   return (
-    <Box className={classes.podcast}>
-      <AspectRatio ratio={1 / 1}>
-        <Image src={image?.[600]} className={classes.image} />
-      </AspectRatio>
+    <Skeleton radius={14} visible={loading}>
+      <Box className={classes.podcast}>
+        <AspectRatio ratio={1 / 1}>
+          <Image src={image?.[600]} className={classes.image} />
+        </AspectRatio>
 
-      <Text size="sm" lineClamp={2} className={classes.title}>
-        {name}
-      </Text>
-    </Box>
+        <Text size="sm" lineClamp={2} className={classes.name}>
+          {name}
+        </Text>
+      </Box>
+    </Skeleton>
   );
 }

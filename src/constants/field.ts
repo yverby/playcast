@@ -3,4 +3,5 @@ export enum FIELD {
   LIMIT = 'limit',
   OFFSET = 'offset',
   ENTITY = 'entity',
+  COUNTRY = 'country',
 }
