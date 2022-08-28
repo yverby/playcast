@@ -3,4 +3,6 @@ export enum ROUTE {
   EXPLORE = '/explore',
   SETTINGS = '/settings',
   PLAYLISTS = '/playlists',
+  EXPLORE_PODCASTS = '/explore/podcasts',
+  EXPLORE_EPISODES = '/explore/episodes',
 }

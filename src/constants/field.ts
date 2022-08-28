@@ -1,4 +1,5 @@
 export enum FIELD {
+  ID = 'id',
   TERM = 'term',
   LIMIT = 'limit',
   OFFSET = 'offset',

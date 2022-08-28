@@ -9,6 +9,7 @@ export interface Podcast {
   language?: string;
   episodes?: Episode[];
   description?: string;
+  collection?: Collection;
 }
 
 export interface Image {

@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { SimpleGrid, Title } from '@mantine/core';
+import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import { Title, Button, SimpleGrid } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
-import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
+import { PodcastCard } from 'src/components/Podcast';
 import { exploreActions } from 'src/store/explore/actions';
-import { PodcastCard } from 'src/components/Podcast/PodcastCard';
+import { ROUTE, FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExplorePodcasts } from 'src/store/explore/selectors';
 
 import type { Podcast } from 'src/store/podcasts/types';
@@ -26,13 +27,14 @@ function generatePodcast(podcast: Partial<Podcast> | undefined) {
 }
 
 export function ExplorePodcasts() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
   const podcasts = useSelector(selectExplorePodcasts);
 
   useEffect(() => {
-    const payload = { [FIELD.LIMIT]: 24, [FIELD.COUNTRY]: 'us' };
+    const payload = { [FIELD.LIMIT]: 50, [FIELD.COUNTRY]: 'us' };
     dispatch(exploreActions.podcasts.request(payload));
 
     return () => {
@@ -40,20 +42,34 @@ export function ExplorePodcasts() {
     };
   }, []);
 
-  const list = podcasts.loading
-    ? [...Array(9)].map((_, id) => generatePodcast({ id }))
-    : podcasts.data;
+  const list = useMemo(
+    () =>
+      podcasts.loading
+        ? Array.from({ length: 9 }, (_, id) => generatePodcast({ id }))
+        : podcasts.data,
+    [podcasts.loading]
+  );
 
   return (
     <Section>
-      <Section.Header>
+      <Section.Header
+        rightContent={
+          <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE_PODCASTS)}>
+            {formatMessage({ id: 'ui.morePodcasts' })}
+          </Button>
+        }
+      >
         <Title order={2}>{formatMessage({ id: 'ui.topPodcasts' })}</Title>
       </Section.Header>
 
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
-          {list?.slice(0, 9).map((podcast, index) => (
-            <PodcastCard {...podcast} key={index} loading={podcasts.loading} />
+          {list?.slice(0, 9).map((podcast) => (
+            <PodcastCard
+              {...podcast}
+              key={podcast.id}
+              loading={podcasts.loading}
+            />
           ))}
         </SimpleGrid>
       </Section.Content>

@@ -4,12 +4,7 @@ import { useRouter } from 'next/router';
 import { useMediaQuery } from '@mantine/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUiSidebar } from 'src/store/ui/selectors';
-import {
-  Box,
-  Stack,
-  UnstyledButton,
-  useMantineColorScheme,
-} from '@mantine/core';
+import { Box, Stack, Button, useMantineColorScheme } from '@mantine/core';
 import {
   TbSearch,
   TbSettings,
@@ -72,15 +67,19 @@ export function ShellNavbar() {
     { icon: Icon, active, title, onClick }: any,
     key: number
   ) => (
-    <UnstyledButton
+    <Button
       key={key}
       onClick={onClick}
       aria-label={title}
-      className={cx(classes.button, { [classes.active]: active })}
+      classNames={{
+        root: cx(classes.button, { [classes.inactive]: !active }),
+        inner: classes.inner,
+        label: classes.label,
+      }}
     >
       <Icon size={17} />
       {!isMaxMd && <Box component="span">{title}</Box>}
-    </UnstyledButton>
+    </Button>
   );
 
   return (
