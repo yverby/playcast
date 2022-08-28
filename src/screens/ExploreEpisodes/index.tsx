@@ -27,10 +27,8 @@ export function ExploreEpisodes() {
   const [values, setValues] = useState<ExploreEntityForm>();
 
   useEffect(() => {
-    if (!episodes.data) {
-      const payload = { [FIELD.LIMIT]: 50, [FIELD.COUNTRY]: 'us' };
-      dispatch(exploreActions.episodes.request(payload));
-    }
+    const payload = { [FIELD.LIMIT]: 50, [FIELD.COUNTRY]: 'us' };
+    dispatch(exploreActions.episodes.request(payload));
 
     return () => {
       dispatch(exploreActions.episodes.cancel());
