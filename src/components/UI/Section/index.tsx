@@ -1,11 +1,12 @@
 import { Box } from '@mantine/core';
 
+import type { ReactNode } from 'react';
 import type { BoxProps } from '@mantine/core';
+import type { PolymorphicComponentProps } from '@mantine/utils';
 
 import { useStyles } from './styles';
 
-type SectionProps<C = 'div'> =
-  import('@mantine/utils').PolymorphicComponentProps<C, BoxProps>;
+type SectionProps<C = 'div'> = PolymorphicComponentProps<C, BoxProps>;
 
 export function Section({
   children,
@@ -28,8 +29,9 @@ export function Section({
 Section.Header = function SectionHeader({
   children,
   className,
+  rightContent,
   ...props
-}: SectionProps<'header'>) {
+}: SectionProps<'header'> & { rightContent?: ReactNode }) {
   const { cx, classes } = useStyles();
 
   return (
@@ -39,6 +41,7 @@ Section.Header = function SectionHeader({
       {...props}
     >
       {children}
+      {rightContent}
     </Box>
   );
 };

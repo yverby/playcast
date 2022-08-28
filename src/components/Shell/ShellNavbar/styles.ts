@@ -20,32 +20,19 @@ export const useStyles = createStyles((theme) => ({
     },
   },
   button: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: theme.spacing.xs,
-    padding: theme.spacing.sm,
-    borderRadius: theme.radius.md,
-    color: theme.fn.rgba(theme.other.variable(theme, 'colorText'), 0.5),
-    fontSize: theme.fontSizes.sm,
-    fontWeight: 600,
+    padding: `0 ${theme.spacing.sm}px`,
+  },
+  inactive: {
+    backgroundColor: 'transparent',
 
-    '&:hover': {
-      color: theme.other.variable(theme, 'colorPrimary'),
-      backgroundColor: theme.fn.rgba(
-        theme.other.variable(theme, 'colorPrimary'),
-        0.15
-      ),
-    },
-
-    [theme.fn.smallerThan('md')]: {
-      justifyContent: 'center',
+    '&:not(:hover)': {
+      color: theme.other.variable(theme, 'colorTextInfo'),
     },
   },
-  active: {
-    color: theme.other.variable(theme, 'colorPrimary'),
-    backgroundColor: theme.fn.rgba(
-      theme.other.variable(theme, 'colorPrimary'),
-      0.125
-    ),
+  inner: {
+    justifyContent: 'flex-start',
+  },
+  label: {
+    gap: theme.spacing.xs,
   },
 }));

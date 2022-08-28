@@ -1,4 +1,4 @@
-import { Box, Text, Image, Skeleton } from '@mantine/core';
+import { Text, Image, Skeleton, Stack, Group } from '@mantine/core';
 
 import type { Episode } from 'src/store/podcasts/types';
 
@@ -11,26 +11,31 @@ interface EpisodeCardProps extends Episode {
 export function EpisodeCard({
   name,
   image,
+  collection,
   loading = false,
 }: EpisodeCardProps) {
   const { classes } = useStyles();
 
   return (
     <Skeleton radius={14} visible={loading}>
-      <Box className={classes.episode}>
-        <Box className={classes.info}>
-          <Image
-            width={90}
-            height={90}
-            src={image?.[600]}
-            className={classes.image}
-          />
+      <Group className={classes.episode}>
+        <Image
+          width={90}
+          height={90}
+          src={image?.[600]}
+          className={classes.image}
+        />
 
-          <Text size="sm" lineClamp={2}>
+        <Stack spacing={4}>
+          <Text size="sm" lineClamp={1} className={classes.name}>
             {name}
           </Text>
-        </Box>
-      </Box>
+
+          <Text size="xs" lineClamp={1} className={classes.artist}>
+            {collection?.name}
+          </Text>
+        </Stack>
+      </Group>
     </Skeleton>
   );
 }

@@ -12,6 +12,21 @@ export const Button: ThemeComponent<
   ButtonStylesParams
 > = {
   defaultProps: {
+    size: 'md',
     radius: 'md',
+    variant: 'light',
   },
+  styles: (theme, { size, color, variant }) => ({
+    ...(variant === 'light' && {
+      root: {
+        ...(!color && {
+          color: theme.other.variable(theme, 'colorPrimary'),
+        }),
+        ...(size === 'md' && {
+          height: 41,
+          fontSize: theme.fontSizes.sm,
+        }),
+      },
+    }),
+  }),
 };

@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Stack, Center, Loader, SimpleGrid } from '@mantine/core';
 
 import { InfiniteList } from 'src/components/UI';
+import { PodcastCard } from 'src/components/Podcast';
+import { EpisodeCard } from 'src/components/Episode';
 import { searchActions } from 'src/store/search/actions';
 import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
-import { PodcastCard } from 'src/components/Podcast/PodcastCard';
-import { EpisodeCard } from 'src/components/Episode/EpisodeCard';
 import {
   selectSearchParams,
   selectSearchResutls,

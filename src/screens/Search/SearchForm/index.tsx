@@ -8,7 +8,7 @@ import { useDebouncedValue } from '@mantine/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Stack, TextInput, SegmentedControl } from '@mantine/core';
 
-import { FIELD, ROUTE, ENTITY } from 'src/constants';
+import { FIELD, ROUTE, ENTITY, DEFAULTS } from 'src/constants';
 import { searchParamsShape } from 'src/store/search/shapes';
 import { selectSearchParams } from 'src/store/search/selectors';
 
@@ -26,7 +26,7 @@ export function SearchForm() {
   });
 
   const entity = form.watch(FIELD.ENTITY);
-  const [term] = useDebouncedValue(form.watch(FIELD.TERM), 500);
+  const [term] = useDebouncedValue(form.watch(FIELD.TERM), DEFAULTS.DELAY);
 
   const onSubmit = (query: SearchParams) => {
     if (!isEqual(params, { term, entity })) {
@@ -60,6 +60,7 @@ export function SearchForm() {
       <Stack spacing="xs">
         <TextInput
           {...form.register(FIELD.TERM)}
+          type="search"
           autoComplete="off"
           aria-label={formatMessage({ id: 'ui.search' })}
           placeholder={formatMessage({ id: 'ui.search' })}

@@ -15,9 +15,19 @@ export const colorText: SchemeVariable = {
   light: (theme) => theme.black,
 };
 
+export const colorTextInfo: SchemeVariable = {
+  dark: (theme) => theme.fn.darken(colorText.dark(theme), 0.35),
+  light: (theme) => theme.fn.lighten(colorText.light(theme), 0.55),
+};
+
 export const colorCard: SchemeVariable = {
   dark: (theme) => theme.colors.dark[6],
   light: (theme) => theme.colors.gray[1],
+};
+
+export const colorCardAccent: SchemeVariable = {
+  dark: (theme) => theme.colors.dark[5],
+  light: (theme) => theme.colors.gray[2],
 };
 
 export const colorPrimary: SchemeVariable = {

@@ -12,6 +12,7 @@ export const useStyles = createStyles((theme) => ({
     zIndex: 9998,
     display: 'flex',
     alignItems: 'flex-end',
+    justifyContent: 'space-between',
     height: 58,
     paddingBottom: 12,
     paddingLeft: theme.spacing.lg,
