@@ -59,7 +59,7 @@ export function ExplorePodcasts() {
           </Button>
         }
       >
-        <Title order={2}>{formatMessage({ id: 'ui.topPodcasts' })}</Title>
+        <Title order={2}>{formatMessage({ id: 'ui.popularPodcasts' })}</Title>
       </Section.Header>
 
       <Section.Content>

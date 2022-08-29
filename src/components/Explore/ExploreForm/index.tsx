@@ -13,12 +13,11 @@ import { exploreEntityFormShape } from 'src/store/explore/shapes';
 import type { ExploreEntityForm } from 'src/store/explore/types';
 
 interface ExploreFormProps {
-  disabled: boolean;
   genres: (string | SelectItem)[];
   onSubmit: (values: ExploreEntityForm) => void;
 }
 
-export function ExploreForm({ genres, disabled, onSubmit }: ExploreFormProps) {
+export function ExploreForm({ genres, onSubmit }: ExploreFormProps) {
   const { formatMessage } = useIntl();
 
   const form = useForm<ExploreEntityForm>({
@@ -40,7 +39,6 @@ export function ExploreForm({ genres, disabled, onSubmit }: ExploreFormProps) {
           {...form.register(FIELD.TERM)}
           type="search"
           autoComplete="off"
-          disabled={disabled}
           aria-label={formatMessage({ id: 'ui.search' })}
           placeholder={formatMessage({ id: 'ui.search' })}
         />
@@ -48,7 +46,6 @@ export function ExploreForm({ genres, disabled, onSubmit }: ExploreFormProps) {
         <MultiSelect
           clearable
           data={genres}
-          disabled={disabled}
           placeholder={formatMessage({ id: 'ui.genres' })}
           onChange={(value) => form.setValue(FIELD.ID, value)}
         />

@@ -1,12 +1,14 @@
 import { useMemo } from 'react';
+import { useIntl } from 'react-intl';
+import { TbVinyl } from 'react-icons/tb';
+import { Stack, SimpleGrid } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { Stack, Center, Loader, SimpleGrid } from '@mantine/core';
 
-import { InfiniteList } from 'src/components/UI';
 import { PodcastCard } from 'src/components/Podcast';
 import { EpisodeCard } from 'src/components/Episode';
 import { searchActions } from 'src/store/search/actions';
 import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
+import { Status, Placeholder, InfiniteList } from 'src/components/UI';
 import {
   selectSearchParams,
   selectSearchResutls,
@@ -16,6 +18,7 @@ import type { Podcast, Episode } from 'src/store/podcasts/types';
 
 export function SearchResults() {
   const dispatch = useDispatch();
+  const { formatMessage } = useIntl();
 
   const params = useSelector(selectSearchParams);
   const results = useSelector(selectSearchResutls);
@@ -45,23 +48,26 @@ export function SearchResults() {
     offset && dispatch(searchActions.results.request(newParams));
   };
 
+  const nothing = !results.succeed && (
+    <Placeholder
+      icon={TbVinyl}
+      title={formatMessage({ id: 'ui.searchSomething' })}
+    />
+  );
+
   return (
     <Stack spacing="xs" sx={{ flex: 1 }}>
-      <SimpleGrid breakpoints={breakpoints}>
-        <InfiniteList
-          loadMore={loadMore}
-          hasMore={results.hasMore}
-          loading={results.loading}
-        >
-          {list}
-        </InfiniteList>
-      </SimpleGrid>
-
-      {results.hasMore && (
-        <Center sx={{ flex: 1, minHeight: 50 }}>
-          {results.loading && <Loader />}
-        </Center>
-      )}
+      <Status selectors={{ ...results, data: list }} views={{ nothing }}>
+        <SimpleGrid breakpoints={breakpoints}>
+          <InfiniteList
+            loadMore={loadMore}
+            hasMore={results.hasMore}
+            loading={results.loading}
+          >
+            {list}
+          </InfiniteList>
+        </SimpleGrid>
+      </Status>
     </Stack>
   );
 }

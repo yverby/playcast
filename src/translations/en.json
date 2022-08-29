@@ -7,8 +7,12 @@
   "ui.playlists": "Playlists",
   "ui.playingNow": "Playing now",
   "ui.podcastEpisode": "Episode",
-  "ui.topPodcasts": "Top podcasts",
-  "ui.topEpisodes": "Top episodes",
   "ui.morePodcasts": "More podcasts",
-  "ui.moreEpisodes": "More episodes"
+  "ui.moreEpisodes": "More episodes",
+  "ui.nothingFound": "Nothing found",
+  "ui.popularPodcasts": "Popular podcasts",
+  "ui.popularEpisodes": "Popular episodes",
+  "ui.searchSomething": "Search something",
+  "ui.nothingToDisplay": "Nothing to display",
+  "ui.somethingWentWrong": "Something went wrong"
 }

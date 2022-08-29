@@ -1,7 +1,7 @@
 import { useIntl } from 'react-intl';
 import { Title } from '@mantine/core';
 
-import { Section } from 'src/components/UI';
+import { Status, Section } from 'src/components/UI';
 
 export function Settings() {
   const { formatMessage } = useIntl();
@@ -11,6 +11,10 @@ export function Settings() {
       <Section.Header>
         <Title order={2}>{formatMessage({ id: 'ui.settings' })}</Title>
       </Section.Header>
+
+      <Section.Content>
+        <Status>{[]}</Status>
+      </Section.Content>
     </Section>
   );
 }
