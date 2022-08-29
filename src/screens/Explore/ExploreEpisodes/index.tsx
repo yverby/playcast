@@ -1,13 +1,14 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Title, Button, SimpleGrid } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
 import { EpisodeCard } from 'src/components/Episode';
 import { exploreActions } from 'src/store/explore/actions';
-import { ROUTE, FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
+import { useEntityRequest } from 'src/store/explore/hooks';
+import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExploreEpisodes } from 'src/store/explore/selectors';
 
 import type { Episode } from 'src/store/podcasts/types';
@@ -30,27 +31,18 @@ function generateEpisode(episode: Partial<Episode> | undefined) {
 
 export function ExploreEpisodes() {
   const router = useRouter();
-  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
   const episodes = useSelector(selectExploreEpisodes);
 
-  useEffect(() => {
-    const payload = { [FIELD.LIMIT]: 50, [FIELD.COUNTRY]: 'us' };
-    dispatch(exploreActions.episodes.request(payload));
+  useEntityRequest(exploreActions.episodes, episodes);
 
-    return () => {
-      dispatch(exploreActions.episodes.cancel());
-    };
-  }, []);
-
-  const list = useMemo(
-    () =>
-      episodes.loading
-        ? Array.from({ length: 6 }, (_, id) => generateEpisode({ id }))
-        : episodes.data,
-    [episodes.loading]
-  );
+  const list = useMemo(() => {
+    if (episodes.loading) {
+      return Array.from({ length: 6 }, (_, id) => generateEpisode({ id }));
+    }
+    return episodes.data;
+  }, [episodes.loading]);
 
   return (
     <Section>

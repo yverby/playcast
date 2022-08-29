@@ -5,7 +5,7 @@ export function filterBy<T extends any[]>(
   keys: string[],
   predicate: (value: any) => boolean
 ) {
-  return (
-    array?.filter((item) => keys.some((key) => predicate(get(item, key)))) || []
-  );
+  return (array || []).filter((item) =>
+    keys.some((key) => predicate(get(item, key)))
+  ) as T;
 }

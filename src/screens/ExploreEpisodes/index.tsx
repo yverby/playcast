@@ -1,16 +1,18 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { useIntl } from 'react-intl';
+import { useSelector } from 'react-redux';
 import { Title, SimpleGrid } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { filterBy } from 'src/lib/helpers';
 import { Status, Section } from 'src/components/UI';
 import { EpisodeCard } from 'src/components/Episode';
 import { ExploreForm } from 'src/components/Explore';
-import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
 import { exploreActions } from 'src/store/explore/actions';
+import { useEntityRequest } from 'src/store/explore/hooks';
+import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExploreEpisodes } from 'src/store/explore/selectors';
 
+import type { Genre } from 'src/store/podcasts/types';
 import type { ExploreEntityForm } from 'src/store/explore/types';
 
 import { useStyles } from './styles';
@@ -18,34 +20,32 @@ import { useStyles } from './styles';
 const breakpoints = BREAKPOINTS[ENTITY.EPISODE];
 
 export function ExploreEpisodes() {
-  const dispatch = useDispatch();
   const { classes } = useStyles();
   const { formatMessage } = useIntl();
 
   const episodes = useSelector(selectExploreEpisodes);
-
   const [values, setValues] = useState<ExploreEntityForm>();
 
-  useEffect(() => {
-    const payload = { [FIELD.LIMIT]: 50, [FIELD.COUNTRY]: 'us' };
-    dispatch(exploreActions.episodes.request(payload));
+  const { data: allEpisodes } = episodes;
+  const { [FIELD.ID]: id, [FIELD.TERM]: term } = { ...values };
 
-    return () => {
-      dispatch(exploreActions.episodes.cancel());
-    };
-  }, []);
+  useEntityRequest(exploreActions.episodes, episodes);
 
-  const list = useMemo(() => {
-    const { [FIELD.ID]: id, [FIELD.TERM]: term } = { ...values };
+  const genreEpisodes = useMemo(() => {
+    if (id?.length) {
+      const predicate = (genre: Genre) => id.includes(String(genre.id));
+      return filterBy(allEpisodes, ['genre'], predicate);
+    }
+    return allEpisodes;
+  }, [allEpisodes, id]);
 
-    return filterBy(
-      id?.length
-        ? episodes.data.filter(({ genre }) => id.includes(String(genre?.id)))
-        : episodes.data,
-      ['name', 'collection.name'],
-      (value) => value?.toLowerCase().includes(term)
-    );
-  }, [episodes.data, values]);
+  const termEpisodes = useMemo(() => {
+    if (term) {
+      const predicate = (value: string) => value.toLowerCase().includes(term);
+      return filterBy(genreEpisodes, ['name', 'collection.name'], predicate);
+    }
+    return genreEpisodes;
+  }, [genreEpisodes, term]);
 
   return (
     <>
@@ -63,9 +63,9 @@ export function ExploreEpisodes() {
 
       <Section>
         <Section.Content>
-          <Status selectors={{ ...episodes, data: list }}>
+          <Status selectors={{ ...episodes, data: termEpisodes }}>
             <SimpleGrid breakpoints={breakpoints}>
-              {list.map((episode) => (
+              {termEpisodes?.map((episode) => (
                 <EpisodeCard {...episode} key={episode.id} />
               ))}
             </SimpleGrid>
