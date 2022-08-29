@@ -15,7 +15,7 @@ export const MultiSelect: ThemeComponent<
     data: [],
     size: 'md',
     radius: 'md',
-    maxDropdownHeight: 202,
+    maxDropdownHeight: 202.5,
   },
   styles: (theme) => ({
     input: {

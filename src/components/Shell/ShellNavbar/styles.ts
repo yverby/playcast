@@ -26,7 +26,7 @@ export const useStyles = createStyles((theme) => ({
     backgroundColor: 'transparent',
 
     '&:not(:hover)': {
-      color: theme.other.variable(theme, 'colorTextInfo'),
+      color: theme.other.variable(theme, 'colorPlaceholder'),
     },
   },
   inner: {

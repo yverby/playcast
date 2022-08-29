@@ -77,7 +77,8 @@ export function ShellNavbar() {
         label: classes.label,
       }}
     >
-      <Icon size={17} />
+      <Icon size={17} strokeWidth={2.25} />
+
       {!isMaxMd && <Box component="span">{title}</Box>}
     </Button>
   );

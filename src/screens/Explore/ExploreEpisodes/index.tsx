@@ -61,7 +61,7 @@ export function ExploreEpisodes() {
           </Button>
         }
       >
-        <Title order={2}>{formatMessage({ id: 'ui.topEpisodes' })}</Title>
+        <Title order={2}>{formatMessage({ id: 'ui.popularEpisodes' })}</Title>
       </Section.Header>
 
       <Section.Content>
