@@ -1,4 +1,6 @@
-import { useRef, useEffect, Children } from 'react';
+import { useEffect, Children } from 'react';
+import { Box } from '@mantine/core';
+import { useIntersection } from '@mantine/hooks';
 
 import type { ReactNode } from 'react';
 
@@ -15,32 +17,21 @@ export function InfiniteList({
   loadMore,
   children,
 }: InfiniteScrollProps) {
-  const visible = !loading && hasMore;
-  const offset = Children.count(children);
+  const { ref, entry } = useIntersection();
 
-  const load = useRef<() => void>();
-  const element = useRef<HTMLDivElement>(null);
-  const observer = useRef<IntersectionObserver>();
-
-  load.current = () => {
-    visible && loadMore(offset);
-  };
+  const isNext = !loading && hasMore;
+  const isIntersecting = entry?.isIntersecting;
 
   useEffect(() => {
-    observer.current = new IntersectionObserver(([target]) => {
-      target.isIntersecting && load?.current?.();
-    });
-  }, []);
-
-  useEffect(() => {
-    element.current && observer.current?.observe(element.current);
-    return () => observer.current?.disconnect();
-  }, [visible]);
+    if (isNext && isIntersecting) {
+      loadMore(Children.count(children));
+    }
+  }, [isNext, isIntersecting]);
 
   return (
     <>
       {children}
-      {visible && <div ref={element} style={{ height: 1 }} />}
+      {isNext && <Box ref={ref} />}
     </>
   );
 }

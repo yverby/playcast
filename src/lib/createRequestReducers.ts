@@ -7,27 +7,31 @@ import type { RequestActions } from './createRequestActions';
 
 type Override<T1, T2> = Omit<T1, keyof T2> & T2;
 
-interface State {
+interface DefaultState {
   data: any;
   meta: any;
   error: any;
   succeed: boolean;
   loading: boolean;
+  timestamp: Date | null;
 }
 
 export function createRequestReducer<S = Record<string, any>>(
   actions: RequestActions,
-  extendReducer?: (builder: ActionReducerMapBuilder<Override<State, S>>) => void
+  extendReducer?: (
+    builder: ActionReducerMapBuilder<Override<DefaultState, S>>
+  ) => void
 ) {
-  const initState = {
+  const initState: DefaultState = {
     data: null,
     meta: null,
     error: null,
     succeed: false,
     loading: false,
+    timestamo: null,
   };
 
-  return createReducer<Override<State, S>>(initState, (builder) => {
+  return createReducer<Override<DefaultState, S>>(initState, (builder) => {
     builder
       .addCase(actions.request, () => ({
         ...initState,
@@ -37,6 +41,7 @@ export function createRequestReducer<S = Record<string, any>>(
         ...initState,
         ...payload,
         succeed: true,
+        timestamp: new Date(),
       }))
       .addCase(actions.error, (_, { payload }) => ({
         ...initState,
@@ -52,28 +57,30 @@ export function createRequestReducer<S = Record<string, any>>(
   });
 }
 
-interface StateList {
+interface DefaultListState {
   data: any[];
   meta: any;
   error: any;
   hasMore: boolean;
   succeed: boolean;
   loading: boolean;
+  timestamp: Date | null;
 }
 
 export function createRequestListReducer<S = Record<string, any>>(
   actions: RequestActions,
   extendReducer?: (
-    builder: ActionReducerMapBuilder<Override<StateList, S>>
+    builder: ActionReducerMapBuilder<Override<DefaultListState, S>>
   ) => void
 ) {
-  const initState = {
+  const initState: DefaultListState = {
     data: [],
     meta: null,
     error: null,
     hasMore: true,
     succeed: false,
     loading: false,
+    timestamp: null,
   };
 
   return createReducer<Override<StateList, S>>(initState, (builder) => {
@@ -89,6 +96,7 @@ export function createRequestListReducer<S = Record<string, any>>(
         ...payload,
         succeed: true,
         loading: false,
+        timestamp: new Date(),
         hasMore: !!payload.data.length,
         data: state.data.concat(payload.data),
       }))
