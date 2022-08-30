@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { Title, Button, SimpleGrid } from '@mantine/core';
+import { Title, Button, Skeleton, SimpleGrid } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
 import { EpisodeCard } from 'src/components/Episode';
@@ -58,13 +58,15 @@ export function ExploreEpisodes() {
 
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
-          {list?.slice(0, 6).map((episode) => (
-            <EpisodeCard
-              {...episode}
-              key={episode.id}
-              loading={episodes.loading}
-            />
-          ))}
+          {list?.slice(0, 6).map((episode) =>
+            !episodes.loading ? (
+              <EpisodeCard {...episode} key={episode.id} />
+            ) : (
+              <Skeleton radius={14}>
+                <EpisodeCard {...episode} key={episode.id} />
+              </Skeleton>
+            )
+          )}
         </SimpleGrid>
       </Section.Content>
     </Section>

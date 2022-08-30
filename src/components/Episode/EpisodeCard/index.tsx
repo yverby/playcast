@@ -1,41 +1,35 @@
-import { Text, Image, Skeleton, Stack, Group } from '@mantine/core';
+import Link from 'next/link';
+import { Box, Text, Image, Stack, Group } from '@mantine/core';
 
 import type { Episode } from 'src/store/podcasts/types';
 
 import { useStyles } from './styles';
 
-interface EpisodeCardProps extends Episode {
-  loading?: boolean;
-}
-
-export function EpisodeCard({
-  name,
-  image,
-  collection,
-  loading = false,
-}: EpisodeCardProps) {
+export function EpisodeCard({ guid, name, image, collection }: Episode) {
   const { classes } = useStyles();
 
   return (
-    <Skeleton radius={14} visible={loading}>
-      <Group className={classes.episode}>
-        <Image
-          width={90}
-          height={90}
-          src={image?.[600]}
-          className={classes.image}
-        />
+    <Link href={`/podcast/${collection?.id}?e=${guid}`} passHref>
+      <Box component="a" className={classes.episode}>
+        <Group>
+          <Image
+            width={90}
+            height={90}
+            src={image?.[600]}
+            className={classes.image}
+          />
 
-        <Stack spacing={4}>
-          <Text size="sm" lineClamp={1} className={classes.name}>
-            {name}
-          </Text>
+          <Stack spacing={4}>
+            <Text size="sm" lineClamp={1} className={classes.name}>
+              {name}
+            </Text>
 
-          <Text size="xs" lineClamp={1} className={classes.artist}>
-            {collection?.name}
-          </Text>
-        </Stack>
-      </Group>
-    </Skeleton>
+            <Text size="xs" lineClamp={1} className={classes.artist}>
+              {collection?.name}
+            </Text>
+          </Stack>
+        </Group>
+      </Box>
+    </Link>
   );
 }

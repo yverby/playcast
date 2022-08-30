@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { Title, Button, SimpleGrid } from '@mantine/core';
+import { Title, Button, Skeleton, SimpleGrid } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
 import { PodcastCard } from 'src/components/Podcast';
@@ -37,7 +37,7 @@ export function ExplorePodcasts() {
 
   const list = useMemo(() => {
     if (podcasts.loading) {
-      return Array.from({ length: 6 }, (_, id) => generatePodcast({ id }));
+      return Array.from({ length: 9 }, (_, id) => generatePodcast({ id }));
     }
     return podcasts.data;
   }, [podcasts.loading]);
@@ -56,13 +56,15 @@ export function ExplorePodcasts() {
 
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
-          {list?.slice(0, 9).map((podcast) => (
-            <PodcastCard
-              {...podcast}
-              key={podcast.id}
-              loading={podcasts.loading}
-            />
-          ))}
+          {list?.slice(0, 9).map((podcast) =>
+            !podcasts.loading ? (
+              <PodcastCard {...podcast} key={podcast.id} />
+            ) : (
+              <Skeleton radius={14}>
+                <PodcastCard {...podcast} key={podcast.id} />
+              </Skeleton>
+            )
+          )}
         </SimpleGrid>
       </Section.Content>
     </Section>

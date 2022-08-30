@@ -2,6 +2,8 @@ import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
   podcast: {
+    all: 'unset',
+    display: 'block',
     padding: 4.5,
     paddingBottom: 11,
     borderRadius: 14,
