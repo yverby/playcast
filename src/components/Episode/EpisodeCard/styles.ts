@@ -2,6 +2,8 @@ import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
   episode: {
+    all: 'unset',
+    display: 'block',
     padding: 4.5,
     borderRadius: 14,
     backgroundColor: theme.other.variable(theme, 'colorCard'),

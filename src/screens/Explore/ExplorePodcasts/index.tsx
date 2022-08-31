@@ -1,13 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
-import { Title, Button, SimpleGrid } from '@mantine/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { Title, Button, Skeleton, SimpleGrid } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
 import { PodcastCard } from 'src/components/Podcast';
 import { exploreActions } from 'src/store/explore/actions';
-import { useEntityRequest } from 'src/store/explore/hooks';
 import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExplorePodcasts } from 'src/store/explore/selectors';
 
@@ -29,15 +28,18 @@ function generatePodcast(podcast: Partial<Podcast> | undefined) {
 
 export function ExplorePodcasts() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
   const podcasts = useSelector(selectExplorePodcasts);
 
-  useEntityRequest(exploreActions.podcasts, podcasts);
+  useEffect(() => {
+    dispatch(exploreActions.podcasts.init());
+  }, []);
 
   const list = useMemo(() => {
     if (podcasts.loading) {
-      return Array.from({ length: 6 }, (_, id) => generatePodcast({ id }));
+      return Array.from({ length: 9 }, (_, id) => generatePodcast({ id }));
     }
     return podcasts.data;
   }, [podcasts.loading]);
@@ -56,13 +58,15 @@ export function ExplorePodcasts() {
 
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
-          {list?.slice(0, 9).map((podcast) => (
-            <PodcastCard
-              {...podcast}
-              key={podcast.id}
-              loading={podcasts.loading}
-            />
-          ))}
+          {list?.slice(0, 9).map((podcast) =>
+            !podcasts.loading ? (
+              <PodcastCard {...podcast} key={podcast.id} />
+            ) : (
+              <Skeleton radius={14} key={podcast.id}>
+                <PodcastCard {...podcast} />
+              </Skeleton>
+            )
+          )}
         </SimpleGrid>
       </Section.Content>
     </Section>
