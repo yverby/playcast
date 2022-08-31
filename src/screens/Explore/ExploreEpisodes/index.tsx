@@ -1,13 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Title, Button, Skeleton, SimpleGrid } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
 import { EpisodeCard } from 'src/components/Episode';
 import { exploreActions } from 'src/store/explore/actions';
-import { useEntityRequest } from 'src/store/explore/hooks';
 import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExploreEpisodes } from 'src/store/explore/selectors';
 
@@ -31,11 +30,14 @@ function generateEpisode(episode: Partial<Episode> | undefined) {
 
 export function ExploreEpisodes() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
   const episodes = useSelector(selectExploreEpisodes);
 
-  useEntityRequest(exploreActions.episodes, episodes);
+  useEffect(() => {
+    dispatch(exploreActions.episodes.init());
+  }, []);
 
   const list = useMemo(() => {
     if (episodes.loading) {
@@ -62,8 +64,8 @@ export function ExploreEpisodes() {
             !episodes.loading ? (
               <EpisodeCard {...episode} key={episode.id} />
             ) : (
-              <Skeleton radius={14}>
-                <EpisodeCard {...episode} key={episode.id} />
+              <Skeleton radius={14} key={episode.id}>
+                <EpisodeCard {...episode} />
               </Skeleton>
             )
           )}

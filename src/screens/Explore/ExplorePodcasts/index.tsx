@@ -1,13 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Title, Button, Skeleton, SimpleGrid } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
 import { PodcastCard } from 'src/components/Podcast';
 import { exploreActions } from 'src/store/explore/actions';
-import { useEntityRequest } from 'src/store/explore/hooks';
 import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExplorePodcasts } from 'src/store/explore/selectors';
 
@@ -29,11 +28,14 @@ function generatePodcast(podcast: Partial<Podcast> | undefined) {
 
 export function ExplorePodcasts() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
   const podcasts = useSelector(selectExplorePodcasts);
 
-  useEntityRequest(exploreActions.podcasts, podcasts);
+  useEffect(() => {
+    dispatch(exploreActions.podcasts.init());
+  }, []);
 
   const list = useMemo(() => {
     if (podcasts.loading) {
@@ -60,8 +62,8 @@ export function ExplorePodcasts() {
             !podcasts.loading ? (
               <PodcastCard {...podcast} key={podcast.id} />
             ) : (
-              <Skeleton radius={14}>
-                <PodcastCard {...podcast} key={podcast.id} />
+              <Skeleton radius={14} key={podcast.id}>
+                <PodcastCard {...podcast} />
               </Skeleton>
             )
           )}

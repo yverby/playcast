@@ -1,4 +1,4 @@
-import { Box } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 
 import type { ReactNode } from 'react';
 import type { BoxProps } from '@mantine/core';
@@ -40,7 +40,7 @@ Section.Header = function SectionHeader({
       className={cx(classes.header, className)}
       {...props}
     >
-      {children}
+      <Text lineClamp={1}>{children}</Text>
       {rightContent}
     </Box>
   );

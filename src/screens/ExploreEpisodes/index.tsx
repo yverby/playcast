@@ -1,14 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useSelector } from 'react-redux';
 import { Title, SimpleGrid } from '@mantine/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { filterBy } from 'src/lib/helpers';
 import { Status, Section } from 'src/components/UI';
 import { EpisodeCard } from 'src/components/Episode';
 import { ExploreForm } from 'src/components/Explore';
 import { exploreActions } from 'src/store/explore/actions';
-import { useEntityRequest } from 'src/store/explore/hooks';
 import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExploreEpisodes } from 'src/store/explore/selectors';
 
@@ -20,6 +19,7 @@ import { useStyles } from './styles';
 const breakpoints = BREAKPOINTS[ENTITY.EPISODE];
 
 export function ExploreEpisodes() {
+  const dispatch = useDispatch();
   const { classes } = useStyles();
   const { formatMessage } = useIntl();
 
@@ -29,7 +29,9 @@ export function ExploreEpisodes() {
   const { data: allEpisodes } = episodes;
   const { [FIELD.ID]: id, [FIELD.TERM]: term } = { ...values };
 
-  useEntityRequest(exploreActions.episodes, episodes);
+  useEffect(() => {
+    dispatch(exploreActions.episodes.init());
+  }, []);
 
   const genreEpisodes = useMemo(() => {
     if (id?.length) {
