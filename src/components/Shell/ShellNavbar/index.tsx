@@ -21,7 +21,7 @@ import { useStyles } from './styles';
 
 const ROUTES = {
   [ROUTE.SEARCH]: TbSearch,
-  [ROUTE.EXPLORE]: TbLayoutGrid,
+  [ROUTE.EXPLORE.ROOT]: TbLayoutGrid,
   [ROUTE.PLAYLISTS]: TbPlaylist,
   [ROUTE.SETTINGS]: TbSettings,
 };

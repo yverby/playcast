@@ -17,9 +17,9 @@ export function Section({
 
   return (
     <Box
+      {...props}
       component="section"
       className={cx(classes.section, className)}
-      {...props}
     >
       {children}
     </Box>
@@ -36,11 +36,14 @@ Section.Header = function SectionHeader({
 
   return (
     <Box
+      {...props}
       component="header"
       className={cx(classes.header, className)}
-      {...props}
     >
-      <Text lineClamp={1}>{children}</Text>
+      <Text lineClamp={1} sx={{ width: '100%' }}>
+        {children}
+      </Text>
+
       {rightContent}
     </Box>
   );
@@ -54,7 +57,7 @@ Section.Content = function SectionContent({
   const { cx, classes } = useStyles();
 
   return (
-    <Box className={cx(classes.section, classes.content, className)} {...props}>
+    <Box {...props} className={cx(classes.section, classes.content, className)}>
       {children}
     </Box>
   );

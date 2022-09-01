@@ -7,7 +7,7 @@ export function Redirect() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(ROUTE.EXPLORE);
+    router.push(ROUTE.EXPLORE.ROOT);
   }, []);
 
   return null;

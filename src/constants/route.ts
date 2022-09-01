@@ -1,8 +1,10 @@
-export enum ROUTE {
-  SEARCH = '/search',
-  EXPLORE = '/explore',
-  SETTINGS = '/settings',
-  PLAYLISTS = '/playlists',
-  EXPLORE_PODCASTS = '/explore/podcasts',
-  EXPLORE_EPISODES = '/explore/episodes',
-}
+export const ROUTE = {
+  SEARCH: '/search',
+  SETTINGS: '/settings',
+  PLAYLISTS: '/playlists',
+  EXPLORE: {
+    ROOT: '/explore',
+    PODCASTS: '/explore/podcasts',
+    EPISODES: '/explore/episodes',
+  },
+};

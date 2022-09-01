@@ -1,55 +1,52 @@
 import { useEffect } from 'react';
+import { isEqual } from 'lodash';
 import { useIntl } from 'react-intl';
 import { useForm } from 'react-hook-form';
-import { useDebouncedValue } from '@mantine/hooks';
+import { Box, MultiSelect } from '@mantine/core';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Stack, TextInput, MultiSelect } from '@mantine/core';
 
 import type { SelectItem } from '@mantine/core';
 
-import { FIELD, DEFAULTS } from 'src/constants';
-import { exploreEntityFormShape } from 'src/store/explore/shapes';
+import { FIELD } from 'src/constants';
+import { exploreFormShape } from 'src/store/explore/shapes';
 
-import type { ExploreEntityForm } from 'src/store/explore/types';
+import type { ExploreFormValues } from 'src/store/explore/types';
 
 interface ExploreFormProps {
+  values: ExploreFormValues;
   genres: (string | SelectItem)[];
-  onSubmit: (values: ExploreEntityForm) => void;
+  onSubmit: (values: ExploreFormValues) => void;
 }
 
-export function ExploreForm({ genres, onSubmit }: ExploreFormProps) {
+export function ExploreForm({ genres, values, onSubmit }: ExploreFormProps) {
   const { formatMessage } = useIntl();
 
-  const form = useForm<ExploreEntityForm>({
-    defaultValues: { [FIELD.ID]: [], [FIELD.TERM]: '' },
-    resolver: zodResolver(exploreEntityFormShape),
+  const form = useForm<ExploreFormValues>({
+    defaultValues: values,
+    resolver: zodResolver(exploreFormShape),
   });
 
-  const id = form.watch(FIELD.ID);
-  const [term] = useDebouncedValue(form.watch(FIELD.TERM), DEFAULTS.DELAY);
+  const genre = form.watch(FIELD.GENRE);
 
   useEffect(() => {
-    form.handleSubmit(onSubmit)();
-  }, [id, term]);
+    form.reset(values);
+  }, [values]);
+
+  useEffect(() => {
+    if (!isEqual(values, form.getValues())) {
+      form.handleSubmit(onSubmit)();
+    }
+  }, [genre]);
 
   return (
     <Box component="form" onSubmit={form.handleSubmit(onSubmit)}>
-      <Stack>
-        <TextInput
-          {...form.register(FIELD.TERM)}
-          type="search"
-          autoComplete="off"
-          aria-label={formatMessage({ id: 'ui.search' })}
-          placeholder={formatMessage({ id: 'ui.search' })}
-        />
-
-        <MultiSelect
-          clearable
-          data={genres}
-          placeholder={formatMessage({ id: 'ui.genres' })}
-          onChange={(value) => form.setValue(FIELD.ID, value)}
-        />
-      </Stack>
+      <MultiSelect
+        clearable
+        data={genres}
+        value={genre}
+        placeholder={formatMessage({ id: 'ui.genres' })}
+        onChange={(value) => form.setValue(FIELD.GENRE, value)}
+      />
     </Box>
   );
 }

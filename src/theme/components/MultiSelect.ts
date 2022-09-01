@@ -22,7 +22,7 @@ export const MultiSelect: ThemeComponent<
       minHeight: 42,
     },
     searchInput: {
-      marginTop: 8,
+      marginTop: 6.5,
       fontSize: theme.fontSizes.sm,
       fontFamily: 'inherit',
     },
