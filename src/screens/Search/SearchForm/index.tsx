@@ -29,9 +29,7 @@ export function SearchForm() {
   const [term] = useDebouncedValue(form.watch(FIELD.TERM), DEFAULTS.DELAY);
 
   const onSubmit = (query: SearchParams) => {
-    if (!isEqual(params, { term, entity })) {
-      router.replace({ pathname: ROUTE.SEARCH, query });
-    }
+    router.replace({ pathname: ROUTE.SEARCH, query });
   };
 
   const handleChange = (name: keyof SearchParams) => (value: string) => {
@@ -43,7 +41,9 @@ export function SearchForm() {
   }, [params]);
 
   useEffect(() => {
-    term && form.handleSubmit(onSubmit)();
+    if (term && !isEqual(params, form.getValues())) {
+      form.handleSubmit(onSubmit)();
+    }
   }, [term, entity]);
 
   const entities = useMemo(
