@@ -7,6 +7,7 @@ export const useStyles = createStyles((theme) => ({
     padding: 4.5,
     borderRadius: 14,
     backgroundColor: theme.other.variable(theme, 'colorCard'),
+    overflow: 'hidden',
     cursor: 'pointer',
 
     '&:focus': {

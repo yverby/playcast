@@ -44,12 +44,12 @@ export interface Genre {
 }
 
 export interface Artist {
-  id: number;
+  id: string | number;
   name: string;
 }
 
 export interface Collection {
-  id: number;
+  id: string | number;
   name: string;
 }
 

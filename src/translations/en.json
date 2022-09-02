@@ -7,13 +7,18 @@
   "ui.playlists": "Playlists",
   "ui.playingNow": "Playing now",
   "ui.podcastEpisode": "Episode",
-  "ui.comingSoon": "Comming soon",
-  "ui.morePodcasts": "More podcasts",
-  "ui.moreEpisodes": "More episodes",
-  "ui.nothingFound": "Nothing found",
-  "ui.popularPodcasts": "Popular podcasts",
-  "ui.popularEpisodes": "Popular episodes",
-  "ui.searchSomething": "Search something",
-  "ui.nothingToDisplay": "Nothing to display",
-  "ui.somethingWentWrong": "Something went wrong"
+
+  "message.comingSoon": "Comming soon",
+  "message.nothingFound": "Nothing found",
+  "message.nothingToDisplay": "Nothing to display",
+  "message.somethingWentWrong": "Something went wrong",
+
+  "search.searchSomething": "Search something",
+
+  "explore.topPodcasts": "Top podcasts",
+  "explore.topEpisodes": "Top episodes",
+  "explore.popularPodcasts": "Popular podcasts",
+  "explore.popularEpisodes": "Popular episodes",
+
+  "podcast.lastEpisodes": "Last episodes"
 }

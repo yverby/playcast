@@ -1,64 +1,65 @@
 import { useMemo, useEffect } from 'react';
+import { slice } from 'lodash';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from '@mantine/hooks';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title, Button, Skeleton, SimpleGrid } from '@mantine/core';
+import {
+  Title,
+  Button,
+  Skeleton,
+  SimpleGrid,
+  useMantineTheme,
+} from '@mantine/core';
 
 import { Section } from 'src/components/UI';
+import { createPodcast } from 'src/lib/helpers';
 import { PodcastCard } from 'src/components/Podcast';
 import { exploreActions } from 'src/store/explore/actions';
 import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExplorePodcasts } from 'src/store/explore/selectors';
 
-import type { Podcast } from 'src/store/podcasts/types';
-
 const breakpoints = BREAKPOINTS[ENTITY.PODCAST];
-
-function generatePodcast(podcast: Partial<Podcast> | undefined) {
-  const defaultPodcast: Podcast = {
-    id: 0,
-    name: '',
-    image: {},
-    genre: { id: '', name: '' },
-    artist: { id: 0, name: '' },
-  };
-
-  return { ...defaultPodcast, ...podcast };
-}
 
 export function ExploreRootPodcasts() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
   const podcasts = useSelector(selectExplorePodcasts);
+
+  const isMaxXs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
 
   useEffect(() => {
     dispatch(exploreActions.podcasts.init());
   }, []);
 
   const list = useMemo(() => {
+    const length = isMaxXs ? 6 : 9;
+
     if (podcasts.loading) {
-      return Array.from({ length: 9 }, (_, id) => generatePodcast({ id }));
+      return Array.from({ length }, (_, id) => createPodcast({ id }));
     }
-    return podcasts.data;
-  }, [podcasts.loading]);
+
+    return slice(podcasts.data, 0, length);
+  }, [podcasts.loading, isMaxXs]);
+
+  const rightContent = (
+    <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.PODCASTS)}>
+      {formatMessage({ id: 'explore.popularPodcasts' })}
+    </Button>
+  );
 
   return (
-    <Section>
-      <Section.Header
-        rightContent={
-          <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.PODCASTS)}>
-            {formatMessage({ id: 'ui.morePodcasts' })}
-          </Button>
-        }
-      >
-        <Title order={2}>{formatMessage({ id: 'ui.popularPodcasts' })}</Title>
+    <Section sx={{ flex: 0 }}>
+      <Section.Header rightContent={rightContent}>
+        <Title order={2}>{formatMessage({ id: 'explore.topPodcasts' })}</Title>
       </Section.Header>
 
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
-          {list?.slice(0, 9).map((podcast) =>
+          {list.map((podcast) =>
             !podcasts.loading ? (
               <PodcastCard {...podcast} key={podcast.id} />
             ) : (

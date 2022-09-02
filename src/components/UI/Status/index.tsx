@@ -37,7 +37,7 @@ export function Status({ views, children, selectors, className }: StatusProps) {
           (views?.error || (
             <Placeholder
               icon={TbAlertCircle}
-              title={formatMessage({ id: 'ui.somethingWentWrong' })}
+              title={formatMessage({ id: 'message.somethingWentWrong' })}
             />
           ))}
 
@@ -45,7 +45,7 @@ export function Status({ views, children, selectors, className }: StatusProps) {
           (views?.nothing || (
             <Placeholder
               icon={TbEyeOff}
-              title={formatMessage({ id: 'ui.nothingFound' })}
+              title={formatMessage({ id: 'message.nothingFound' })}
             />
           ))}
       </Center>

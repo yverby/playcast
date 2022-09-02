@@ -1,66 +1,65 @@
 import { useMemo, useEffect } from 'react';
+import { slice } from 'lodash';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from '@mantine/hooks';
 import { useDispatch, useSelector } from 'react-redux';
-import { Title, Button, Skeleton, SimpleGrid } from '@mantine/core';
+import {
+  Title,
+  Button,
+  Skeleton,
+  SimpleGrid,
+  useMantineTheme,
+} from '@mantine/core';
 
 import { Section } from 'src/components/UI';
+import { createEpisode } from 'src/lib/helpers';
 import { EpisodeCard } from 'src/components/Episode';
 import { exploreActions } from 'src/store/explore/actions';
 import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExploreEpisodes } from 'src/store/explore/selectors';
 
-import type { Episode } from 'src/store/podcasts/types';
-
 const breakpoints = BREAKPOINTS[ENTITY.EPISODE];
-
-function generateEpisode(episode: Partial<Episode> | undefined) {
-  const defaultEpisode: Episode = {
-    name: '',
-    guid: '',
-    date: '',
-    image: {},
-    summary: '',
-    content: '',
-    source: { url: '', time: '' },
-  };
-
-  return { ...defaultEpisode, ...episode };
-}
 
 export function ExploreRootEpisodes() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
   const episodes = useSelector(selectExploreEpisodes);
+
+  const isMaxXs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
 
   useEffect(() => {
     dispatch(exploreActions.episodes.init());
   }, []);
 
   const list = useMemo(() => {
+    const length = isMaxXs ? 5 : 6;
+
     if (episodes.loading) {
-      return Array.from({ length: 6 }, (_, id) => generateEpisode({ id }));
+      return Array.from({ length }, (_, id) => createEpisode({ id }));
     }
-    return episodes.data;
-  }, [episodes.loading]);
+
+    return slice(episodes.data, 0, length);
+  }, [episodes.loading, isMaxXs]);
+
+  const rightContent = (
+    <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.EPISODES)}>
+      {formatMessage({ id: 'explore.popularEpisodes' })}
+    </Button>
+  );
 
   return (
-    <Section>
-      <Section.Header
-        rightContent={
-          <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.EPISODES)}>
-            {formatMessage({ id: 'ui.moreEpisodes' })}
-          </Button>
-        }
-      >
-        <Title order={2}>{formatMessage({ id: 'ui.popularEpisodes' })}</Title>
+    <Section sx={{ flex: 0 }}>
+      <Section.Header rightContent={rightContent}>
+        <Title order={2}>{formatMessage({ id: 'explore.topEpisodes' })}</Title>
       </Section.Header>
 
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
-          {list?.slice(0, 6).map((episode) =>
+          {list.map((episode) =>
             !episodes.loading ? (
               <EpisodeCard {...episode} key={episode.id} />
             ) : (

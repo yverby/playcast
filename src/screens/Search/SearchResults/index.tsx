@@ -51,7 +51,7 @@ export function SearchResults() {
   const nothing = !results.succeed && (
     <Placeholder
       icon={TbVinyl}
-      title={formatMessage({ id: 'ui.searchSomething' })}
+      title={formatMessage({ id: 'search.searchSomething' })}
     />
   );
 

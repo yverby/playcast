@@ -1,3 +1,4 @@
+export { Text } from './Text';
 export { Group } from './Group';
 export { Stack } from './Stack';
 export { Input } from './Input';
