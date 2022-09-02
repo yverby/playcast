@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app';
 
-import { Shell as AppShell } from 'src/components/Shell';
+import { Shell as AppShell } from 'src/screens/Shell';
 import {
   AppContext,
   StoreContext,

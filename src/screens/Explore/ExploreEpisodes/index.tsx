@@ -52,7 +52,9 @@ export function ExploreEpisodes() {
     <>
       <Section className={classes.sticky}>
         <Section.Header>
-          <Title order={2}>{formatMessage({ id: 'ui.popularEpisodes' })}</Title>
+          <Title order={2}>
+            {formatMessage({ id: 'explore.popularEpisodes' })}
+          </Title>
         </Section.Header>
 
         {episodes.data && (

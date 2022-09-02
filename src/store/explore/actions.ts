@@ -5,7 +5,7 @@ function withType(type: string) {
   return `EXPLORE/${type}`;
 }
 
-const defaultsParams = { [FIELD.LIMIT]: 50, [FIELD.COUNTRY]: 'us' };
+const defaultsParams = { [FIELD.LIMIT]: 100, [FIELD.COUNTRY]: 'us' };
 
 export const exploreActions = {
   podcasts: createRequestActions(withType('PODCASTS'), () => ({

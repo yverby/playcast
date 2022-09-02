@@ -1,13 +1,18 @@
+import { useIntl } from 'react-intl';
 import { Title } from '@mantine/core';
 import { useRouter } from 'next/router';
 
 import { Status, Section } from 'src/components/UI';
 import { usePodcasts } from 'src/store/podcasts/hooks';
 
-export function Podcast() {
-  const { query } = useRouter();
+import { PodcastPreview } from './PodcastPreview';
+import { PodcastEpisodes } from './PodcastEpisodes';
 
-  const podcasts = usePodcasts({ id: [query.id as string] });
+export function Podcast() {
+  const router = useRouter();
+  const { formatMessage } = useIntl();
+
+  const podcasts = usePodcasts({ id: [router.query.id as string] });
 
   const [podcast] = podcasts.data;
 
@@ -15,13 +20,31 @@ export function Podcast() {
     <Section>
       <Section.Header>
         <Title order={2}>
-          {podcasts.loading ? 'Loading...' : podcast?.name}
+          {podcasts.loading
+            ? formatMessage({ id: 'ui.podcast' })
+            : podcast?.name}
         </Title>
       </Section.Header>
 
-      <Section.Content>
-        <Status selectors={{ ...podcasts, data: podcast }}>{[]}</Status>
-      </Section.Content>
+      <Status selectors={{ ...podcasts, data: podcast }}>
+        <Section sx={{ flex: 0 }}>
+          <Section.Content>
+            <PodcastPreview {...podcast} />
+          </Section.Content>
+        </Section>
+
+        <Section sx={{ flex: 0 }}>
+          <Section.Header sx={{ top: 58 }}>
+            <Title order={2}>
+              {formatMessage({ id: 'podcast.lastEpisodes' })}
+            </Title>
+          </Section.Header>
+
+          <Section.Content>
+            <PodcastEpisodes {...podcast} />
+          </Section.Content>
+        </Section>
+      </Status>
     </Section>
   );
 }

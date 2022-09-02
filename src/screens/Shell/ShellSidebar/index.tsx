@@ -28,7 +28,7 @@ export function ShellSidebar() {
   const nothing = (
     <Placeholder
       icon={TbVinyl}
-      title={formatMessage({ id: 'ui.comingSoon' })}
+      title={formatMessage({ id: 'message.comingSoon' })}
     />
   );
 

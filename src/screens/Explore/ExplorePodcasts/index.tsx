@@ -52,7 +52,9 @@ export function ExplorePodcasts() {
     <>
       <Section className={classes.sticky}>
         <Section.Header>
-          <Title order={2}>{formatMessage({ id: 'ui.popularPodcasts' })}</Title>
+          <Title order={2}>
+            {formatMessage({ id: 'explore.popularPodcasts' })}
+          </Title>
         </Section.Header>
 
         {podcasts.data && (
