@@ -6,7 +6,7 @@ import { createRequestWatcher } from 'src/lib';
 import { exploreActions } from 'src/store/explore/actions';
 import { selectExplorePodcasts } from 'src/store/explore/selectors';
 
-const { ENTITIES } = DEFAULTS.CACHE_TIME;
+const { ENTITIES } = DEFAULTS.CACHE;
 
 function* explorePodcastsInitSaga() {
   const { timestamp }: ReturnType<typeof selectExplorePodcasts> = yield select(

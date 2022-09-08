@@ -31,6 +31,7 @@ export const useStyles = createStyles((theme) => ({
     overflowY: 'auto',
   },
   content: {
+    position: 'relative',
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
