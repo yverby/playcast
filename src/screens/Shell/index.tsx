@@ -5,6 +5,7 @@ import type { ReactNode } from 'react';
 
 import { selectUiSidebar } from 'src/store/ui/selectors';
 
+import { ShellDrawer } from './ShellDrawer';
 import { ShellNavbar } from './ShellNavbar';
 import { ShellSidebar } from './ShellSidebar';
 
@@ -27,6 +28,8 @@ export function Shell({ children }: ShellProps) {
 
       <Box component="main" className={classes.content}>
         {children}
+
+        <ShellDrawer />
       </Box>
 
       <Box

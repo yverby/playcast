@@ -9,7 +9,7 @@ export const useStyles = createStyles((theme) => ({
   header: {
     position: 'sticky',
     top: 0,
-    zIndex: 9998,
+    zIndex: 9997,
     display: 'flex',
     alignItems: 'flex-end',
     justifyContent: 'space-between',

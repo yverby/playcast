@@ -20,9 +20,7 @@ export function Podcast() {
     <Section>
       <Section.Header>
         <Title order={2}>
-          {podcasts.loading
-            ? formatMessage({ id: 'ui.podcast' })
-            : podcast?.name}
+          {podcast?.name ?? formatMessage({ id: 'ui.podcast' })}
         </Title>
       </Section.Header>
 

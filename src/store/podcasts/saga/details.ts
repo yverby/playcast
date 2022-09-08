@@ -6,7 +6,7 @@ import { createRequestWatcher } from 'src/lib';
 import { podcastsActions } from 'src/store/podcasts/actions';
 import { selectPodcastsCache } from 'src/store/podcasts/selectors';
 
-const { PODCASTS } = DEFAULTS.CACHE_TIME;
+const { PODCASTS } = DEFAULTS.CACHE;
 
 function* podcastsDetailsInitSaga({
   payload,
