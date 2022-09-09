@@ -1,3 +1,4 @@
+export { BRAND } from './brand';
 export { FIELD } from './field';
 export { ROUTE } from './route';
 export { ENTITY } from './entity';

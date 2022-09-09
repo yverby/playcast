@@ -1,7 +1,9 @@
 import { useIntl } from 'react-intl';
+import Head from 'next/head';
 import { Title } from '@mantine/core';
 import { TbVinyl } from 'react-icons/tb';
 
+import { BRAND } from 'src/constants';
 import { Status, Section, Placeholder } from 'src/components/UI';
 
 export function Playlists() {
@@ -15,14 +17,22 @@ export function Playlists() {
   );
 
   return (
-    <Section>
-      <Section.Header>
-        <Title order={2}>{formatMessage({ id: 'ui.playlists' })}</Title>
-      </Section.Header>
+    <>
+      <Head>
+        <title>
+          {formatMessage({ id: 'ui.playlists' })} / {BRAND.NAME}
+        </title>
+      </Head>
 
-      <Section.Content>
-        <Status views={{ nothing }}>{[]}</Status>
-      </Section.Content>
-    </Section>
+      <Section>
+        <Section.Header>
+          <Title order={2}>{formatMessage({ id: 'ui.playlists' })}</Title>
+        </Section.Header>
+
+        <Section.Content>
+          <Status views={{ nothing }}>{[]}</Status>
+        </Section.Content>
+      </Section>
+    </>
   );
 }

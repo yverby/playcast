@@ -1,7 +1,9 @@
 import { useIntl } from 'react-intl';
+import Head from 'next/head';
 import { Title } from '@mantine/core';
 import { useRouter } from 'next/router';
 
+import { BRAND } from 'src/constants';
 import { Status, Section } from 'src/components/UI';
 import { usePodcasts } from 'src/store/podcasts/hooks';
 
@@ -17,32 +19,40 @@ export function Podcast() {
   const [podcast] = podcasts.data;
 
   return (
-    <Section>
-      <Section.Header>
-        <Title order={2}>
-          {podcast?.name ?? formatMessage({ id: 'ui.podcast' })}
-        </Title>
-      </Section.Header>
+    <>
+      <Head>
+        <title>
+          {podcast?.name ?? formatMessage({ id: 'ui.podcast' })} / {BRAND.NAME}
+        </title>
+      </Head>
 
-      <Status selectors={{ ...podcasts, data: podcast }}>
-        <Section sx={{ flex: 0 }}>
-          <Section.Content>
-            <PodcastPreview {...podcast} />
-          </Section.Content>
-        </Section>
+      <Section>
+        <Section.Header>
+          <Title order={2}>
+            {podcast?.name ?? formatMessage({ id: 'ui.podcast' })}
+          </Title>
+        </Section.Header>
 
-        <Section sx={{ flex: 0 }}>
-          <Section.Header sx={{ top: 58 }}>
-            <Title order={2}>
-              {formatMessage({ id: 'podcast.lastEpisodes' })}
-            </Title>
-          </Section.Header>
+        <Status selectors={{ ...podcasts, data: podcast }}>
+          <Section sx={{ flex: 0 }}>
+            <Section.Content>
+              <PodcastPreview {...podcast} />
+            </Section.Content>
+          </Section>
 
-          <Section.Content>
-            <PodcastEpisodes {...podcast} />
-          </Section.Content>
-        </Section>
-      </Status>
-    </Section>
+          <Section sx={{ flex: 0 }}>
+            <Section.Header sx={{ top: 58 }}>
+              <Title order={2}>
+                {formatMessage({ id: 'podcast.lastEpisodes' })}
+              </Title>
+            </Section.Header>
+
+            <Section.Content>
+              <PodcastEpisodes {...podcast} />
+            </Section.Content>
+          </Section>
+        </Status>
+      </Section>
+    </>
   );
 }
