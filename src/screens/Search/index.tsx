@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
+import Head from 'next/head';
 import { useIntl } from 'react-intl';
 import { Title } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 
+import { BRAND } from 'src/constants';
 import { Section } from 'src/components/UI';
 import { searchActions } from 'src/store/search/actions';
 
@@ -25,6 +27,12 @@ export function Search() {
 
   return (
     <>
+      <Head>
+        <title>
+          {formatMessage({ id: 'ui.search' })} / {BRAND.NAME}
+        </title>
+      </Head>
+
       <Section className={classes.sticky}>
         <Section.Header>
           <Title order={2}>{formatMessage({ id: 'ui.search' })}</Title>

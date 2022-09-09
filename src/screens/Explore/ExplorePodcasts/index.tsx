@@ -1,4 +1,5 @@
 import { useMemo, useEffect } from 'react';
+import Head from 'next/head';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { get, keys, groupBy } from 'lodash';
@@ -11,8 +12,8 @@ import { Status, Section } from 'src/components/UI';
 import { PodcastCard } from 'src/components/Podcast';
 import { ExploreForm } from 'src/components/Explore';
 import { exploreActions } from 'src/store/explore/actions';
-import { FIELD, ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 import { selectExplorePodcasts } from 'src/store/explore/selectors';
+import { BRAND, FIELD, ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 
 import type { ExploreFormValues } from 'src/store/explore/types';
 
@@ -50,6 +51,12 @@ export function ExplorePodcasts() {
 
   return (
     <>
+      <Head>
+        <title>
+          {formatMessage({ id: 'explore.popularPodcasts' })} / {BRAND.NAME}
+        </title>
+      </Head>
+
       <Section className={classes.sticky}>
         <Section.Header>
           <Title order={2}>
