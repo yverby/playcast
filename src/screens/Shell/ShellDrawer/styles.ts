@@ -9,11 +9,8 @@ export const useStyles = createStyles((theme, { top }: { top: number }) => ({
     position: 'absolute',
     top,
     zIndex: 9998,
-    display: 'flex',
-    flexDirection: 'column',
     width: '100%',
     height: '100vh',
-    backgroundColor: theme.other.variable(theme, 'colorBgDrop'),
     overflow: 'hidden',
 
     [theme.fn.smallerThan('sm')]: {
@@ -21,13 +18,20 @@ export const useStyles = createStyles((theme, { top }: { top: number }) => ({
     },
   },
   spacer: {
-    flex: 1,
+    height: '100%',
+    willChange: 'auto',
+    ...theme.other.backdrop(theme),
   },
   container: {
+    position: 'absolute',
+    bottom: 0,
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
     height: '65vh',
+    willChange: 'auto',
     backgroundColor: theme.other.variable(theme, 'colorBg'),
+    overflow: 'auto',
 
     [theme.fn.smallerThan('sm')]: {
       height: '55vh',

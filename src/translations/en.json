@@ -1,8 +1,12 @@
 {
+  "ui.owner": "Owner",
+  "ui.email": "Email",
+  "ui.genre": "Genre",
   "ui.search": "Search",
   "ui.genres": "Genres",
   "ui.explore": "Explore",
   "ui.podcast": "Podcast",
+  "ui.language": "Language",
   "ui.settings": "Settings",
   "ui.playlists": "Playlists",
   "ui.playingNow": "Playing now",

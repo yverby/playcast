@@ -10,7 +10,7 @@ import type { Podcast } from 'src/store/podcasts/types';
 
 const breakpoints = BREAKPOINTS[ENTITY.EPISODE];
 
-export function PodcastEpisodes({ id, name, image, episodes }: Podcast) {
+export function PodcastRootEpisodes({ id, name, image, episodes }: Podcast) {
   const theme = useMantineTheme();
 
   const isMaxXs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
@@ -25,9 +25,9 @@ export function PodcastEpisodes({ id, name, image, episodes }: Podcast) {
       {list.map((episode) => (
         <EpisodeCard
           {...episode}
-          image={image}
           key={episode.id}
           collection={{ id, name }}
+          image={{ ...image, ...episode.image }}
         />
       ))}
     </SimpleGrid>

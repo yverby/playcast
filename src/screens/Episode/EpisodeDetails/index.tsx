@@ -4,7 +4,7 @@ import { TbVinyl } from 'react-icons/tb';
 
 import { Status, Section, Placeholder } from 'src/components/UI';
 
-export function Episode() {
+export function EpisodeDetails() {
   const { formatMessage } = useIntl();
 
   const nothing = (

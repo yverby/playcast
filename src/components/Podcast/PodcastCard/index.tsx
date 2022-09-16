@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
+import { values } from 'lodash';
 import { Box, Text, Stack, Image, AspectRatio } from '@mantine/core';
 
 import { ROUTE } from 'src/constants';
@@ -12,14 +13,19 @@ import { useStyles } from './styles';
 export function PodcastCard({ id, name, image, artist }: Podcast) {
   const { classes } = useStyles();
 
-  const href = useMemo(() => replaceBy(ROUTE.PODCAST, { ':id': id }), [id]);
+  const href = useMemo(
+    () => replaceBy(ROUTE.PODCAST.ROOT, { ':id': id }),
+    [id]
+  );
+
+  const src = useMemo(() => values(image).reverse().find(Boolean), [image]);
 
   return (
     <Link href={href} passHref>
       <Box component="a" className={classes.podcast}>
         <Stack>
           <AspectRatio ratio={1 / 1}>
-            <Image src={image?.[600]} className={classes.image} />
+            <Image src={src} className={classes.image} />
           </AspectRatio>
 
           <Stack spacing={4} className={classes.info}>

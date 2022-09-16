@@ -11,7 +11,6 @@ export const useStyles = createStyles((theme) => ({
     overflow: 'hidden',
   },
   artist: {
-    color: theme.other.variable(theme, 'colorPlaceholder'),
-    fontWeight: 600,
+    color: theme.other.variable(theme, 'colorTextInfo'),
   },
 }));
