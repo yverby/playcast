@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+import { values } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { Box, Text, Image, Stack, Group } from '@mantine/core';
 
@@ -17,15 +19,12 @@ export function EpisodeCard({ guid, name, image, collection }: Episode) {
     dispatch(uiActions.drawer.open(DRAWER.EPISODE, props));
   };
 
+  const src = useMemo(() => values(image).reverse().find(Boolean), [image]);
+
   return (
     <Box component="button" className={classes.episode} onClick={openDrawer}>
       <Group>
-        <Image
-          width={90}
-          height={90}
-          src={image?.[600]}
-          className={classes.image}
-        />
+        <Image width={90} height={90} src={src} className={classes.image} />
 
         <Stack spacing={4}>
           <Text size="sm" lineClamp={1} className={classes.name}>

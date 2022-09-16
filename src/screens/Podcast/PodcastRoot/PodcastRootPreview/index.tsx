@@ -4,7 +4,7 @@ import type { Podcast } from 'src/store/podcasts/types';
 
 import { useStyles } from './styles';
 
-export function PodcastPreview({ name, image, artist }: Podcast) {
+export function PodcastRootPreview({ name, image, artist }: Podcast) {
   const { classes } = useStyles();
 
   return (

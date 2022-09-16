@@ -1,21 +1,25 @@
 import { useIntl } from 'react-intl';
 import Head from 'next/head';
-import { Title } from '@mantine/core';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from '@mantine/hooks';
+import { Title, Stack, useMantineTheme } from '@mantine/core';
 
 import { BRAND } from 'src/constants';
 import { Status, Section } from 'src/components/UI';
 import { usePodcasts } from 'src/store/podcasts/hooks';
 
-import { PodcastPreview } from './PodcastPreview';
-import { PodcastEpisodes } from './PodcastEpisodes';
+import { PodcastRootPreview } from './PodcastRootPreview';
+import { PodcastRootCaption } from './PodcastRootCaption';
+import { PodcastRootEpisodes } from './PodcastRootEpisodes';
 
-export function Podcast() {
+export function PodcastRoot() {
   const router = useRouter();
+  const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
-  const podcasts = usePodcasts({ id: [router.query.id as string] });
+  const isMaxSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
 
+  const podcasts = usePodcasts({ id: [router.query.id as string] });
   const [podcast] = podcasts.data;
 
   return (
@@ -36,7 +40,11 @@ export function Podcast() {
         <Status selectors={{ ...podcasts, data: podcast }}>
           <Section sx={{ flex: 0 }}>
             <Section.Content>
-              <PodcastPreview {...podcast} />
+              <Stack spacing={isMaxSm ? 'sm' : 'lg'}>
+                <PodcastRootPreview {...podcast} />
+
+                <PodcastRootCaption {...podcast} />
+              </Stack>
             </Section.Content>
           </Section>
 
@@ -48,7 +56,7 @@ export function Podcast() {
             </Section.Header>
 
             <Section.Content>
-              <PodcastEpisodes {...podcast} />
+              <PodcastRootEpisodes {...podcast} />
             </Section.Content>
           </Section>
         </Status>
