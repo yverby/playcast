@@ -1,4 +1,5 @@
 {
+  "ui.date": "Date",
   "ui.owner": "Owner",
   "ui.email": "Email",
   "ui.genre": "Genre",
@@ -6,6 +7,7 @@
   "ui.genres": "Genres",
   "ui.explore": "Explore",
   "ui.podcast": "Podcast",
+  "ui.duration": "Duration",
   "ui.language": "Language",
   "ui.settings": "Settings",
   "ui.playlists": "Playlists",

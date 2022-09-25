@@ -2,12 +2,8 @@ import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
   podcast: {
-    all: 'unset',
-    display: 'block',
-    padding: 4.5,
-    paddingBottom: 11,
-    borderRadius: 14,
-    backgroundColor: theme.other.variable(theme, 'colorCard'),
+    padding: 6,
+    paddingBottom: 12,
     overflow: 'hidden',
     cursor: 'pointer',
 
@@ -20,7 +16,7 @@ export const useStyles = createStyles((theme) => ({
     },
   },
   image: {
-    borderRadius: 13,
+    borderRadius: 10,
   },
   info: {
     padding: `0 ${theme.spacing.xs}px`,

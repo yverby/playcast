@@ -27,6 +27,7 @@ export const MultiSelect: ThemeComponent<
     },
     value: {
       margin: 5,
+      borderRadius: 7,
       backgroundColor: theme.other.variable(theme, 'colorBg'),
     },
     dropdown: {
@@ -36,7 +37,7 @@ export const MultiSelect: ThemeComponent<
       boxShadow: 'none',
     },
     item: {
-      borderRadius: theme.radius.md,
+      borderRadius: 8,
       fontSize: theme.fontSizes.sm,
 
       '&:hover': {

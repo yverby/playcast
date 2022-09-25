@@ -1,10 +1,8 @@
 import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
-  episode: {
-    padding: 6,
-    paddingRight: theme.spacing.xs,
-    overflow: 'hidden',
+  caption: {
+    padding: theme.spacing.md,
     cursor: 'pointer',
 
     '&:hover': {
@@ -15,15 +13,10 @@ export const useStyles = createStyles((theme) => ({
       ...theme.fn.focusStyles(),
     },
   },
-  image: {
-    flexShrink: 0,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  name: {
-    fontWeight: 600,
-  },
-  artist: {
+  title: {
     color: theme.other.variable(theme, 'colorTextInfo'),
+  },
+  value: {
+    fontWeight: 600,
   },
 }));

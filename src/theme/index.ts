@@ -23,7 +23,7 @@ export function configureTheme({
       sm: 760,
     },
     radius: {
-      md: 9,
+      md: 10,
     },
     lineHeight: 1.25,
     fontFamily: 'Gilroy, sans-serif',
@@ -45,7 +45,7 @@ export function configureTheme({
       backdrop(theme) {
         return {
           backgroundColor: theme.other.variable(theme, 'colorBgDrop'),
-          backdropFilter: 'blur(4px) saturate(180%)',
+          backdropFilter: 'blur(5px) saturate(180%)',
         };
       },
       variable(theme, variable) {

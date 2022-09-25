@@ -32,8 +32,8 @@ export function ShellDrawer() {
   }, [hasComponent]);
 
   useEffect(() => {
-    router.events.on('routeChangeComplete', closeDrawer);
-    return () => router.events.off('routeChangeComplete', closeDrawer);
+    router.events.on('beforeHistoryChange', closeDrawer);
+    return () => router.events.off('beforeHistoryChange', closeDrawer);
   }, [router]);
 
   return (
