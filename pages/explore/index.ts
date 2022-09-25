@@ -1,1 +1,1 @@
-export { ExploreRoot as default } from 'src/screens/Explore/ExploreRoot';
+export { ExplorePage as default } from 'src/screens/Explore/ExplorePage';

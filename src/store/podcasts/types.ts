@@ -54,7 +54,7 @@ export interface Collection {
 }
 
 export interface Episode {
-  id?: number;
+  id?: string | number;
   name: string;
   guid: string;
   date: string;

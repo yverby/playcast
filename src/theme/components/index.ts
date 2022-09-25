@@ -1,4 +1,5 @@
 export { Text } from './Text';
+export { Paper } from './Paper';
 export { Group } from './Group';
 export { Stack } from './Stack';
 export { Input } from './Input';

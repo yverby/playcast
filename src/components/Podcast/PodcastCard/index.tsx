@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { values } from 'lodash';
-import { Box, Text, Stack, Image, AspectRatio } from '@mantine/core';
+import { Text, Paper, Stack, Image, AspectRatio } from '@mantine/core';
 
 import { ROUTE } from 'src/constants';
 import { replaceBy } from 'src/lib/helpers';
@@ -22,13 +22,13 @@ export function PodcastCard({ id, name, image, artist }: Podcast) {
 
   return (
     <Link href={href} passHref>
-      <Box component="a" className={classes.podcast}>
+      <Paper component="a" className={classes.podcast}>
         <Stack>
           <AspectRatio ratio={1 / 1}>
             <Image src={src} className={classes.image} />
           </AspectRatio>
 
-          <Stack spacing={4} className={classes.info}>
+          <Stack spacing={3} className={classes.info}>
             <Text size="sm" lineClamp={1} className={classes.name}>
               {name}
             </Text>
@@ -38,7 +38,7 @@ export function PodcastCard({ id, name, image, artist }: Podcast) {
             </Text>
           </Stack>
         </Stack>
-      </Box>
+      </Paper>
     </Link>
   );
 }
