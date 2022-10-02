@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 import { values } from 'lodash';
 import { format } from 'date-fns';
 import { useDispatch } from 'react-redux';
-import { Text, Image, Stack, Group, Paper } from '@mantine/core';
+import { Text, Image, Stack, Group, Paper, AspectRatio } from '@mantine/core';
 
+import { Logo } from 'src/components/UI';
 import { DRAWER, FORMAT } from 'src/constants';
 import { uiActions } from 'src/store/ui/actions';
 import { formatDuration } from 'src/lib/helpers';
@@ -32,7 +33,13 @@ export function EpisodeCard({
   return (
     <Paper component="button" className={classes.episode} onClick={openDrawer}>
       <Group>
-        <Image width={90} height={90} src={src} className={classes.image} />
+        <AspectRatio ratio={1 / 1} className={classes.image}>
+          <Image
+            src={src}
+            withPlaceholder
+            placeholder={<Logo short order={2} />}
+          />
+        </AspectRatio>
 
         <Stack spacing={4}>
           <Text size="sm" lineClamp={1} className={classes.name}>

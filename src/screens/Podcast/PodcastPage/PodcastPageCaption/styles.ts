@@ -3,6 +3,8 @@ import { createStyles } from '@mantine/core';
 export const useStyles = createStyles((theme) => ({
   caption: {
     padding: theme.spacing.md,
+  },
+  more: {
     cursor: 'pointer',
 
     '&:hover': {

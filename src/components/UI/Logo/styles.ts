@@ -6,6 +6,7 @@ export const useStyles = createStyles((theme) => ({
     fontSize: 'inherit',
   },
   cast: {
+    color: theme.other.variable(theme, 'colorText'),
     fontSize: 'inherit',
   },
 }));

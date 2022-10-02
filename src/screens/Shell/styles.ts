@@ -36,10 +36,6 @@ export const useStyles = createStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-
-    [theme.fn.smallerThan('xs')]: {
-      border: 'none',
-    },
   },
   navbar: {
     width: 220,
@@ -59,7 +55,6 @@ export const useStyles = createStyles((theme) => ({
       bottom: 0,
       width: '100%',
       height: 'auto',
-      border: 'none',
     },
   },
   sidebar: {
@@ -71,9 +66,12 @@ export const useStyles = createStyles((theme) => ({
       ...theme.other.backdrop(theme),
     },
 
+    [theme.fn.smallerThan('sm')]: {
+      height: 'calc(100vh - 65px)',
+    },
+
     [theme.fn.smallerThan('xs')]: {
       width: '100%',
-      border: 'none',
     },
   },
   visible: {

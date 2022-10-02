@@ -11,7 +11,8 @@ export const useStyles = createStyles((theme) => ({
     },
   },
   image: {
-    minWidth: 150,
+    width: 150,
+    flexShrink: 0,
     borderRadius: 9,
     overflow: 'hidden',
   },

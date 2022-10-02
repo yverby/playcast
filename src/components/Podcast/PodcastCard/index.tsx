@@ -4,6 +4,7 @@ import { values } from 'lodash';
 import { Text, Paper, Stack, Image, AspectRatio } from '@mantine/core';
 
 import { ROUTE } from 'src/constants';
+import { Logo } from 'src/components/UI';
 import { replaceBy } from 'src/lib/helpers';
 
 import type { Podcast } from 'src/store/podcasts/types';
@@ -24,8 +25,8 @@ export function PodcastCard({ id, name, image, artist }: Podcast) {
     <Link href={href} passHref>
       <Paper component="a" className={classes.podcast}>
         <Stack>
-          <AspectRatio ratio={1 / 1}>
-            <Image src={src} className={classes.image} />
+          <AspectRatio ratio={1 / 1} className={classes.image}>
+            <Image src={src} withPlaceholder placeholder={<Logo short />} />
           </AspectRatio>
 
           <Stack spacing={3} className={classes.info}>

@@ -1,15 +1,16 @@
 import { createStyles } from '@mantine/core';
 
 export const useStyles = createStyles((theme) => ({
-  preview: {
-    padding: theme.spacing.md,
-  },
   image: {
-    width: 200,
-    borderRadius: 12,
+    width: 180,
+    margin: '0 auto',
+    borderRadius: 10,
     overflow: 'hidden',
   },
-  artist: {
+  info: {
+    minHeight: 50,
+  },
+  collection: {
     color: theme.other.variable(theme, 'colorTextInfo'),
   },
 }));
