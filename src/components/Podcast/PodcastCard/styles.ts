@@ -17,6 +17,7 @@ export const useStyles = createStyles((theme) => ({
   },
   image: {
     borderRadius: 10,
+    overflow: 'hidden',
   },
   info: {
     padding: `0 ${theme.spacing.xs}px`,

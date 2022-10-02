@@ -1,6 +1,6 @@
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
-import { Text, Paper, Group, Stack, Divider } from '@mantine/core';
+import { Text, Paper, Group, Divider } from '@mantine/core';
 
 import { DRAWER } from 'src/constants';
 import { Caption } from 'src/components/UI';
@@ -19,7 +19,7 @@ export function PodcastPageCaption({
   ...podcast
 }: Podcast) {
   const dispatch = useDispatch();
-  const { classes } = useStyles();
+  const { cx, classes } = useStyles();
   const { formatMessage } = useIntl();
 
   const openDetails = () => {
@@ -35,8 +35,8 @@ export function PodcastPageCaption({
   };
 
   return (
-    <Paper component="button" className={classes.caption} onClick={openDetails}>
-      <Stack>
+    <>
+      <Paper className={classes.caption}>
         <Group>
           <Caption title={formatMessage({ id: 'ui.genre' })}>
             {genre.name}
@@ -48,11 +48,17 @@ export function PodcastPageCaption({
             {language?.toUpperCase()}
           </Caption>
         </Group>
+      </Paper>
 
+      <Paper
+        component="button"
+        onClick={openDetails}
+        className={cx(classes.more, classes.caption)}
+      >
         <Text align="center" className={classes.title} lineClamp={2}>
           {stripTags(summary || description)}
         </Text>
-      </Stack>
-    </Paper>
+      </Paper>
+    </>
   );
 }

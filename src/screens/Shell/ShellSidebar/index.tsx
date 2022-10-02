@@ -1,19 +1,17 @@
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { Title } from '@mantine/core';
-import { TbVinyl } from 'react-icons/tb';
 import { useDispatch } from 'react-redux';
 import { useMediaQuery } from '@mantine/hooks';
+import { Title, useMantineTheme } from '@mantine/core';
 
+import { Player } from 'src/screens/Player';
+import { Section } from 'src/components/UI';
 import { uiActions } from 'src/store/ui/actions';
-import { Status, Section, Placeholder } from 'src/components/UI';
-
-import { useStyles } from './styles';
 
 export function ShellSidebar() {
   const dispatch = useDispatch();
+  const theme = useMantineTheme();
   const { formatMessage } = useIntl();
-  const { theme, classes } = useStyles();
 
   const isMaxLg = useMediaQuery(`(max-width: ${theme.breakpoints.lg}px)`);
 
@@ -21,25 +19,14 @@ export function ShellSidebar() {
     dispatch(uiActions.sidebar.toggle(!isMaxLg));
   }, [isMaxLg]);
 
-  const closeSidebar = () => {
-    isMaxLg && dispatch(uiActions.sidebar.toggle(false));
-  };
-
-  const nothing = (
-    <Placeholder
-      icon={TbVinyl}
-      title={formatMessage({ id: 'message.comingSoon' })}
-    />
-  );
-
   return (
-    <Section onClick={closeSidebar}>
-      <Section.Header className={classes.header}>
+    <Section>
+      <Section.Header>
         <Title order={2}>{formatMessage({ id: 'ui.playingNow' })}</Title>
       </Section.Header>
 
       <Section.Content>
-        <Status views={{ nothing }}>{[]}</Status>
+        <Player />
       </Section.Content>
     </Section>
   );

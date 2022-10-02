@@ -3,7 +3,7 @@ import { createStyles } from '@mantine/core';
 export const useStyles = createStyles((theme) => ({
   episode: {
     padding: 6,
-    paddingRight: theme.spacing.xs,
+    paddingRight: theme.spacing.sm,
     overflow: 'hidden',
     cursor: 'pointer',
 
@@ -16,6 +16,7 @@ export const useStyles = createStyles((theme) => ({
     },
   },
   image: {
+    width: 90,
     flexShrink: 0,
     borderRadius: 10,
     overflow: 'hidden',
