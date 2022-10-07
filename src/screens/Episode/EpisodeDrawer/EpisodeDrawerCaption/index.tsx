@@ -4,7 +4,7 @@ import { Divider, Group } from '@mantine/core';
 
 import { FORMAT } from 'src/constants';
 import { Caption } from 'src/components/UI';
-import { formatDuration } from 'src/lib/helpers';
+import { humanizeTime } from 'src/lib/helpers';
 
 import type { Episode } from 'src/store/podcasts/types';
 
@@ -20,7 +20,7 @@ export function EpisodeDrawerCaption({ date, source }: Episode) {
       <Divider orientation="vertical" />
 
       <Caption title={formatMessage({ id: 'ui.duration' })}>
-        {formatDuration(source.time)}
+        {humanizeTime(source.time)}
       </Caption>
     </Group>
   );

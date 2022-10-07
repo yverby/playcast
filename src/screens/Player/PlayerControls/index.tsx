@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Group, Button } from '@mantine/core';
 import {
   TbPlayerPlay,
@@ -9,11 +9,13 @@ import {
 
 import type { IconType } from 'react-icons';
 
+import { usePlayer } from 'src/store/ui/hooks';
+
 import { useStyles } from './styles';
 
 export function PlayerControls() {
   const { cx, classes } = useStyles();
-  const [play, setPlay] = useState(false);
+  const { play, seek, pause, status } = usePlayer();
 
   const cn = useCallback(
     (active?: boolean) => {
@@ -28,15 +30,22 @@ export function PlayerControls() {
     []
   );
 
+  const toggle = () => (status.playing ? pause() : play());
+  const shift = (time: number) => () => seek(seek() + time);
+
   return (
     <Group className={classes.controls}>
-      <Button classNames={cn()}>{icon(TbPlayerTrackPrev)}</Button>
-
-      <Button classNames={cn(play)} onClick={() => setPlay((p) => !p)}>
-        {icon(!play ? TbPlayerPlay : TbPlayerPause)}
+      <Button classNames={cn()} onClick={shift(-30)}>
+        {icon(TbPlayerTrackPrev)}
       </Button>
 
-      <Button classNames={cn()}>{icon(TbPlayerTrackNext)}</Button>
+      <Button classNames={cn(status.playing)} onClick={toggle}>
+        {icon(!status.playing ? TbPlayerPlay : TbPlayerPause)}
+      </Button>
+
+      <Button classNames={cn()} onClick={shift(+30)}>
+        {icon(TbPlayerTrackNext)}
+      </Button>
     </Group>
   );
 }

@@ -4,5 +4,5 @@ export { stripTags } from './stripTags';
 export { mergeImage } from './mergeImage';
 export { overrideBy } from './overrideBy';
 export { stripScripts } from './stripScripts';
-export { formatDuration } from './formatDuration';
+export { specifyTime, humanizeTime } from './formatTime';
 export { createPodcast, createEpisode } from './createEntity';

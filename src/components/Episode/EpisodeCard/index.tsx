@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
-import { values } from 'lodash';
 import { format } from 'date-fns';
+import { compact, values } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { Text, Image, Stack, Group, Paper, AspectRatio } from '@mantine/core';
 
 import { Logo } from 'src/components/UI';
+import { humanizeTime } from 'src/lib/helpers';
 import { DRAWER, FORMAT } from 'src/constants';
 import { uiActions } from 'src/store/ui/actions';
-import { formatDuration } from 'src/lib/helpers';
 
 import type { Episode } from 'src/store/podcasts/types';
 
@@ -42,18 +42,24 @@ export function EpisodeCard({
         </AspectRatio>
 
         <Stack spacing={4}>
-          <Text size="sm" lineClamp={1} className={classes.name}>
+          <Text size="sm" title={name} lineClamp={1} className={classes.name}>
             {name}
           </Text>
 
-          <Text size="xs" lineClamp={1} className={classes.artist}>
+          <Text
+            size="xs"
+            lineClamp={1}
+            title={collection?.name}
+            className={classes.artist}
+          >
             {collection?.name}
           </Text>
 
           <Text size="xs" lineClamp={1} className={classes.artist}>
-            {date && format(new Date(date), FORMAT.DATE.EPISODE)}
-            {' / '}
-            {source?.time && formatDuration(source?.time)}
+            {compact([
+              date && format(new Date(date), FORMAT.DATE.EPISODE),
+              source?.time && humanizeTime(source?.time),
+            ]).join(' / ')}
           </Text>
         </Stack>
       </Group>
