@@ -30,11 +30,16 @@ export function PodcastCard({ id, name, image, artist }: Podcast) {
           </AspectRatio>
 
           <Stack spacing={3} className={classes.info}>
-            <Text size="sm" lineClamp={1} className={classes.name}>
+            <Text size="sm" title={name} lineClamp={1} className={classes.name}>
               {name}
             </Text>
 
-            <Text size="xs" lineClamp={1} className={classes.artist}>
+            <Text
+              size="xs"
+              lineClamp={1}
+              title={artist?.name}
+              className={classes.artist}
+            >
               {artist?.name}
             </Text>
           </Stack>

@@ -11,8 +11,9 @@ import type { Episode } from 'src/store/podcasts/types';
 
 import { useStyles } from './styles';
 
-export function EpisodeDrawerPreview({ name, image, collection }: Episode) {
+export function EpisodeDrawerPreview(episode: Episode) {
   const { classes } = useStyles();
+  const { name, image, collection } = episode;
 
   const href = useMemo(
     () => replaceBy(ROUTE.PODCAST.ROOT, { ':id': collection?.id }),

@@ -58,7 +58,7 @@ export const useStyles = createStyles((theme) => ({
     },
   },
   sidebar: {
-    width: 320,
+    width: 315,
 
     [theme.fn.smallerThan('lg')]: {
       position: 'fixed',

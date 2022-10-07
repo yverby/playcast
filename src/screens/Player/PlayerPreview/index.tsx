@@ -25,7 +25,7 @@ export function PlayerPreview({ name, image, collection }: Episode) {
         </Text>
 
         <Text
-          lineClamp={2}
+          lineClamp={1}
           align="center"
           title={collection?.name}
           className={classes.collection}

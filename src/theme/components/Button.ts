@@ -26,6 +26,10 @@ export const Button: ThemeComponent<
           height: 41,
           fontSize: theme.fontSizes.sm,
         }),
+
+        '&:focus': {
+          ...theme.fn.focusStyles(),
+        },
       },
     }),
   }),

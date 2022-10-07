@@ -9,6 +9,7 @@ import { Status, Section, Typography } from 'src/components/UI';
 import type { Episode } from 'src/store/podcasts/types';
 
 import { EpisodeDrawerPreview } from './EpisodeDrawerPreview';
+import { EpisodeDrawerActions } from './EpisodeDrawerActions';
 import { EpisodeDrawerCaption } from './EpisodeDrawerCaption';
 
 import { useStyles } from './styles';
@@ -44,6 +45,14 @@ export function EpisodeDrawer({
               <Stack spacing="lg">
                 <Paper className={classes.preview}>
                   <EpisodeDrawerPreview
+                    {...episode}
+                    collection={collection}
+                    image={mergeImage(podcast.image, episode.image)}
+                  />
+                </Paper>
+
+                <Paper className={classes.preview}>
+                  <EpisodeDrawerActions
                     {...episode}
                     collection={collection}
                     image={mergeImage(podcast.image, episode.image)}

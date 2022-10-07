@@ -28,13 +28,13 @@ export const useStyles = createStyles((theme, { top }: { top: number }) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    height: '67vh',
+    height: '70vh',
     willChange: 'auto',
     backgroundColor: theme.other.variable(theme, 'colorBg'),
     overflow: 'auto',
 
     [theme.fn.smallerThan('sm')]: {
-      height: '57vh',
+      height: '55vh',
     },
   },
 }));

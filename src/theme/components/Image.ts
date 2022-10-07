@@ -11,9 +11,17 @@ export const Image: ThemeComponent<
   ImageStylesNames,
   ImageStylesParams
 > = {
-  styles: () => ({
+  styles: (theme) => ({
+    figure: {
+      width: '100%',
+      height: '100%',
+    },
+    imageWrapper: {
+      width: '100%',
+      height: '100%',
+    },
     placeholder: {
-      backgroundColor: 'transparent',
+      backgroundColor: theme.other.variable(theme, 'colorBg'),
     },
   }),
 };
