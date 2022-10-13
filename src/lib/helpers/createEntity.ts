@@ -19,7 +19,7 @@ const defaultEpisode: Episode = {
   image: {},
   summary: '',
   content: '',
-  source: { url: '', time: '' },
+  source: { url: '', type: '', time: '' },
 };
 
 export function createEpisode(episode: Partial<Episode> | undefined): Episode {

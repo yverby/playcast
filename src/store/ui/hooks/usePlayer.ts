@@ -1,55 +1,66 @@
-import { useMemo, useCallback } from 'react';
-import { Howl } from 'howler';
-import { noop, isNumber } from 'lodash';
-import { useDispatch, useSelector } from 'react-redux';
+import { useContext } from 'react';
+import { first, isNumber } from 'lodash';
+import { createGlobalState } from 'react-use';
 
-import type { HowlOptions } from 'howler';
+import { Media } from 'src/context';
 
-import { uiActions } from 'src/store/ui/actions';
-import {
-  selectUiPlayerAudio,
-  selectUiPlayerStatus,
-} from 'src/store/ui/selectors';
+import type { Source } from 'src/store/podcasts/types';
+
+const defaults = {
+  error: false,
+  ready: false,
+  ended: false,
+  playing: false,
+  loading: false,
+};
+
+const usePlayerStatus = createGlobalState({ ...defaults });
+
+function parseType(type?: string) {
+  return (first(type?.split('/')) as 'audio' | 'video') || 'audio';
+}
 
 export function usePlayer() {
-  const dispatch = useDispatch();
+  const [status, setStatus] = usePlayerStatus();
+  const { ref, init, element } = useContext(Media);
 
-  const audio = useSelector(selectUiPlayerAudio);
-  const status = useSelector(selectUiPlayerStatus);
+  const load = ({ url: src, type }: Source) => {
+    setStatus(() => ({ ...defaults, loading: true }));
 
-  const load = useCallback(
-    (options: HowlOptions) => {
-      if (audio instanceof Howl) {
-        audio.unload();
-      }
+    const onError = () => setStatus(() => ({ ...defaults, error: true }));
+    const onEnded = () => setStatus(() => ({ ...defaults, ended: true }));
+    const onPlay = () => setStatus((prev) => ({ ...prev, playing: true }));
+    const onPause = () => setStatus((prev) => ({ ...prev, playing: false }));
+    const onLoadedData = () => setStatus(() => ({ ...defaults, ready: true }));
 
-      dispatch(uiActions.player.start());
+    init(parseType(type), {
+      src,
+      onPlay,
+      onPause,
+      onEnded,
+      onError,
+      onLoadedData,
+      hidden: true,
+      autoPlay: true,
+    });
+  };
 
-      const howl = new Howl({ html5: true, autoplay: true, ...options });
+  const play = () => ref.current?.play();
+  const pause = () => ref.current?.pause();
 
-      howl.on('load', () => dispatch(uiActions.player.load(howl)));
-      howl.on('end', () => dispatch(uiActions.player.end()));
-      howl.on('play', () => dispatch(uiActions.player.play()));
-      howl.on('pause', () => dispatch(uiActions.player.pause()));
-    },
-    [audio]
-  );
+  const duration = () => ref.current?.duration || 0;
+  const position = () => ref.current?.currentTime || 0;
 
-  const handlers = useMemo(
-    () => ({
-      play: audio ? audio.play.bind(audio) : noop,
-      pause: audio ? audio.pause.bind(audio) : noop,
-      duration: () => (audio ? Math.round(audio.duration()) : 0),
-      seek: (time?: number) => {
-        if (audio && isNumber(time)) audio.seek(time);
-        return audio ? Math.round(audio.seek()) : 0;
-      },
-    }),
-    [audio]
-  );
+  const seek = (time: number) => {
+    if (isNumber(time) && ref?.current) {
+      ref.current.currentTime = time;
+    }
+  };
 
-  return useMemo(
-    () => ({ ...handlers, load, status }),
-    [load, status, handlers]
-  );
+  return {
+    status,
+    media: { ref, element },
+    state: { position, duration },
+    controls: { load, play, seek, pause },
+  };
 }

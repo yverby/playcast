@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
 
 import type { ReactNode } from 'react';
@@ -12,6 +12,10 @@ interface ThemeContextProps {
 
 export function ThemeContext({ children }: ThemeContextProps) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
+
+  useEffect(() => {
+    document.documentElement.style.colorScheme = colorScheme;
+  }, [colorScheme]);
 
   const toggleColorScheme = useCallback(
     (scheme?: ColorScheme) => {

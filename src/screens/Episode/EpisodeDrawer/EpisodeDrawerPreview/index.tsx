@@ -4,7 +4,6 @@ import { values } from 'lodash';
 import { Text, Stack, Title, Image, Anchor, AspectRatio } from '@mantine/core';
 
 import { ROUTE } from 'src/constants';
-import { Logo } from 'src/components/UI';
 import { replaceBy } from 'src/lib/helpers';
 
 import type { Episode } from 'src/store/podcasts/types';
@@ -25,7 +24,7 @@ export function EpisodeDrawerPreview(episode: Episode) {
   return (
     <Stack align="flex-start" spacing="md" className={classes.preview}>
       <AspectRatio ratio={1 / 1} className={classes.image}>
-        <Image src={src} withPlaceholder placeholder={<Logo short />} />
+        <Image src={src} />
       </AspectRatio>
 
       <Stack spacing={3}>

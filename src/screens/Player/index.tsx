@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { get } from 'lodash';
 import { useSelector } from 'react-redux';
 import { Paper, Stack } from '@mantine/core';
 
@@ -13,16 +12,16 @@ import { PlayerControls } from './PlayerControls';
 import { useStyles } from './styles';
 
 export function Player() {
-  const { load } = usePlayer();
   const { classes } = useStyles();
+  const { controls } = usePlayer();
 
   const [episode] = useSelector(selectUiPlaylist);
 
-  const src = get(episode, 'source.url');
+  const { source } = { ...episode };
 
   useEffect(() => {
-    src && load({ src });
-  }, [src]);
+    source && controls.load(source);
+  }, [source]);
 
   return (
     <Paper className={classes.player}>

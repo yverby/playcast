@@ -1,8 +1,7 @@
 import { createStyles } from '@mantine/core';
 
-export const useStyles = createStyles((theme) => ({
+export const useStyles = createStyles(() => ({
   player: {
-    minHeight: 351,
-    padding: theme.spacing.md,
+    padding: 17,
   },
 }));

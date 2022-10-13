@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { Group, Button } from '@mantine/core';
 import {
+  TbRotate2,
   TbPlayerPlay,
   TbPlayerPause,
-  TbPlayerTrackPrev,
-  TbPlayerTrackNext,
+  TbRotateClockwise2,
 } from 'react-icons/tb';
 
 import type { IconType } from 'react-icons';
@@ -15,7 +15,7 @@ import { useStyles } from './styles';
 
 export function PlayerControls() {
   const { cx, classes } = useStyles();
-  const { play, seek, pause, status } = usePlayer();
+  const { state, status, controls } = usePlayer();
 
   const cn = useCallback(
     (active?: boolean) => {
@@ -30,13 +30,13 @@ export function PlayerControls() {
     []
   );
 
-  const toggle = () => (status.playing ? pause() : play());
-  const shift = (time: number) => () => seek(seek() + time);
+  const toggle = () => (!status.playing ? controls.play() : controls.pause());
+  const shift = (time: number) => () => controls.seek(state.position() + time);
 
   return (
     <Group className={classes.controls}>
-      <Button classNames={cn()} onClick={shift(-30)}>
-        {icon(TbPlayerTrackPrev)}
+      <Button classNames={cn()} onClick={shift(-15)}>
+        15 {icon(TbRotate2)}
       </Button>
 
       <Button classNames={cn(status.playing)} onClick={toggle}>
@@ -44,7 +44,7 @@ export function PlayerControls() {
       </Button>
 
       <Button classNames={cn()} onClick={shift(+30)}>
-        {icon(TbPlayerTrackNext)}
+        {icon(TbRotateClockwise2)} 30
       </Button>
     </Group>
   );
