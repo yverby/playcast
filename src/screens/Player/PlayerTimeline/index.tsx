@@ -39,7 +39,7 @@ export function PlayerTimeline() {
   );
 
   const changePosition = (sliding: boolean) => (newValue: number) => {
-    !sliding && controls.seek(value);
+    !sliding && controls.seek(newValue);
 
     setState({
       sliding,

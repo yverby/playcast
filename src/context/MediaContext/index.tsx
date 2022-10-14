@@ -41,7 +41,13 @@ export function MediaContext({ children }: MediaContextProps) {
   const [element, setElement] = useState<MediaContextValue['element']>(null);
 
   const init = useCallback<MediaContextValue['init']>((type, attributes) => {
-    setElement(createElement(type, { ...attributes, ref }) as any);
+    setElement(
+      createElement(type, {
+        ...attributes,
+        ref,
+        onContextMenu: (e) => e.preventDefault(),
+      }) as any
+    );
   }, []);
 
   return (

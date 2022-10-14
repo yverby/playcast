@@ -35,7 +35,7 @@ export function PlayerPreview(episode: Episode) {
   };
 
   return (
-    <Stack spacing="md" className={classes.preview} onClick={openDetails}>
+    <Stack spacing="md" onClick={openDetails} className={classes.preview}>
       <AspectRatio ratio={1 / 1} className={classes.media}>
         <>
           {status.loading ? (
