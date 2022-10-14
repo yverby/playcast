@@ -68,5 +68,6 @@ export interface Episode {
 
 export interface Source {
   url: string;
+  type: string;
   time: number | string;
 }

@@ -1,5 +1,6 @@
-import { useMemo, useEffect } from 'react';
-import { useInterval, useSetState } from '@mantine/hooks';
+import { useEffect } from 'react';
+import { useEvent } from 'react-use';
+import { useSetState } from '@mantine/hooks';
 import { Text, Group, Stack, Slider } from '@mantine/core';
 
 import { specifyTime } from 'src/lib/helpers';
@@ -9,55 +10,58 @@ import { useStyles } from './styles';
 
 export function PlayerTimeline() {
   const { classes } = useStyles();
-  const { seek, status, duration: full } = usePlayer();
+  const { media, state, status, controls } = usePlayer();
 
-  const duration = useMemo(() => full(), [status.ready]);
-
-  const [{ value, position }, setState] = useSetState({
-    sync: true,
-    value: seek(),
-    position: seek(),
+  const [{ value, position, duration }, setState] = useSetState({
+    sliding: false,
+    value: state.position(),
+    position: state.position(),
+    duration: state.duration(),
   });
 
   useEffect(() => {
     setState({
-      sync: true,
-      value: seek(),
-      position: seek(),
+      sliding: false,
+      value: state.position(),
+      position: state.position(),
+      duration: state.duration(),
     });
   }, [status.ready]);
 
-  const interval = useInterval(() => {
-    setState(({ sync }) => ({
-      position: seek(),
-      ...(sync && { value: seek() }),
-    }));
-  }, 1000);
+  useEvent(
+    'timeupdate',
+    () =>
+      setState(({ sliding }) => ({
+        position: state.position(),
+        ...(!sliding && { value: state.position() }),
+      })),
+    media.ref?.current
+  );
 
-  useEffect(() => {
-    status.playing && interval.start();
-    return () => interval.stop();
-  }, [status.playing]);
+  const changePosition = (sliding: boolean) => (newValue: number) => {
+    !sliding && controls.seek(newValue);
 
-  const changePosition = (sync: boolean) => (val: number) => {
-    if (sync) seek(val);
-    setState({ sync, value: val, ...(sync && { position: val }) });
+    setState({
+      sliding,
+      value: newValue,
+      ...(!sliding && { position: newValue }),
+    });
   };
 
   return (
-    <Stack spacing={5}>
+    <Stack spacing={5} mt={3}>
       <Slider
         min={0}
-        size="sm"
+        size="xs"
         value={value}
         max={duration}
-        disabled={status.loading}
+        disabled={!status.ready}
         label={specifyTime(value)}
-        onChange={changePosition(false)}
-        onChangeEnd={changePosition(true)}
+        onChange={changePosition(true)}
+        onChangeEnd={changePosition(false)}
       />
 
-      <Group className={classes.time}>
+      <Group className={classes.timer}>
         <Text size="xs">{specifyTime(position)}</Text>
         <Text size="xs">{specifyTime(duration)}</Text>
       </Group>

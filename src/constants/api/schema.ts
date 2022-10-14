@@ -60,6 +60,7 @@ export const EPISODE_FEED = {
   summary: 'itunes.summary',
   source: {
     url: 'enclosure.url',
+    type: 'enclosure.type',
     time: 'itunes.duration',
   },
   image: {

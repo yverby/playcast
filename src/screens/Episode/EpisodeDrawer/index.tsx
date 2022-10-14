@@ -51,13 +51,11 @@ export function EpisodeDrawer({
                   />
                 </Paper>
 
-                <Paper className={classes.preview}>
-                  <EpisodeDrawerActions
-                    {...episode}
-                    collection={collection}
-                    image={mergeImage(podcast.image, episode.image)}
-                  />
-                </Paper>
+                <EpisodeDrawerActions
+                  {...episode}
+                  collection={collection}
+                  image={mergeImage(podcast.image, episode.image)}
+                />
 
                 <Paper className={classes.content}>
                   <EpisodeDrawerCaption {...episode} />

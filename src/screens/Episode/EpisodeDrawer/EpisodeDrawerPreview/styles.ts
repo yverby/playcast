@@ -13,7 +13,7 @@ export const useStyles = createStyles((theme) => ({
   image: {
     width: 150,
     flexShrink: 0,
-    borderRadius: 9,
+    borderRadius: 12,
     overflow: 'hidden',
   },
   collection: {

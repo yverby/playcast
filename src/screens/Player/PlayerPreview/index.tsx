@@ -1,27 +1,57 @@
 import { useMemo } from 'react';
 import { values } from 'lodash';
-import { Text, Title, Image, Stack, AspectRatio } from '@mantine/core';
+import { useDispatch } from 'react-redux';
+import {
+  Text,
+  Title,
+  Stack,
+  Image,
+  Center,
+  Loader,
+  AspectRatio,
+} from '@mantine/core';
 
 import { Logo } from 'src/components/UI';
+import { BRAND, DRAWER } from 'src/constants';
+import { usePlayer } from 'src/store/ui/hooks';
+import { uiActions } from 'src/store/ui/actions';
 
 import type { Episode } from 'src/store/podcasts/types';
 
 import { useStyles } from './styles';
 
-export function PlayerPreview({ name, image, collection }: Episode) {
+export function PlayerPreview(episode: Episode) {
+  const { name, guid, image, collection } = episode;
+
+  const dispatch = useDispatch();
+
   const { classes } = useStyles();
+  const { media, status } = usePlayer();
 
   const src = useMemo(() => values(image).reverse().find(Boolean), [image]);
 
+  const openDetails = () => {
+    dispatch(uiActions.drawer.open(DRAWER.EPISODE, { guid, collection }));
+  };
+
   return (
-    <Stack spacing="md">
-      <AspectRatio ratio={1 / 1} className={classes.image}>
-        <Image src={src} withPlaceholder placeholder={<Logo />} />
+    <Stack spacing="md" onClick={openDetails} className={classes.preview}>
+      <AspectRatio ratio={1 / 1} className={classes.media}>
+        <>
+          {status.loading ? (
+            <Center>
+              <Loader />
+            </Center>
+          ) : (
+            <Image src={src} placeholder={<Logo />} />
+          )}
+          {media.element}
+        </>
       </AspectRatio>
 
-      <Stack spacing={3} className={classes.info}>
+      <Stack spacing={3}>
         <Text title={name} lineClamp={1} align="center">
-          <Title order={3}>{name}</Title>
+          <Title order={3}>{name ?? BRAND.NAME}</Title>
         </Text>
 
         <Text
@@ -30,7 +60,7 @@ export function PlayerPreview({ name, image, collection }: Episode) {
           title={collection?.name}
           className={classes.collection}
         >
-          {collection?.name}
+          {collection?.name ?? BRAND.NAME}
         </Text>
       </Stack>
     </Stack>

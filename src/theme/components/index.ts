@@ -6,5 +6,6 @@ export { Stack } from './Stack';
 export { Input } from './Input';
 export { Anchor } from './Anchor';
 export { Button } from './Button';
+export { Slider } from './Slider';
 export { MultiSelect } from './MultiSelect';
 export { SegmentedControl } from './SegmentedControl';

@@ -28,5 +28,5 @@ export function usePodcasts(params: PodcastsDetailsParams) {
     };
   }, [id]);
 
-  return { ...details, data };
+  return { ...details, data: !details.loading ? data : [] };
 }

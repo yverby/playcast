@@ -4,6 +4,8 @@ import type {
   ImageStylesParams,
 } from '@mantine/core';
 
+import { Logo } from 'src/components/UI';
+
 import type { ThemeComponent } from 'src/theme/types';
 
 export const Image: ThemeComponent<
@@ -11,6 +13,10 @@ export const Image: ThemeComponent<
   ImageStylesNames,
   ImageStylesParams
 > = {
+  defaultProps: {
+    withPlaceholder: true,
+    placeholder: <Logo short />,
+  },
   styles: (theme) => ({
     figure: {
       width: '100%',
@@ -18,6 +24,9 @@ export const Image: ThemeComponent<
     },
     imageWrapper: {
       width: '100%',
+      height: '100%',
+    },
+    image: {
       height: '100%',
     },
     placeholder: {
