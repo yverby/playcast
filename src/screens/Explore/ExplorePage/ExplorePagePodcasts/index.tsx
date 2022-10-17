@@ -24,26 +24,27 @@ const breakpoints = BREAKPOINTS[ENTITY.PODCAST];
 export function ExplorePagePodcasts() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
   const podcasts = useSelector(selectExplorePodcasts);
 
-  const isMaxXs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
+  const theme = useMantineTheme();
+
+  const xs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
 
   useEffect(() => {
     dispatch(exploreActions.podcasts.init());
   }, []);
 
   const list = useMemo(() => {
-    const length = isMaxXs ? 6 : 9;
+    const length = xs ? 6 : 9;
 
     if (podcasts.loading) {
       return Array.from({ length }, (_, id) => createPodcast({ id }));
     }
 
     return slice(podcasts.data, 0, length);
-  }, [podcasts.loading, isMaxXs]);
+  }, [xs, podcasts.loading]);
 
   const rightContent = (
     <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.PODCASTS)}>

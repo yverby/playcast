@@ -14,12 +14,9 @@ const breakpoints = BREAKPOINTS[ENTITY.EPISODE];
 export function PodcastPageEpisodes({ id, name, image, episodes }: Podcast) {
   const theme = useMantineTheme();
 
-  const isMaxXs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
+  const xs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
 
-  const list = useMemo(
-    () => slice(episodes, 0, isMaxXs ? 5 : 6),
-    [episodes, isMaxXs]
-  );
+  const list = useMemo(() => slice(episodes, 0, xs ? 5 : 6), [xs, episodes]);
 
   return (
     <SimpleGrid breakpoints={breakpoints}>

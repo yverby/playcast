@@ -13,11 +13,11 @@ export function ShellSidebar() {
   const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
-  const isMaxLg = useMediaQuery(`(max-width: ${theme.breakpoints.lg}px)`);
+  const lg = useMediaQuery(`(max-width: ${theme.breakpoints.lg}px)`);
 
   useEffect(() => {
-    dispatch(uiActions.sidebar.toggle(!isMaxLg));
-  }, [isMaxLg]);
+    dispatch(uiActions.sidebar.toggle(!lg));
+  }, [lg]);
 
   return (
     <Section>

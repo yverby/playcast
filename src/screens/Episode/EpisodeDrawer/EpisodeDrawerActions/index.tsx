@@ -15,14 +15,14 @@ export function EpisodeDrawerActions(episode: Episode) {
 
   const playEpisode = () => dispatch(uiActions.playlist.next(episode));
 
+  const disabled = ep?.guid === episode.guid;
+
   return (
     <Group>
-      <Button
-        onClick={playEpisode}
-        sx={{ width: '100%' }}
-        disabled={ep?.guid === episode.guid}
-      >
-        {formatMessage({ id: 'ui.playEpisode' })}
+      <Button disabled={disabled} onClick={playEpisode} sx={{ width: '100%' }}>
+        {disabled
+          ? formatMessage({ id: 'ui.playingNow' })
+          : formatMessage({ id: 'ui.playEpisode' })}
       </Button>
     </Group>
   );

@@ -30,6 +30,12 @@ export const Button: ThemeComponent<
         '&:focus': {
           ...theme.fn.focusStyles(),
         },
+
+        '&:disabled': {
+          color: theme.other.variable(theme, 'colorPlaceholder'),
+          backgroundColor: theme.other.variable(theme, 'colorCardDisabled'),
+          pointerEvents: 'auto',
+        },
       },
     }),
   }),

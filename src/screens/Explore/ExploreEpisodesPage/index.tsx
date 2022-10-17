@@ -2,7 +2,7 @@ import { useMemo, useEffect } from 'react';
 import Head from 'next/head';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
-import { get, keys, groupBy } from 'lodash';
+import { get, groupBy, isEmpty } from 'lodash';
 import { Title, SimpleGrid } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -24,6 +24,7 @@ const breakpoints = BREAKPOINTS[ENTITY.EPISODE];
 export function ExploreEpisodesPage() {
   const router = useRouter();
   const dispatch = useDispatch();
+
   const { classes } = useStyles();
   const { formatMessage } = useIntl();
 
@@ -42,8 +43,6 @@ export function ExploreEpisodesPage() {
     () => ({ [FIELD.GENRE]: [get(router.query, FIELD.GENRE, [])].flat() }),
     [router.query]
   );
-
-  const genres = useMemo(() => keys(list), [list]);
 
   const onSubmit = (query: ExploreFormValues) => {
     router.replace({ pathname: ROUTE.EXPLORE.EPISODES, query });
@@ -79,17 +78,19 @@ export function ExploreEpisodesPage() {
         <Section.Content>
           <Status selectors={episodes}>
             <SimpleGrid breakpoints={breakpoints}>
-              {[get(router.query, FIELD.GENRE, genres)]
-                .flat()
-                .reduce<ReactNode[]>(
-                  (cards, id) =>
-                    cards.concat(
-                      get(list, id, []).map((episode) => (
-                        <EpisodeCard {...episode} key={episode.id} />
-                      ))
-                    ),
-                  []
-                )}
+              {isEmpty(values[FIELD.GENRE])
+                ? episodes.data.map((episode) => (
+                    <EpisodeCard {...episode} key={episode.id} />
+                  ))
+                : values[FIELD.GENRE].reduce<ReactNode[]>(
+                    (acc, genre) =>
+                      acc.concat(
+                        get(list, genre, []).map((episode) => (
+                          <EpisodeCard {...episode} key={episode.id} />
+                        ))
+                      ),
+                    []
+                  )}
             </SimpleGrid>
           </Status>
         </Section.Content>
