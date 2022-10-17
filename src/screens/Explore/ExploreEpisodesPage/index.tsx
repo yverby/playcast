@@ -79,7 +79,7 @@ export function ExploreEpisodesPage() {
           <Status selectors={episodes}>
             <SimpleGrid breakpoints={breakpoints}>
               {isEmpty(values[FIELD.GENRE])
-                ? episodes.data.map((episode) => (
+                ? episodes.data?.map((episode) => (
                     <EpisodeCard {...episode} key={episode.id} />
                   ))
                 : values[FIELD.GENRE].reduce<ReactNode[]>(
