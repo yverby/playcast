@@ -10,5 +10,5 @@ export type ExploreEntityParams = z.infer<typeof exploreEntityShape>;
 
 export interface ExploreEntityResults<T> {
   data: T[];
-  genres: (string | SelectItem)[];
+  genres: SelectItem[];
 }

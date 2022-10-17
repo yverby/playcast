@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Paper, Stack } from '@mantine/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { usePlayer } from 'src/store/ui/hooks';
+import { uiActions } from 'src/store/ui/actions';
 import { selectUiPlaylist } from 'src/store/ui/selectors';
 
 import { PlayerPreview } from './PlayerPreview';
@@ -12,8 +13,10 @@ import { PlayerControls } from './PlayerControls';
 import { useStyles } from './styles';
 
 export function Player() {
+  const dispatch = useDispatch();
+
   const { classes } = useStyles();
-  const { controls } = usePlayer();
+  const { status, controls } = usePlayer();
 
   const [episode] = useSelector(selectUiPlaylist);
 
@@ -22,6 +25,10 @@ export function Player() {
   useEffect(() => {
     source && controls.load(source);
   }, [source]);
+
+  useEffect(() => {
+    status.ended && dispatch(uiActions.playlist.clear());
+  }, [status.ended]);
 
   return (
     <Paper className={classes.player}>

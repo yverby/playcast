@@ -35,7 +35,12 @@ export const colorCardAccent: SchemeVariable = {
   light: (theme) => theme.colors.gray[2],
 };
 
+export const colorCardDisabled: SchemeVariable = {
+  dark: (theme) => theme.fn.rgba(colorCard.dark(theme), 0.2),
+  light: (theme) => theme.fn.rgba(colorCard.light(theme), 0.2),
+};
+
 export const colorPrimary: SchemeVariable = {
   dark: (theme) => theme.colors[theme.primaryColor][6],
-  light: (theme) => theme.colors[theme.primaryColor][6],
+  light: (theme) => theme.colors[theme.primaryColor][7],
 };

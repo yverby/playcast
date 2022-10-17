@@ -22,16 +22,20 @@ function parseType(type?: string) {
 
 export function usePlayer() {
   const [status, setStatus] = usePlayerStatus();
-  const { ref, init, element } = useContext(Media);
+  const { ref, init, element, destroy } = useContext(Media);
 
   const load = ({ url: src, type }: Source) => {
     setStatus(() => ({ ...defaults, loading: true }));
 
     const onError = () => setStatus(() => ({ ...defaults, error: true }));
-    const onEnded = () => setStatus(() => ({ ...defaults, ended: true }));
     const onPlay = () => setStatus((prev) => ({ ...prev, playing: true }));
     const onPause = () => setStatus((prev) => ({ ...prev, playing: false }));
     const onLoadedData = () => setStatus(() => ({ ...defaults, ready: true }));
+
+    const onEnded = () => {
+      setStatus(() => ({ ...defaults, ended: true }));
+      destroy();
+    };
 
     init(parseType(type), {
       src,

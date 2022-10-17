@@ -17,7 +17,7 @@ export function PodcastPage() {
   const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
-  const isMaxSm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+  const sm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
 
   const podcasts = usePodcasts({ id: [router.query.id as string] });
   const [podcast] = podcasts.data;
@@ -40,7 +40,7 @@ export function PodcastPage() {
         <Status selectors={{ ...podcasts, data: podcast }}>
           <Section sx={{ flex: 0 }}>
             <Section.Content>
-              <Stack spacing={isMaxSm ? 'sm' : 'lg'}>
+              <Stack spacing={sm ? 'sm' : 'lg'}>
                 <PodcastPagePreview {...podcast} />
 
                 <PodcastPageCaption {...podcast} />

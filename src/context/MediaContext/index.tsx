@@ -1,7 +1,6 @@
 import {
   useRef,
   useState,
-  useCallback,
   createRef,
   createContext,
   createElement,
@@ -21,6 +20,7 @@ export type MediaAttributes =
   | VideoHTMLAttributes<any>;
 
 interface MediaContextValue {
+  destroy: () => void;
   ref: RefObject<MediaElement>;
   element: MediaElement | null;
   init: (type: 'audio' | 'video', attributes?: MediaAttributes) => void;
@@ -28,6 +28,7 @@ interface MediaContextValue {
 
 export const Media = createContext<MediaContextValue>({
   init: noop,
+  destroy: noop,
   element: null,
   ref: createRef(),
 });
@@ -38,9 +39,9 @@ interface MediaContextProps {
 
 export function MediaContext({ children }: MediaContextProps) {
   const ref = useRef<MediaElement>(null);
-  const [element, setElement] = useState<MediaContextValue['element']>(null);
+  const [element, setElement] = useState<MediaElement | null>(null);
 
-  const init = useCallback<MediaContextValue['init']>((type, attributes) => {
+  const init = (type: 'audio' | 'video', attributes?: MediaAttributes) => {
     setElement(
       createElement(type, {
         ...attributes,
@@ -48,9 +49,15 @@ export function MediaContext({ children }: MediaContextProps) {
         onContextMenu: (e) => e.preventDefault(),
       }) as any
     );
-  }, []);
+  };
+
+  const destroy = () => {
+    setElement(null);
+  };
 
   return (
-    <Media.Provider value={{ ref, init, element }}>{children}</Media.Provider>
+    <Media.Provider value={{ ref, init, destroy, element }}>
+      {children}
+    </Media.Provider>
   );
 }
