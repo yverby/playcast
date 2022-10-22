@@ -30,17 +30,21 @@ export function ShellRoutes() {
         icon,
         onClick: () => router.push(route),
         active: router.pathname.includes(route),
-        ...(!md && {
-          title: formatMessage({ id: `ui.${route.replace('/', '')}` }),
-        }),
+        title: formatMessage({ id: `ui.${route.replace('/', '')}` }),
       })),
-    [md, router.pathname]
+    [router.pathname]
   );
 
   return (
     <>
-      {routes.map((props, key) => (
-        <Control {...props} key={key} />
+      {routes.map(({ icon, title, active, onClick }) => (
+        <Control
+          key={title}
+          icon={icon}
+          active={active}
+          onClick={onClick}
+          {...(!md && { title })}
+        />
       ))}
     </>
   );

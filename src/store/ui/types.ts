@@ -1,6 +1,7 @@
-import { DRAWER } from 'src/constants';
+import type { AudioHTMLAttributes, VideoHTMLAttributes } from 'react';
 
-export interface DrawerParams {
-  name?: DRAWER;
-  props?: object;
-}
+export type MediaElement = HTMLAudioElement | HTMLVideoElement;
+
+export type MediaAttributes =
+  | AudioHTMLAttributes<any>
+  | VideoHTMLAttributes<any>;

@@ -1,10 +1,7 @@
 import { useEffect } from 'react';
 import { Paper, Stack } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { usePlayer } from 'src/store/ui/hooks';
-import { uiActions } from 'src/store/ui/actions';
-import { selectUiPlaylist } from 'src/store/ui/selectors';
+import { usePlayer, usePlaylist } from 'src/store/ui/hooks';
 
 import { PlayerPreview } from './PlayerPreview';
 import { PlayerTimeline } from './PlayerTimeline';
@@ -13,13 +10,11 @@ import { PlayerControls } from './PlayerControls';
 import { useStyles } from './styles';
 
 export function Player() {
-  const dispatch = useDispatch();
-
+  const playlist = usePlaylist();
   const { classes } = useStyles();
   const { status, controls } = usePlayer();
 
-  const [episode] = useSelector(selectUiPlaylist);
-
+  const [episode] = playlist.state.queue;
   const { source } = { ...episode };
 
   useEffect(() => {
@@ -27,7 +22,7 @@ export function Player() {
   }, [source]);
 
   useEffect(() => {
-    status.ended && dispatch(uiActions.playlist.clear());
+    status.ended && playlist.actions.next();
   }, [status.ended]);
 
   return (

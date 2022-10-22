@@ -1,11 +1,10 @@
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { Text, Paper, Group, Divider } from '@mantine/core';
 
 import { DRAWER } from 'src/constants';
 import { Caption } from 'src/components/UI';
 import { stripTags } from 'src/lib/helpers';
-import { uiActions } from 'src/store/ui/actions';
+import { useDrawer } from 'src/store/ui/hooks';
 
 import type { Podcast } from 'src/store/podcasts/types';
 
@@ -18,20 +17,19 @@ export function PodcastPageCaption({
   description,
   ...podcast
 }: Podcast) {
-  const dispatch = useDispatch();
   const { cx, classes } = useStyles();
   const { formatMessage } = useIntl();
 
+  const drawer = useDrawer(({ actions }) => actions);
+
   const openDetails = () => {
-    dispatch(
-      uiActions.drawer.open(DRAWER.PODCAST, {
-        genre,
-        summary,
-        language,
-        description,
-        ...podcast,
-      })
-    );
+    drawer.open(DRAWER.PODCAST, {
+      genre,
+      summary,
+      language,
+      description,
+      ...podcast,
+    });
   };
 
   return (

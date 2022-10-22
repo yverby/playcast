@@ -17,20 +17,26 @@ interface StatusProps extends CenterProps {
   selectors?: Partial<Omit<Record<Status, any>, 'nothing'>>;
 }
 
-export function Status({ views, children, selectors, className }: StatusProps) {
+export function Status({
+  views,
+  children,
+  selectors,
+  className,
+  ...props
+}: StatusProps) {
   const isData = !isEmpty(selectors?.data);
   const isError = !isEmpty(selectors?.error);
   const isLoading = Boolean(selectors?.loading);
   const isNothing = !isLoading && !isError && !isData;
 
+  const { cx, classes } = useStyles();
   const { formatMessage } = useIntl();
-  const { cx, classes } = useStyles(isData && isLoading);
 
   return (
     <>
       {isData && children}
 
-      <Center className={cx(classes.status, className)}>
+      <Center {...props} className={cx(classes.status, className)}>
         {isLoading && (views?.loading || <Loader />)}
 
         {isError &&

@@ -1,9 +1,8 @@
 import { Box } from '@mantine/core';
-import { useSelector } from 'react-redux';
 
 import type { ReactNode } from 'react';
 
-import { selectUiSidebar } from 'src/store/ui/selectors';
+import { useSidebar } from 'src/store/ui/hooks';
 
 import { ShellDrawer } from './ShellDrawer';
 import { ShellNavbar } from './ShellNavbar';
@@ -18,7 +17,7 @@ interface ShellProps {
 export function Shell({ children }: ShellProps) {
   const { cx, classes } = useStyles();
 
-  const sidebar = useSelector(selectUiSidebar);
+  const sidebar = useSidebar(({ state }) => state);
 
   return (
     <Box className={classes.shell}>

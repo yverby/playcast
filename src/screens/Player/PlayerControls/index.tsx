@@ -26,12 +26,14 @@ export function PlayerControls() {
         icon={TbRotate2}
         onClick={shift(-15)}
         sx={{ width: 'auto' }}
+        disabled={!status.ready}
       />
 
       <Control
         onClick={toggle}
         sx={{ width: 'auto' }}
         active={status.playing}
+        disabled={!status.ready}
         icon={!status.playing ? TbPlayerPlay : TbPlayerPause}
       />
 
@@ -40,6 +42,7 @@ export function PlayerControls() {
         active={false}
         onClick={shift(+30)}
         sx={{ width: 'auto' }}
+        disabled={!status.ready}
         icon={TbRotateClockwise2}
       />
     </Group>

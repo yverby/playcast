@@ -1,21 +1,16 @@
 import { useIntl } from 'react-intl';
 import { useMediaQuery } from '@mantine/hooks';
 import { TbLayoutSidebarRight } from 'react-icons/tb';
-import { useDispatch, useSelector } from 'react-redux';
 import { Indicator, useMantineTheme } from '@mantine/core';
 
 import { Control } from 'src/components/UI';
-import { usePlayer } from 'src/store/ui/hooks';
-import { uiActions } from 'src/store/ui/actions';
-import { selectUiSidebar } from 'src/store/ui/selectors';
+import { usePlayer, useSidebar } from 'src/store/ui/hooks';
 
 export function ShellOptions() {
-  const dispatch = useDispatch();
+  const sidebar = useSidebar();
+  const { status } = usePlayer();
   const { formatMessage } = useIntl();
 
-  const sidebar = useSelector(selectUiSidebar);
-
-  const { status } = usePlayer();
   const theme = useMantineTheme();
 
   const lg = useMediaQuery(`(max-width: ${theme.breakpoints.lg}px)`);
@@ -34,9 +29,9 @@ export function ShellOptions() {
           )}
         >
           <Control
-            active={sidebar.visible}
             icon={TbLayoutSidebarRight}
-            onClick={() => dispatch(uiActions.sidebar.toggle())}
+            active={sidebar.state.visible}
+            onClick={() => sidebar.actions.toggle()}
             {...(!md && { title: formatMessage({ id: 'ui.playingNow' }) })}
           />
         </Indicator>

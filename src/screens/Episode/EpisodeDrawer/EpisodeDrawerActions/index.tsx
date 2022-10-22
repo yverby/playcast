@@ -1,21 +1,18 @@
 import { useIntl } from 'react-intl';
 import { Group, Button } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
 
-import { uiActions } from 'src/store/ui/actions';
-import { selectUiPlaylist } from 'src/store/ui/selectors';
+import { usePlaylist } from 'src/store/ui/hooks';
 
 import type { Episode } from 'src/store/podcasts/types';
 
 export function EpisodeDrawerActions(episode: Episode) {
-  const dispatch = useDispatch();
+  const playlist = usePlaylist();
   const { formatMessage } = useIntl();
 
-  const [ep] = useSelector(selectUiPlaylist);
+  const playEpisode = () => playlist.actions.next(episode);
 
-  const playEpisode = () => dispatch(uiActions.playlist.next(episode));
-
-  const disabled = ep?.guid === episode.guid;
+  const [queueEpisode] = playlist.state.queue;
+  const disabled = queueEpisode?.guid === episode.guid;
 
   return (
     <Group>
