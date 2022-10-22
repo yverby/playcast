@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { values } from 'lodash';
-import { useDispatch } from 'react-redux';
 import {
   Text,
   Title,
@@ -13,8 +12,7 @@ import {
 
 import { Logo } from 'src/components/UI';
 import { BRAND, DRAWER } from 'src/constants';
-import { usePlayer } from 'src/store/ui/hooks';
-import { uiActions } from 'src/store/ui/actions';
+import { useDrawer, usePlayer } from 'src/store/ui/hooks';
 
 import type { Episode } from 'src/store/podcasts/types';
 
@@ -23,19 +21,21 @@ import { useStyles } from './styles';
 export function PlayerPreview(episode: Episode) {
   const { name, guid, image, collection } = episode;
 
-  const dispatch = useDispatch();
+  const drawer = useDrawer(({ actions }) => actions);
 
   const { classes } = useStyles();
   const { media, status } = usePlayer();
 
   const src = useMemo(() => values(image).reverse().find(Boolean), [image]);
 
-  const openDetails = () => {
-    dispatch(uiActions.drawer.open(DRAWER.EPISODE, { guid, collection }));
-  };
+  const openDetails = () => drawer.open(DRAWER.EPISODE, { guid, collection });
 
   return (
-    <Stack spacing="md" onClick={openDetails} className={classes.preview}>
+    <Stack
+      spacing="md"
+      className={classes.preview}
+      {...(status.ready && { onClick: openDetails })}
+    >
       <AspectRatio ratio={1 / 1} className={classes.media}>
         <>
           {status.loading ? (

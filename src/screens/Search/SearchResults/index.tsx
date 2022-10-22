@@ -57,7 +57,11 @@ export function SearchResults() {
 
   return (
     <Stack spacing="xs" sx={{ flex: 1 }}>
-      <Status selectors={{ ...results, data: list }} views={{ nothing }}>
+      <Status
+        views={{ nothing }}
+        selectors={{ ...results, data: list }}
+        sx={{ ...(results.hasMore && { minHeight: 25 }) }}
+      >
         <SimpleGrid breakpoints={breakpoints}>
           <InfiniteList
             loadMore={loadMore}

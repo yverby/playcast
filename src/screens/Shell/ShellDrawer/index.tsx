@@ -1,29 +1,24 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect } from 'react';
 import { get } from 'lodash';
 import { useRouter } from 'next/router';
 import { useScrollLock } from '@mantine/hooks';
 import { Box, GroupedTransition } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
 
+import { useDrawer } from 'src/store/ui/hooks';
 import { DRAWER_REGISTER } from 'src/constants';
-import { uiActions } from 'src/store/ui/actions';
-import { selectUiDrawer } from 'src/store/ui/selectors';
 
 import { useStyles, transitions } from './styles';
 
 export function ShellDrawer() {
   const top = useRef(0);
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const { classes } = useStyles({ top: top.current });
   const { 1: lockScroll } = useScrollLock();
 
-  const drawer = useSelector(selectUiDrawer);
+  const { state, actions } = useDrawer();
 
-  const closeDrawer = useCallback(() => dispatch(uiActions.drawer.close()), []);
-
-  const Component = get(DRAWER_REGISTER, String(drawer.name));
+  const Component = get(DRAWER_REGISTER, String(state.name));
   const hasComponent = Boolean(Component);
 
   useEffect(() => {
@@ -32,8 +27,8 @@ export function ShellDrawer() {
   }, [hasComponent]);
 
   useEffect(() => {
-    router.events.on('beforeHistoryChange', closeDrawer);
-    return () => router.events.off('beforeHistoryChange', closeDrawer);
+    router.events.on('beforeHistoryChange', actions.close);
+    return () => router.events.off('beforeHistoryChange', actions.close);
   }, [router]);
 
   return (
@@ -44,10 +39,10 @@ export function ShellDrawer() {
           style={styles.drawer}
           className={classes.drawer}
         >
-          <Box className={classes.spacer} onClick={closeDrawer} />
+          <Box className={classes.spacer} onClick={actions.close} />
 
           <Box style={styles.container} className={classes.container}>
-            {hasComponent && <Component {...drawer.props} />}
+            {hasComponent && <Component {...state.props} />}
           </Box>
         </Box>
       )}

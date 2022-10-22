@@ -9,6 +9,7 @@ interface ControlProps extends DefaultProps {
   icon: IconType;
   title?: string;
   active: boolean;
+  disabled?: boolean;
   onClick: () => void;
 }
 
@@ -18,6 +19,7 @@ export function Control({
   styles,
   onClick,
   unstyled,
+  disabled,
   className,
   classNames,
   icon: Icon,
@@ -41,9 +43,9 @@ export function Control({
   return (
     <Button
       {...props}
-      key={title}
       onClick={onClick}
       aria-label={title}
+      disabled={disabled}
       classNames={cn(active)}
     >
       <Icon size={17} strokeWidth={2.25} />

@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 import { format } from 'date-fns';
 import { compact, values } from 'lodash';
-import { useDispatch } from 'react-redux';
 import { Text, Image, Stack, Group, Paper, AspectRatio } from '@mantine/core';
 
 import { Logo } from 'src/components/UI';
+import { useDrawer } from 'src/store/ui/hooks';
 import { humanizeTime } from 'src/lib/helpers';
 import { DRAWER, FORMAT } from 'src/constants';
-import { uiActions } from 'src/store/ui/actions';
 
 import type { Episode } from 'src/store/podcasts/types';
 
@@ -21,17 +20,15 @@ export function EpisodeCard({
   source,
   collection,
 }: Episode) {
-  const dispatch = useDispatch();
   const { classes } = useStyles();
-
-  const openDrawer = () => {
-    dispatch(uiActions.drawer.open(DRAWER.EPISODE, { guid, collection }));
-  };
+  const drawer = useDrawer(({ actions }) => actions);
 
   const src = useMemo(() => values(image).reverse().find(Boolean), [image]);
 
+  const openDetails = () => drawer.open(DRAWER.EPISODE, { guid, collection });
+
   return (
-    <Paper component="button" className={classes.episode} onClick={openDrawer}>
+    <Paper component="button" className={classes.episode} onClick={openDetails}>
       <Group>
         <AspectRatio ratio={1 / 1} className={classes.image}>
           <Image

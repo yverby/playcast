@@ -1,5 +1,5 @@
-import { useIntl } from 'react-intl';
 import Head from 'next/head';
+import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from '@mantine/hooks';
 import { Title, Stack, useMantineTheme } from '@mantine/core';

@@ -3,7 +3,6 @@ import type { AppProps } from 'next/app';
 import { Shell as AppShell } from 'src/screens/Shell';
 import {
   AppContext,
-  MediaContext,
   StoreContext,
   ThemeContext,
   LocaleContext,
@@ -17,11 +16,9 @@ export default function App({ pageProps, Component }: AppProps) {
       <StoreContext>
         <ThemeContext>
           <LocaleContext>
-            <MediaContext>
-              <AppShell>
-                <Component {...pageProps} />
-              </AppShell>
-            </MediaContext>
+            <AppShell>
+              <Component {...pageProps} />
+            </AppShell>
           </LocaleContext>
         </ThemeContext>
       </StoreContext>

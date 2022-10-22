@@ -1,22 +1,23 @@
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { useMediaQuery } from '@mantine/hooks';
-import { Title, useMantineTheme } from '@mantine/core';
+import { Stack, Title, useMantineTheme } from '@mantine/core';
 
 import { Player } from 'src/screens/Player';
 import { Section } from 'src/components/UI';
-import { uiActions } from 'src/store/ui/actions';
+import { Playlist } from 'src/screens/Playlist';
+import { useSidebar } from 'src/store/ui/hooks';
 
 export function ShellSidebar() {
-  const dispatch = useDispatch();
   const theme = useMantineTheme();
   const { formatMessage } = useIntl();
+
+  const sidebar = useSidebar(({ actions }) => actions);
 
   const lg = useMediaQuery(`(max-width: ${theme.breakpoints.lg}px)`);
 
   useEffect(() => {
-    dispatch(uiActions.sidebar.toggle(!lg));
+    sidebar.toggle(!lg);
   }, [lg]);
 
   return (
@@ -26,7 +27,10 @@ export function ShellSidebar() {
       </Section.Header>
 
       <Section.Content>
-        <Player />
+        <Stack spacing="lg">
+          <Player />
+          <Playlist />
+        </Stack>
       </Section.Content>
     </Section>
   );
