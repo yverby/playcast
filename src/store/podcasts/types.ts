@@ -1,16 +1,3 @@
-export interface PodcastsDetailsParams {
-  id: string[];
-}
-
-export interface PodcastsDetailsResults {
-  data: Podcast[];
-}
-
-export type PodcastsCache = Record<
-  Podcast['id'],
-  { data: Podcast; timestamp: Date }
->;
-
 export interface Podcast {
   id: string | number;
   name: string;

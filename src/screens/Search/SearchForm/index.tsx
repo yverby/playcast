@@ -3,22 +3,21 @@ import { isEqual } from 'lodash';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { useDebouncedValue } from '@mantine/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Stack, TextInput, SegmentedControl } from '@mantine/core';
 
-import { FIELD, ROUTE, ENTITY, DEFAULTS } from 'src/constants';
+import { useSearchParams } from 'src/store/search/hooks';
 import { searchParamsShape } from 'src/store/search/shapes';
-import { selectSearchParams } from 'src/store/search/selectors';
+import { FIELD, ROUTE, ENTITY, DEFAULTS } from 'src/constants';
 
-import type { SearchParams } from 'src/store/search/types';
+import type { SearchParamsState } from 'src/store/search/types';
 
 export function SearchForm() {
   const router = useRouter();
   const { formatMessage } = useIntl();
 
-  const params = useSelector(selectSearchParams);
+  const params = useSearchParams(({ state }) => state);
 
   const form = useForm({
     defaultValues: params,
@@ -28,11 +27,13 @@ export function SearchForm() {
   const entity = form.watch(FIELD.ENTITY);
   const [term] = useDebouncedValue(form.watch(FIELD.TERM), DEFAULTS.DELAY);
 
-  const onSubmit = (query: SearchParams) => {
-    router.replace({ pathname: ROUTE.SEARCH, query });
+  const onSubmit = (query: SearchParamsState) => {
+    router.replace({ pathname: ROUTE.SEARCH, query }, undefined, {
+      shallow: true,
+    });
   };
 
-  const handleChange = (name: keyof SearchParams) => (value: string) => {
+  const handleChange = (name: keyof SearchParamsState) => (value: string) => {
     form.setValue(name, value);
   };
 

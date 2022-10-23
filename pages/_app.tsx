@@ -3,17 +3,17 @@ import type { AppProps } from 'next/app';
 import { Shell as AppShell } from 'src/screens/Shell';
 import {
   AppContext,
-  StoreContext,
   ThemeContext,
   LocaleContext,
+  QueryProvider,
 } from 'src/context';
 
 import 'src/assets/styles/global.css';
 
 export default function App({ pageProps, Component }: AppProps) {
   return (
-    <AppContext>
-      <StoreContext>
+    <QueryProvider>
+      <AppContext>
         <ThemeContext>
           <LocaleContext>
             <AppShell>
@@ -21,7 +21,7 @@ export default function App({ pageProps, Component }: AppProps) {
             </AppShell>
           </LocaleContext>
         </ThemeContext>
-      </StoreContext>
-    </AppContext>
+      </AppContext>
+    </QueryProvider>
   );
 }

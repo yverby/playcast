@@ -6,44 +6,43 @@ import { Title, Stack, useMantineTheme } from '@mantine/core';
 
 import { BRAND } from 'src/constants';
 import { Status, Section } from 'src/components/UI';
-import { usePodcasts } from 'src/store/podcasts/hooks';
+import { usePodcastQuery } from 'src/store/podcasts/hooks';
 
 import { PodcastPagePreview } from './PodcastPagePreview';
 import { PodcastPageCaption } from './PodcastPageCaption';
 import { PodcastPageEpisodes } from './PodcastPageEpisodes';
 
 export function PodcastPage() {
-  const router = useRouter();
+  const { query } = useRouter();
   const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
-  const sm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
+  const podcast = usePodcastQuery(query.id as string);
 
-  const podcasts = usePodcasts({ id: [router.query.id as string] });
-  const [podcast] = podcasts.data;
+  const sm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
 
   return (
     <>
       <Head>
         <title>
-          {podcast?.name ?? formatMessage({ id: 'ui.podcast' })} / {BRAND.NAME}
+          {podcast.data?.name ?? formatMessage({ id: 'ui.podcast' })} /{' '}
+          {BRAND.NAME}
         </title>
       </Head>
 
       <Section>
         <Section.Header>
           <Title order={2}>
-            {podcast?.name ?? formatMessage({ id: 'ui.podcast' })}
+            {podcast.data?.name ?? formatMessage({ id: 'ui.podcast' })}
           </Title>
         </Section.Header>
 
-        <Status selectors={{ ...podcasts, data: podcast }}>
+        <Status selectors={podcast}>
           <Section sx={{ flex: 0 }}>
             <Section.Content>
               <Stack spacing={sm ? 'sm' : 'lg'}>
-                <PodcastPagePreview {...podcast} />
-
-                <PodcastPageCaption {...podcast} />
+                <PodcastPagePreview {...podcast.data!} />
+                <PodcastPageCaption {...podcast.data!} />
               </Stack>
             </Section.Content>
           </Section>
@@ -56,7 +55,7 @@ export function PodcastPage() {
             </Section.Header>
 
             <Section.Content>
-              <PodcastPageEpisodes {...podcast} />
+              <PodcastPageEpisodes {...podcast.data!} />
             </Section.Content>
           </Section>
         </Status>

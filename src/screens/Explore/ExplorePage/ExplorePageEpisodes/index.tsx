@@ -1,9 +1,8 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { slice } from 'lodash';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from '@mantine/hooks';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   Title,
   Button,
@@ -15,36 +14,31 @@ import {
 import { Section } from 'src/components/UI';
 import { createEpisode } from 'src/lib/helpers';
 import { EpisodeCard } from 'src/components/Episode';
-import { exploreActions } from 'src/store/explore/actions';
+import { useExploreQuery } from 'src/store/explore/hooks';
 import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
-import { selectExploreEpisodes } from 'src/store/explore/selectors';
+
+import type { Episode } from 'src/store/podcasts/types';
 
 const breakpoints = BREAKPOINTS[ENTITY.EPISODE];
 
 export function ExplorePageEpisodes() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
-  const episodes = useSelector(selectExploreEpisodes);
-
-  const theme = useMantineTheme();
+  const episodes = useExploreQuery<Episode[]>(ENTITY.EPISODE);
 
   const xs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
-
-  useEffect(() => {
-    dispatch(exploreActions.episodes.init());
-  }, []);
 
   const list = useMemo(() => {
     const length = xs ? 5 : 6;
 
-    if (episodes.loading) {
+    if (episodes.isFetching) {
       return Array.from({ length }, (_, id) => createEpisode({ id }));
     }
 
     return slice(episodes.data, 0, length);
-  }, [xs, episodes.loading]);
+  }, [xs, episodes.isFetching]);
 
   const rightContent = (
     <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.EPISODES)}>
@@ -61,7 +55,7 @@ export function ExplorePageEpisodes() {
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
           {list.map((episode) =>
-            !episodes.loading ? (
+            !episodes.isFetching ? (
               <EpisodeCard {...episode} key={episode.id} />
             ) : (
               <Skeleton radius={14} key={episode.id}>

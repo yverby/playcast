@@ -6,7 +6,7 @@ import type { ReactNode } from 'react';
 
 interface InfiniteScrollProps {
   loading: boolean;
-  hasMore: boolean;
+  hasMore?: boolean;
   children: ReactNode;
   loadMore: (offset: number) => void;
 }

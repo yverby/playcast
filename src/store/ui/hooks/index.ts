@@ -1,4 +1,4 @@
 export { usePlayer } from './player';
-export { useDrawer } from './drawer';
-export { useSidebar } from './sidebar';
-export { usePlaylist } from './playlist';
+export { useDrawer } from './useDrawer';
+export { useSidebar } from './useSidebar';
+export { usePlaylist } from './usePlaylist';

@@ -2,8 +2,8 @@ import { noop, first } from 'lodash';
 
 import type { Source } from 'src/store/podcasts/types';
 
-import { useMedia } from './media';
-import { useStatus } from './status';
+import { useMedia } from './useMedia';
+import { useStatus } from './useStatus';
 
 function parseType(type?: string) {
   return (first(type?.split('/')) as 'audio' | 'video') || 'audio';

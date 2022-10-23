@@ -1,16 +1,6 @@
 import create from 'zustand';
 
-interface StatusState {
-  error: boolean;
-  ready: boolean;
-  ended: boolean;
-  loading: boolean;
-  playing: boolean;
-}
-
-interface StatusActions {
-  set: (status: Partial<StatusState>, reset?: boolean) => void;
-}
+import type { StatusState, StatusActions } from './types';
 
 const initialState: StatusState = {
   error: false,

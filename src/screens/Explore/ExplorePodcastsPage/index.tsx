@@ -1,20 +1,19 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import Head from 'next/head';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
-import { get, groupBy, isEmpty } from 'lodash';
 import { Title, SimpleGrid } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { get, sortBy, uniqBy, groupBy, isEmpty } from 'lodash';
 
 import type { ReactNode } from 'react';
 
 import { Status, Section } from 'src/components/UI';
 import { PodcastCard } from 'src/components/Podcast';
 import { ExploreForm } from 'src/components/Explore';
-import { exploreActions } from 'src/store/explore/actions';
-import { selectExplorePodcasts } from 'src/store/explore/selectors';
+import { useExploreQuery } from 'src/store/explore/hooks';
 import { BRAND, FIELD, ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
 
+import type { Podcast } from 'src/store/podcasts/types';
 import type { ExploreFormValues } from 'src/store/explore/types';
 
 import { useStyles } from './styles';
@@ -23,19 +22,28 @@ const breakpoints = BREAKPOINTS[ENTITY.PODCAST];
 
 export function ExplorePodcastsPage() {
   const router = useRouter();
-  const dispatch = useDispatch();
-
   const { classes } = useStyles();
   const { formatMessage } = useIntl();
 
-  const podcasts = useSelector(selectExplorePodcasts);
-
-  useEffect(() => {
-    dispatch(exploreActions.podcasts.init());
-  }, []);
+  const podcasts = useExploreQuery<Podcast[]>(ENTITY.PODCAST);
 
   const list = useMemo(
     () => groupBy(podcasts.data, ({ genre }) => genre?.id),
+    [podcasts.data]
+  );
+
+  const genres = useMemo(
+    () =>
+      sortBy(
+        uniqBy(
+          podcasts.data?.map(({ genre }) => ({
+            value: String(genre?.id),
+            label: String(genre?.name),
+          })),
+          'value'
+        ),
+        'label'
+      ),
     [podcasts.data]
   );
 
@@ -65,11 +73,7 @@ export function ExplorePodcastsPage() {
 
         {podcasts.data && (
           <Section.Content className={classes.form}>
-            <ExploreForm
-              values={values}
-              onSubmit={onSubmit}
-              genres={podcasts.genres}
-            />
+            <ExploreForm genres={genres} values={values} onSubmit={onSubmit} />
           </Section.Content>
         )}
       </Section>

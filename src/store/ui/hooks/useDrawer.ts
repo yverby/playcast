@@ -1,16 +1,6 @@
 import create from 'zustand';
 
-import { DRAWER } from 'src/constants';
-
-interface DrawerState {
-  props: object;
-  name: DRAWER | undefined;
-}
-
-interface DrawerActions {
-  close: () => void;
-  open: (name: DRAWER | undefined, props?: object) => void;
-}
+import type { DrawerState, DrawerActions } from 'src/store/ui/types';
 
 const initialState = {
   props: {},

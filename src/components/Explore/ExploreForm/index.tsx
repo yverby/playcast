@@ -13,8 +13,8 @@ import { exploreFormShape } from 'src/store/explore/shapes';
 import type { ExploreFormValues } from 'src/store/explore/types';
 
 interface ExploreFormProps {
+  genres: SelectItem[];
   values: ExploreFormValues;
-  genres: (string | SelectItem)[];
   onSubmit: (values: ExploreFormValues) => void;
 }
 
