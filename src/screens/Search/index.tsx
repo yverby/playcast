@@ -3,11 +3,10 @@ import Head from 'next/head';
 import { useIntl } from 'react-intl';
 import { Title } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
 
 import { BRAND } from 'src/constants';
 import { Section } from 'src/components/UI';
-import { searchActions } from 'src/store/search/actions';
+import { useSearchParams } from 'src/store/search/hooks';
 
 import { SearchForm } from './SearchForm';
 import { SearchResults } from './SearchResults';
@@ -19,10 +18,10 @@ export function Search() {
   const { classes } = useStyles();
   const { formatMessage } = useIntl();
 
-  const dispatch = useDispatch();
+  const params = useSearchParams(({ actions }) => actions);
 
   useEffect(() => {
-    dispatch(searchActions.results.init(query));
+    params.set(query as any);
   }, [query]);
 
   return (

@@ -1,4 +1,4 @@
 export { AppContext } from './AppContext';
-export { StoreContext } from './StoreContext';
 export { ThemeContext } from './ThemeContext';
 export { LocaleContext } from './LocaleContext';
+export { queryClient, QueryProvider } from './QueryContext';

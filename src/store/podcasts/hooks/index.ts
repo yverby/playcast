@@ -1,1 +1,1 @@
-export { usePodcasts } from './usePodcasts';
+export { usePodcastQuery } from './usePodcastQuery';

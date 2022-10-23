@@ -3,8 +3,8 @@ import { z } from 'zod';
 import { FIELD, ENTITY } from 'src/constants';
 
 export const exploreEntityShape = z.object({
-  [FIELD.COUNTRY]: z.string(),
   [FIELD.LIMIT]: z.number().optional(),
+  [FIELD.COUNTRY]: z.string().optional(),
   [FIELD.ENTITY]: z.nativeEnum(ENTITY).optional(),
 });
 

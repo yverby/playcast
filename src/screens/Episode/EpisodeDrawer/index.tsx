@@ -3,7 +3,7 @@ import { useIntl } from 'react-intl';
 import { Title, Paper, Stack } from '@mantine/core';
 
 import { mergeImage } from 'src/lib/helpers';
-import { usePodcasts } from 'src/store/podcasts/hooks';
+import { usePodcastQuery } from 'src/store/podcasts/hooks';
 import { Status, Section, Typography } from 'src/components/UI';
 
 import type { Episode } from 'src/store/podcasts/types';
@@ -21,13 +21,11 @@ export function EpisodeDrawer({
   const { classes } = useStyles();
   const { formatMessage } = useIntl();
 
-  const podcasts = usePodcasts({ id: [collection?.id as string] });
-
-  const [podcast] = podcasts.data;
+  const podcast = usePodcastQuery(collection?.id as string);
 
   const episode = useMemo(
-    () => podcast?.episodes?.find((e) => e.guid === guid),
-    [guid, podcast?.episodes]
+    () => podcast.data?.episodes?.find((e) => e.guid === guid),
+    [guid, podcast.data?.episodes]
   );
 
   return (
@@ -38,7 +36,7 @@ export function EpisodeDrawer({
         </Title>
       </Section.Header>
 
-      <Status selectors={{ ...podcasts, data: episode }}>
+      <Status selectors={podcast}>
         {episode && (
           <Section>
             <Section.Content>
@@ -47,14 +45,14 @@ export function EpisodeDrawer({
                   <EpisodeDrawerPreview
                     {...episode}
                     collection={collection}
-                    image={mergeImage(podcast.image, episode.image)}
+                    image={mergeImage(podcast.data!.image, episode.image)}
                   />
                 </Paper>
 
                 <EpisodeDrawerActions
                   {...episode}
                   collection={collection}
-                  image={mergeImage(podcast.image, episode.image)}
+                  image={mergeImage(podcast.data!.image, episode.image)}
                 />
 
                 <Paper className={classes.content}>

@@ -2,36 +2,32 @@ import { useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { TbVinyl } from 'react-icons/tb';
 import { Stack, SimpleGrid } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
 
+import { ENTITY, BREAKPOINTS } from 'src/constants';
 import { PodcastCard } from 'src/components/Podcast';
 import { EpisodeCard } from 'src/components/Episode';
-import { searchActions } from 'src/store/search/actions';
-import { FIELD, ENTITY, BREAKPOINTS } from 'src/constants';
 import { Status, Placeholder, InfiniteList } from 'src/components/UI';
-import {
-  selectSearchParams,
-  selectSearchResutls,
-} from 'src/store/search/selectors';
+import { useSearchQuery, useSearchParams } from 'src/store/search/hooks';
 
 import type { Podcast, Episode } from 'src/store/podcasts/types';
 
 export function SearchResults() {
-  const dispatch = useDispatch();
   const { formatMessage } = useIntl();
 
-  const params = useSelector(selectSearchParams);
-  const results = useSelector(selectSearchResutls);
+  const params = useSearchParams(({ state }) => state);
+  const results = useSearchQuery(params);
 
   const list = useMemo(() => {
+    const entities = results.data?.pages.flat() || [];
+
     switch (params.entity) {
       case ENTITY.PODCAST: {
-        return results.data.map((podcast: Podcast) => (
+        return entities.map((podcast: Podcast) => (
           <PodcastCard key={podcast.id} {...podcast} />
         ));
       }
       case ENTITY.EPISODE: {
-        return results.data.map((episode: Episode) => (
+        return entities.map((episode: Episode) => (
           <EpisodeCard key={episode.id} {...episode} />
         ));
       }
@@ -39,16 +35,18 @@ export function SearchResults() {
         return [];
       }
     }
-  }, [results.data]);
+  }, [results.data?.pages]);
 
-  const breakpoints = BREAKPOINTS[params.entity];
+  const breakpoints = useMemo(
+    () => BREAKPOINTS[params.entity],
+    [results.data?.pages]
+  );
 
   const loadMore = (offset: number) => {
-    const newParams = { ...params, [FIELD.OFFSET]: offset };
-    offset && dispatch(searchActions.results.request(newParams));
+    offset && results.fetchNextPage({ pageParam: offset });
   };
 
-  const nothing = !results.succeed && (
+  const nothing = !results.isSuccess && (
     <Placeholder
       icon={TbVinyl}
       title={formatMessage({ id: 'search.searchSomething' })}
@@ -57,16 +55,12 @@ export function SearchResults() {
 
   return (
     <Stack spacing="xs" sx={{ flex: 1 }}>
-      <Status
-        views={{ nothing }}
-        selectors={{ ...results, data: list }}
-        sx={{ ...(results.hasMore && { minHeight: 25 }) }}
-      >
+      <Status views={{ nothing }} selectors={{ ...results, data: list }}>
         <SimpleGrid breakpoints={breakpoints}>
           <InfiniteList
             loadMore={loadMore}
-            hasMore={results.hasMore}
-            loading={results.loading}
+            hasMore={results.hasNextPage}
+            loading={results.isFetchingNextPage}
           >
             {list}
           </InfiniteList>

@@ -44,7 +44,7 @@ export function configureTheme({
       backdrop(theme) {
         return {
           backgroundColor: theme.other.variable(theme, 'colorBgDrop'),
-          backdropFilter: 'blur(5px) saturate(180%)',
+          // backdropFilter: 'blur(5px) saturate(180%)',
         };
       },
       variable(theme, variable) {

@@ -1,16 +1,6 @@
 import create from 'zustand';
 
-import type { Episode } from 'src/store/podcasts/types';
-
-interface PlaylistState {
-  queue: Episode[];
-}
-
-interface PlaylistActions {
-  add: (episode: Episode) => void;
-  next: (episode?: Episode) => void;
-  clear: () => void;
-}
+import type { PlaylistState, PlaylistActions } from 'src/store/ui/types';
 
 const initialState: PlaylistState = {
   queue: [],

@@ -1,12 +1,6 @@
 import create from 'zustand';
 
-interface SidebarState {
-  visible: boolean;
-}
-
-interface SidebarActions {
-  toggle: (payload?: boolean) => void;
-}
+import type { SidebarState, SidebarActions } from 'src/store/ui/types';
 
 const initialState: SidebarState = {
   visible: true,

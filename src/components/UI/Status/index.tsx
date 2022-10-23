@@ -10,11 +10,9 @@ import { Placeholder } from 'src/components/UI';
 
 import { useStyles } from './styles';
 
-type Status = 'data' | 'error' | 'loading' | 'nothing';
-
 interface StatusProps extends CenterProps {
-  views?: Partial<Omit<Record<Status, ReactNode>, 'data'>>;
-  selectors?: Partial<Omit<Record<Status, any>, 'nothing'>>;
+  views?: Partial<Record<'error' | 'nothing' | 'loading', ReactNode>>;
+  selectors?: Record<'data' | 'isError' | 'isFetching', any>;
 }
 
 export function Status({
@@ -25,8 +23,8 @@ export function Status({
   ...props
 }: StatusProps) {
   const isData = !isEmpty(selectors?.data);
-  const isError = !isEmpty(selectors?.error);
-  const isLoading = Boolean(selectors?.loading);
+  const isError = !isEmpty(selectors?.isError);
+  const isLoading = Boolean(selectors?.isFetching);
   const isNothing = !isLoading && !isError && !isData;
 
   const { cx, classes } = useStyles();

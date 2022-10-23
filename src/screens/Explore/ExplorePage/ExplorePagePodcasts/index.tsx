@@ -1,9 +1,8 @@
-import { useMemo, useEffect } from 'react';
+import { useMemo } from 'react';
 import { slice } from 'lodash';
 import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { useMediaQuery } from '@mantine/hooks';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   Title,
   Button,
@@ -15,36 +14,31 @@ import {
 import { Section } from 'src/components/UI';
 import { createPodcast } from 'src/lib/helpers';
 import { PodcastCard } from 'src/components/Podcast';
-import { exploreActions } from 'src/store/explore/actions';
+import { useExploreQuery } from 'src/store/explore/hooks';
 import { ROUTE, ENTITY, BREAKPOINTS } from 'src/constants';
-import { selectExplorePodcasts } from 'src/store/explore/selectors';
+
+import type { Podcast } from 'src/store/podcasts/types';
 
 const breakpoints = BREAKPOINTS[ENTITY.PODCAST];
 
 export function ExplorePagePodcasts() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const theme = useMantineTheme();
   const { formatMessage } = useIntl();
 
-  const podcasts = useSelector(selectExplorePodcasts);
-
-  const theme = useMantineTheme();
+  const podcasts = useExploreQuery<Podcast[]>(ENTITY.PODCAST);
 
   const xs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
-
-  useEffect(() => {
-    dispatch(exploreActions.podcasts.init());
-  }, []);
 
   const list = useMemo(() => {
     const length = xs ? 6 : 9;
 
-    if (podcasts.loading) {
+    if (podcasts.isFetching) {
       return Array.from({ length }, (_, id) => createPodcast({ id }));
     }
 
     return slice(podcasts.data, 0, length);
-  }, [xs, podcasts.loading]);
+  }, [xs, podcasts.isFetching]);
 
   const rightContent = (
     <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.PODCASTS)}>
@@ -61,7 +55,7 @@ export function ExplorePagePodcasts() {
       <Section.Content>
         <SimpleGrid breakpoints={breakpoints}>
           {list.map((podcast) =>
-            !podcasts.loading ? (
+            !podcasts.isFetching ? (
               <PodcastCard {...podcast} key={podcast.id} />
             ) : (
               <Skeleton radius={14} key={podcast.id}>
