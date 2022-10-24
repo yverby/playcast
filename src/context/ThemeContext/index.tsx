@@ -6,11 +6,7 @@ import type { ColorScheme } from '@mantine/core';
 
 import { configureTheme } from 'src/theme';
 
-interface ThemeContextProps {
-  children: ReactNode;
-}
-
-export function ThemeContext({ children }: ThemeContextProps) {
+export function ThemeProvider({ children }: { children: ReactNode }) {
   const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
 
   useEffect(() => {

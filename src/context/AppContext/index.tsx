@@ -2,11 +2,9 @@ import Head from 'next/head';
 
 import type { ReactNode } from 'react';
 
-interface AppContextProps {
-  children: ReactNode;
-}
+import { Shell } from 'src/screens/Shell';
 
-export function AppContext({ children }: AppContextProps) {
+export function AppProvider({ children }: { children: ReactNode }) {
   return (
     <>
       <Head>
@@ -16,7 +14,7 @@ export function AppContext({ children }: AppContextProps) {
         />
       </Head>
 
-      {children}
+      <Shell>{children}</Shell>
     </>
   );
 }
