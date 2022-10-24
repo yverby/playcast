@@ -5,13 +5,9 @@ import type { ReactNode } from 'react';
 
 import en from 'src/translations/en.json';
 
-interface LocaleContextProps {
-  children: ReactNode;
-}
-
 const messages = { en };
 
-export function LocaleContext({ children }: LocaleContextProps) {
+export function LocaleProvider({ children }: { children: ReactNode }) {
   const [locale] = useState<keyof typeof messages>('en');
 
   return (

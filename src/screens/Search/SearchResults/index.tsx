@@ -1,26 +1,35 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { isEqual } from 'lodash';
 import { useIntl } from 'react-intl';
+import { useRouter } from 'next/router';
 import { TbVinyl } from 'react-icons/tb';
 import { Stack, SimpleGrid } from '@mantine/core';
 
-import { ENTITY, BREAKPOINTS } from 'src/constants';
 import { PodcastCard } from 'src/components/Podcast';
 import { EpisodeCard } from 'src/components/Episode';
+import { ENTITY, BREAKPOINTS, FIELD } from 'src/constants';
 import { Status, Placeholder, InfiniteList } from 'src/components/UI';
 import { useSearchQuery, useSearchParams } from 'src/store/search/hooks';
 
 import type { Podcast, Episode } from 'src/store/podcasts/types';
 
 export function SearchResults() {
+  const router = useRouter();
+  const params = useSearchParams();
   const { formatMessage } = useIntl();
 
-  const params = useSearchParams(({ state }) => state);
-  const results = useSearchQuery(params);
+  const results = useSearchQuery(
+    isEqual(router.query, params.state) ? params.state : undefined
+  );
+
+  useEffect(() => {
+    params.actions.set(router.query as any);
+  }, [router.query]);
 
   const list = useMemo(() => {
     const entities = results.data?.pages.flat() || [];
 
-    switch (params.entity) {
+    switch (params.state.entity) {
       case ENTITY.PODCAST: {
         return entities.map((podcast: Podcast) => (
           <PodcastCard key={podcast.id} {...podcast} />
@@ -38,12 +47,13 @@ export function SearchResults() {
   }, [results.data?.pages]);
 
   const breakpoints = useMemo(
-    () => BREAKPOINTS[params.entity],
+    () => BREAKPOINTS[params.state.entity],
     [results.data?.pages]
   );
 
   const loadMore = (offset: number) => {
-    offset && results.fetchNextPage({ pageParam: offset });
+    const pageParam = { ...params.state, [FIELD.OFFSET]: offset };
+    offset && results.fetchNextPage({ pageParam });
   };
 
   const nothing = !results.isSuccess && (

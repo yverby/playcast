@@ -1,15 +1,18 @@
 import { useEffect } from 'react';
-import { useEvent } from 'react-use';
+import { useIdle } from 'react-use';
 import { useSetState } from '@mantine/hooks';
 import { Text, Group, Stack, Slider } from '@mantine/core';
 
 import { specifyTime } from 'src/lib/helpers';
-import { usePlayer } from 'src/store/ui/hooks';
+import { usePlayer, useSidebar } from 'src/store/ui/hooks';
 
 import { useStyles } from './styles';
 
 export function PlayerTimeline() {
+  const idle = useIdle(3000);
   const { classes } = useStyles();
+
+  const { visible } = useSidebar(({ state }) => state);
   const { media, state, status, controls } = usePlayer();
 
   const [{ value, position, duration }, setState] = useSetState({
@@ -28,15 +31,22 @@ export function PlayerTimeline() {
     });
   }, [status.ready]);
 
-  useEvent(
-    'timeupdate',
-    () =>
+  useEffect(() => {
+    const { ref } = media;
+
+    const update = () => {
       setState(({ sliding }) => ({
         position: state.position(),
         ...(!sliding && { value: state.position() }),
-      })),
-    media.ref?.current
-  );
+      }));
+    };
+
+    if (!idle && visible) {
+      ref.current?.addEventListener('timeupdate', update);
+    }
+
+    return () => ref.current?.removeEventListener('timeupdate', update);
+  }, [idle, media, visible]);
 
   const changePosition = (sliding: boolean) => (newValue: number) => {
     !sliding && controls.seek(newValue);
