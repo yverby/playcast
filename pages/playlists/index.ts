@@ -1,1 +1,1 @@
-export { Playlists as default } from 'src/screens/Playlists';
+export { PlaylistsRoot as default } from 'src/screens/Playlists/PlaylistsRoot';

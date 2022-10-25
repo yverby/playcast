@@ -18,8 +18,8 @@ export function EpisodeDrawer({
   guid,
   collection,
 }: Pick<Episode, 'guid' | 'collection'>) {
+  const intl = useIntl();
   const { classes } = useStyles();
-  const { formatMessage } = useIntl();
 
   const podcast = usePodcastQuery(collection?.id as string);
 
@@ -32,7 +32,7 @@ export function EpisodeDrawer({
     <Section>
       <Section.Header>
         <Title order={2}>
-          {episode?.name ?? formatMessage({ id: 'ui.podcastEpisode' })}
+          {episode?.name ?? intl.formatMessage({ id: 'ui.podcastEpisode' })}
         </Title>
       </Section.Header>
 

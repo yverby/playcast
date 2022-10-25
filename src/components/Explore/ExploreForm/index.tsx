@@ -19,7 +19,7 @@ interface ExploreFormProps {
 }
 
 export function ExploreForm({ genres, values, onSubmit }: ExploreFormProps) {
-  const { formatMessage } = useIntl();
+  const intl = useIntl();
 
   const form = useForm<ExploreFormValues>({
     defaultValues: values,
@@ -44,7 +44,7 @@ export function ExploreForm({ genres, values, onSubmit }: ExploreFormProps) {
         clearable
         data={genres}
         value={genre}
-        placeholder={formatMessage({ id: 'ui.genres' })}
+        placeholder={intl.formatMessage({ id: 'ui.genres' })}
         onChange={(value) => form.setValue(FIELD.GENRE, value)}
       />
     </Box>

@@ -2,7 +2,7 @@ import { Box } from '@mantine/core';
 
 import type { ReactNode } from 'react';
 
-import { useSidebar } from 'src/store/ui/hooks';
+import { useShellSidebar } from 'src/store/shell/hooks';
 
 import { ShellDrawer } from './ShellDrawer';
 import { ShellNavbar } from './ShellNavbar';
@@ -10,14 +10,10 @@ import { ShellSidebar } from './ShellSidebar';
 
 import { useStyles } from './styles';
 
-interface ShellProps {
-  children: ReactNode;
-}
-
-export function Shell({ children }: ShellProps) {
+export function Shell({ children }: { children: ReactNode }) {
   const { cx, classes } = useStyles();
 
-  const sidebar = useSidebar(({ state }) => state);
+  const sidebar = useShellSidebar(({ state }) => state);
 
   return (
     <Box className={classes.shell}>

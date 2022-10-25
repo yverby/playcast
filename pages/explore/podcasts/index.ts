@@ -1,1 +1,1 @@
-export { ExplorePodcastsPage as default } from 'src/screens/Explore/ExplorePodcastsPage';
+export { ExplorePodcasts as default } from 'src/screens/Explore/ExplorePodcasts';

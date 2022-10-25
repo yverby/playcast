@@ -27,8 +27,8 @@ export function Status({
   const isLoading = Boolean(selectors?.isFetching);
   const isNothing = !isLoading && !isError && !isData;
 
+  const intl = useIntl();
   const { cx, classes } = useStyles();
-  const { formatMessage } = useIntl();
 
   return (
     <>
@@ -41,7 +41,7 @@ export function Status({
           (views?.error || (
             <Placeholder
               icon={TbAlertCircle}
-              title={formatMessage({ id: 'message.somethingWentWrong' })}
+              title={intl.formatMessage({ id: 'message.somethingWentWrong' })}
             />
           ))}
 
@@ -49,7 +49,7 @@ export function Status({
           (views?.nothing || (
             <Placeholder
               icon={TbEyeOff}
-              title={formatMessage({ id: 'message.nothingFound' })}
+              title={intl.formatMessage({ id: 'message.nothingFound' })}
             />
           ))}
       </Center>

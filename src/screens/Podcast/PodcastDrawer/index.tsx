@@ -10,8 +10,8 @@ import { PodcastDrawerCaption } from './PodcastDrawerCaption';
 import { useStyles } from './styles';
 
 export function PodcastDrawer(podcast: Podcast) {
+  const intl = useIntl();
   const { classes } = useStyles();
-  const { formatMessage } = useIntl();
 
   const { name, summary, description } = podcast;
   const content = description || summary;
@@ -19,7 +19,9 @@ export function PodcastDrawer(podcast: Podcast) {
   return (
     <Section>
       <Section.Header>
-        <Title order={2}>{name ?? formatMessage({ id: 'ui.podcast' })}</Title>
+        <Title order={2}>
+          {name ?? intl.formatMessage({ id: 'ui.podcast' })}
+        </Title>
       </Section.Header>
 
       <Section.Content sx={{ flex: 0 }}>

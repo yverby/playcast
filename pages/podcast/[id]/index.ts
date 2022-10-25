@@ -1,1 +1,1 @@
-export { PodcastPage as default } from 'src/screens/Podcast/PodcastPage';
+export { PodcastRoot as default } from 'src/screens/Podcast/PodcastRoot';

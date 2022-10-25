@@ -1,7 +1,3 @@
-const DATE = {
-  EPISODE: 'LLL dd, yyyy',
-};
+const DATE = { EPISODE: 'LLL dd, yyyy' };
 
-export const FORMAT = {
-  DATE,
-};
+export const FORMAT = { DATE };

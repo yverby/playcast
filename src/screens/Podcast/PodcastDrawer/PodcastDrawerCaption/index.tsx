@@ -6,15 +6,17 @@ import { Caption } from 'src/components/UI';
 import type { Podcast } from 'src/store/podcasts/types';
 
 export function PodcastDrawerCaption({ owner }: Podcast) {
-  const { formatMessage } = useIntl();
+  const intl = useIntl();
 
   return (
     <Group>
-      <Caption title={formatMessage({ id: 'ui.owner' })}>{owner?.name}</Caption>
+      <Caption title={intl.formatMessage({ id: 'ui.owner' })}>
+        {owner?.name}
+      </Caption>
 
       <Divider orientation="vertical" />
 
-      <Caption title={formatMessage({ id: 'ui.email' })}>
+      <Caption title={intl.formatMessage({ id: 'ui.email' })}>
         {owner?.email}
       </Caption>
     </Group>

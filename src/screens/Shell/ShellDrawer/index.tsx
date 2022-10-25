@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { useScrollLock } from '@mantine/hooks';
 import { Box, GroupedTransition } from '@mantine/core';
 
-import { useDrawer } from 'src/store/ui/hooks';
 import { DRAWER_REGISTER } from 'src/constants';
+import { useShellDrawer } from 'src/store/shell/hooks';
 
 import { useStyles, transitions } from './styles';
 
@@ -16,7 +16,7 @@ export function ShellDrawer() {
   const { classes } = useStyles({ top: top.current });
   const { 1: lockScroll } = useScrollLock();
 
-  const { state, actions } = useDrawer();
+  const { state, actions } = useShellDrawer();
 
   const Component = get(DRAWER_REGISTER, String(state.name));
   const hasComponent = Boolean(Component);
