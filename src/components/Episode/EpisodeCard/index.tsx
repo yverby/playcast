@@ -4,9 +4,9 @@ import { compact, values } from 'lodash';
 import { Text, Image, Stack, Group, Paper, AspectRatio } from '@mantine/core';
 
 import { Logo } from 'src/components/UI';
-import { useDrawer } from 'src/store/ui/hooks';
 import { humanizeTime } from 'src/lib/helpers';
 import { DRAWER, FORMAT } from 'src/constants';
+import { useShellDrawer } from 'src/store/shell/hooks';
 
 import type { Episode } from 'src/store/podcasts/types';
 
@@ -21,7 +21,7 @@ export function EpisodeCard({
   collection,
 }: Episode) {
   const { classes } = useStyles();
-  const drawer = useDrawer(({ actions }) => actions);
+  const drawer = useShellDrawer(({ actions }) => actions);
 
   const src = useMemo(() => values(image).reverse().find(Boolean), [image]);
 

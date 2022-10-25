@@ -1,1 +1,1 @@
-export { ExploreEpisodesPage as default } from 'src/screens/Explore/ExploreEpisodesPage';
+export { ExploreEpisodes as default } from 'src/screens/Explore/ExploreEpisodes';

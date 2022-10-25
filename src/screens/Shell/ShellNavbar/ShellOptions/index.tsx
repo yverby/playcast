@@ -4,14 +4,14 @@ import { TbLayoutSidebarRight } from 'react-icons/tb';
 import { Indicator, useMantineTheme } from '@mantine/core';
 
 import { Control } from 'src/components/UI';
-import { usePlayer, useSidebar } from 'src/store/ui/hooks';
+import { useShellPlayer, useShellSidebar } from 'src/store/shell/hooks';
 
 export function ShellOptions() {
-  const sidebar = useSidebar();
-  const { status } = usePlayer();
-  const { formatMessage } = useIntl();
-
+  const intl = useIntl();
   const theme = useMantineTheme();
+
+  const player = useShellPlayer();
+  const sidebar = useShellSidebar();
 
   const lg = useMediaQuery(`(max-width: ${theme.breakpoints.lg}px)`);
   const md = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
@@ -21,18 +21,18 @@ export function ShellOptions() {
     <>
       {lg && (
         <Indicator
-          disabled={!status.ready}
+          disabled={!player.status.ready}
           position={sm ? 'top-center' : 'middle-end'}
           color={theme.other.variable(
             theme,
-            status.playing ? 'colorPrimary' : 'colorPlaceholder'
+            player.status.playing ? 'colorPrimary' : 'colorPlaceholder'
           )}
         >
           <Control
             icon={TbLayoutSidebarRight}
             active={sidebar.state.visible}
             onClick={() => sidebar.actions.toggle()}
-            {...(!md && { title: formatMessage({ id: 'ui.playingNow' }) })}
+            {...(!md && { title: intl.formatMessage({ id: 'ui.playingNow' }) })}
           />
         </Indicator>
       )}

@@ -1,1 +1,1 @@
-export { Settings as default } from 'src/screens/Settings';
+export { SettingsRoot as default } from 'src/screens/Settings/SettingsRoot';

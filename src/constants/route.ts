@@ -1,7 +1,13 @@
 export const ROUTE = {
-  SEARCH: '/search',
-  SETTINGS: '/settings',
-  PLAYLISTS: '/playlists',
+  SEARCH: {
+    ROOT: '/search',
+  },
+  SETTINGS: {
+    ROOT: '/settings',
+  },
+  PLAYLISTS: {
+    ROOT: '/playlists',
+  },
   PODCAST: {
     ROOT: '/podcast/:id',
   },

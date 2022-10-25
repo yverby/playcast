@@ -11,16 +11,16 @@ import { ROUTE } from 'src/constants';
 import { Control } from 'src/components/UI';
 
 const ROUTES = {
-  [ROUTE.SEARCH]: TbSearch,
+  [ROUTE.SEARCH.ROOT]: TbSearch,
   [ROUTE.EXPLORE.ROOT]: TbLayoutGrid,
-  [ROUTE.PLAYLISTS]: TbPlaylist,
-  [ROUTE.SETTINGS]: TbSettings,
+  [ROUTE.PLAYLISTS.ROOT]: TbPlaylist,
+  [ROUTE.SETTINGS.ROOT]: TbSettings,
 };
 
 export function ShellRoutes() {
+  const intl = useIntl();
   const router = useRouter();
   const theme = useMantineTheme();
-  const { formatMessage } = useIntl();
 
   const md = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
 
@@ -30,7 +30,7 @@ export function ShellRoutes() {
         icon,
         onClick: () => router.push(route),
         active: router.pathname.includes(route),
-        title: formatMessage({ id: `ui.${route.replace('/', '')}` }),
+        title: intl.formatMessage({ id: `ui.${route.replace('/', '')}` }),
       })),
     [router.pathname]
   );
