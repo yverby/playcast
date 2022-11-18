@@ -19,8 +19,8 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/server": "^11.10.0",
-    "@hookform/resolvers": "^2.9.10",
     "@mantine/core": "^5.8.0",
+    "@mantine/form": "^5.8.0",
     "@mantine/hooks": "^5.8.0",
     "@mantine/next": "^5.8.0",
     "@next/bundle-analyzer": "^13.0.4",
@@ -32,7 +32,6 @@
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.39.4",
     "react-icons": "^4.6.0",
     "react-intl": "^6.2.1",
     "react-use": "^17.4.0",

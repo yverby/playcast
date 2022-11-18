@@ -1,17 +1,14 @@
 import { useMemo, useEffect } from 'react';
-import { isEqual } from 'lodash';
 import { useIntl } from 'react-intl';
+import { omit, isEqual } from 'lodash';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { useDebouncedValue } from '@mantine/hooks';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, zodResolver } from '@mantine/form';
 import { Stack, TextInput, SegmentedControl } from '@mantine/core';
+import { useDebouncedValue, useShallowEffect } from '@mantine/hooks';
 
 import { useSearchParams } from 'src/store/search/hooks';
 import { searchParamsShape } from 'src/store/search/shapes';
 import { FIELD, ROUTE, ENTITY, DEFAULTS } from 'src/constants';
-
-import type { SearchParamsState } from 'src/store/search/types';
 
 export function SearchRootForm() {
   const intl = useIntl();
@@ -20,32 +17,27 @@ export function SearchRootForm() {
   const params = useSearchParams(({ state }) => state);
 
   const form = useForm({
-    defaultValues: params,
-    resolver: zodResolver(searchParamsShape),
+    initialValues: params,
+    validate: zodResolver(searchParamsShape),
   });
 
-  const entity = form.watch(FIELD.ENTITY);
-  const [term] = useDebouncedValue(form.watch(FIELD.TERM), DEFAULTS.DELAY);
+  const [term] = useDebouncedValue(form.values[FIELD.TERM], DEFAULTS.DELAY);
 
-  const onSubmit = (query: SearchParamsState) => {
+  const handleSubmit = (query: typeof form.values) => {
     router.replace({ pathname: ROUTE.SEARCH.ROOT, query }, undefined, {
       shallow: true,
     });
   };
 
-  const handleChange = (name: keyof SearchParamsState) => (value: string) => {
-    form.setValue(name, value);
-  };
-
   useEffect(() => {
-    form.reset(params);
+    form.setValues(params);
   }, [params]);
 
-  useEffect(() => {
-    if (term && !isEqual(params, form.getValues())) {
-      form.handleSubmit(onSubmit)();
+  useShallowEffect(() => {
+    if (term && !isEqual(params, form.values)) {
+      form.onSubmit(handleSubmit)();
     }
-  }, [term, entity]);
+  }, [term, omit(form.values, [FIELD.TERM])]);
 
   const entities = useMemo(
     () =>
@@ -57,10 +49,10 @@ export function SearchRootForm() {
   );
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack spacing="xs">
         <TextInput
-          {...form.register(FIELD.TERM)}
+          {...form.getInputProps(FIELD.TERM, { withError: false })}
           type="search"
           autoComplete="off"
           aria-label={intl.formatMessage({ id: 'ui.search' })}
@@ -68,10 +60,8 @@ export function SearchRootForm() {
         />
 
         <SegmentedControl
-          value={entity}
+          {...form.getInputProps(FIELD.ENTITY)}
           data={entities}
-          name={FIELD.ENTITY}
-          onChange={handleChange(FIELD.ENTITY)}
         />
       </Stack>
     </form>

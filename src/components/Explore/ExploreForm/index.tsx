@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import { isEqual } from 'lodash';
 import { useIntl } from 'react-intl';
-import { useForm } from 'react-hook-form';
 import { Box, MultiSelect } from '@mantine/core';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm, zodResolver } from '@mantine/form';
 
 import type { SelectItem } from '@mantine/core';
 
@@ -21,31 +20,28 @@ interface ExploreFormProps {
 export function ExploreForm({ genres, values, onSubmit }: ExploreFormProps) {
   const intl = useIntl();
 
-  const form = useForm<ExploreFormValues>({
-    defaultValues: values,
-    resolver: zodResolver(exploreFormShape),
+  const form = useForm({
+    initialValues: values,
+    validate: zodResolver(exploreFormShape),
   });
 
-  const genre = form.watch(FIELD.GENRE);
-
   useEffect(() => {
-    form.reset(values);
+    form.setValues(values);
   }, [values]);
 
   useEffect(() => {
-    if (!isEqual(values, form.getValues())) {
-      form.handleSubmit(onSubmit)();
+    if (!isEqual(values, form.values)) {
+      form.onSubmit(onSubmit)();
     }
-  }, [genre]);
+  }, [form.values]);
 
   return (
-    <Box component="form" onSubmit={form.handleSubmit(onSubmit)}>
+    <Box component="form" onSubmit={form.onSubmit(onSubmit)}>
       <MultiSelect
+        {...form.getInputProps(FIELD.GENRE)}
         clearable
         data={genres}
-        value={genre}
         placeholder={intl.formatMessage({ id: 'ui.genres' })}
-        onChange={(value) => form.setValue(FIELD.GENRE, value)}
       />
     </Box>
   );
