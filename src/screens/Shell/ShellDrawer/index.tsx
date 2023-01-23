@@ -1,8 +1,10 @@
 import { useRef, useEffect } from 'react';
 import { get } from 'lodash';
+import { useIntl } from 'react-intl';
 import { useRouter } from 'next/router';
 import { useScrollLock } from '@mantine/hooks';
-import { Box, GroupedTransition } from '@mantine/core';
+import { FiChevronDown } from 'react-icons/fi';
+import { Box, UnstyledButton, GroupedTransition } from '@mantine/core';
 
 import { DRAWER_REGISTER } from 'src/constants';
 import { useShellDrawer } from 'src/store/shell/hooks';
@@ -11,6 +13,7 @@ import { useStyles, transitions } from './styles';
 
 export function ShellDrawer() {
   const top = useRef(0);
+  const intl = useIntl();
   const router = useRouter();
 
   const { classes } = useStyles({ top: top.current });
@@ -39,7 +42,13 @@ export function ShellDrawer() {
           style={styles.drawer}
           className={classes.drawer}
         >
-          <Box className={classes.spacer} onClick={actions.close} />
+          <UnstyledButton
+            onClick={actions.close}
+            className={classes.closer}
+            aria-label={intl.formatMessage({ id: 'ui.close' })}
+          >
+            <FiChevronDown size={28} />
+          </UnstyledButton>
 
           <Box style={styles.container} className={classes.container}>
             {hasComponent && <Component {...state.props} />}

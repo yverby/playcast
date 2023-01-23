@@ -12,15 +12,31 @@ export const useStyles = createStyles((theme, { top }: { top: number }) => ({
     width: '100%',
     height: '100vh',
     overflow: 'hidden',
+    willChange: 'auto',
+    ...theme.other.backdrop(theme),
 
     [theme.fn.smallerThan('sm')]: {
       height: 'calc(100vh - 65px)',
     },
   },
-  spacer: {
-    height: '100%',
-    willChange: 'auto',
-    ...theme.other.backdrop(theme),
+  closer: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: '30%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: 15,
+    color: theme.other.variable(theme, 'colorPlaceholder'),
+
+    '&:hover': {
+      color: theme.other.variable(theme, 'colorPrimary'),
+    },
+
+    [theme.fn.smallerThan('sm')]: {
+      height: '40%',
+    },
   },
   container: {
     position: 'absolute',
@@ -28,13 +44,13 @@ export const useStyles = createStyles((theme, { top }: { top: number }) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    height: '70vh',
+    height: '70%',
     willChange: 'auto',
     backgroundColor: theme.other.variable(theme, 'colorBg'),
     overflow: 'auto',
 
     [theme.fn.smallerThan('sm')]: {
-      height: '55vh',
+      height: '60%',
     },
   },
 }));
