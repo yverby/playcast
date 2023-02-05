@@ -5,20 +5,23 @@ import {
   QueryProvider,
   ThemeProvider,
   LocaleProvider,
+  SettingsContext,
 } from 'src/context';
 
 import 'src/assets/styles/global.css';
 
 export default function App({ pageProps, Component }: AppProps) {
   return (
-    <QueryProvider>
+    <SettingsContext>
       <ThemeProvider>
         <LocaleProvider>
-          <AppProvider>
-            <Component {...pageProps} />
-          </AppProvider>
+          <QueryProvider>
+            <AppProvider>
+              <Component {...pageProps} />
+            </AppProvider>
+          </QueryProvider>
         </LocaleProvider>
       </ThemeProvider>
-    </QueryProvider>
+    </SettingsContext>
   );
 }

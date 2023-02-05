@@ -37,7 +37,7 @@ export function ExploreRootPodcasts() {
     }
 
     return slice(podcasts.data, 0, length);
-  }, [xs, podcasts.isFetching]);
+  }, [xs, podcasts]);
 
   const rightContent = (
     <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.PODCASTS)}>

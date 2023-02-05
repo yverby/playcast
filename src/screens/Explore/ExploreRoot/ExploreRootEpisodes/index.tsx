@@ -37,7 +37,7 @@ export function ExploreRootEpisodes() {
     }
 
     return slice(episodes.data, 0, length);
-  }, [xs, episodes.isFetching]);
+  }, [xs, episodes]);
 
   const rightContent = (
     <Button size="xs" onClick={() => router.push(ROUTE.EXPLORE.EPISODES)}>

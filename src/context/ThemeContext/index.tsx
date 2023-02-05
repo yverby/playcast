@@ -1,37 +1,26 @@
-import { useState, useEffect, useCallback } from 'react';
-import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
+import { useEffect } from 'react';
+import { MantineProvider } from '@mantine/core';
 
 import type { ReactNode } from 'react';
-import type { ColorScheme } from '@mantine/core';
 
 import { configureTheme } from 'src/theme';
+import { useSettings } from 'src/store/settings/hooks';
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('dark');
+  const settings = useSettings();
+  const colorScheme = settings.values.appearance.scheme;
 
   useEffect(() => {
     document.documentElement.style.colorScheme = colorScheme;
   }, [colorScheme]);
 
-  const toggleColorScheme = useCallback(
-    (scheme?: ColorScheme) => {
-      setColorScheme(scheme || colorScheme === 'dark' ? 'light' : 'dark');
-    },
-    [colorScheme]
-  );
-
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={configureTheme({ colorScheme })}
     >
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={configureTheme({ colorScheme })}
-      >
-        {children}
-      </MantineProvider>
-    </ColorSchemeProvider>
+      {children}
+    </MantineProvider>
   );
 }

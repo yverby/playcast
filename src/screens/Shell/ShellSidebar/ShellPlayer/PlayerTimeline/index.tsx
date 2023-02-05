@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { useIdle } from 'react-use';
-import { useSetState } from '@mantine/hooks';
 import { Text, Group, Stack, Slider } from '@mantine/core';
+import { useSetState, useDocumentVisibility } from '@mantine/hooks';
 
 import { specifyTime } from 'src/lib/helpers';
 import { useShellPlayer, useShellSidebar } from 'src/store/shell/hooks';
@@ -9,8 +8,8 @@ import { useShellPlayer, useShellSidebar } from 'src/store/shell/hooks';
 import { useStyles } from './styles';
 
 export function PlayerTimeline() {
-  const idle = useIdle(3000);
   const { classes } = useStyles();
+  const documentVisible = useDocumentVisibility();
 
   const { visible } = useShellSidebar(({ state }) => state);
   const { media, state, status, controls } = useShellPlayer();
@@ -41,12 +40,12 @@ export function PlayerTimeline() {
       }));
     };
 
-    if (!idle && visible) {
+    if (documentVisible && visible) {
       ref.current?.addEventListener('timeupdate', update);
     }
 
     return () => ref.current?.removeEventListener('timeupdate', update);
-  }, [idle, media, visible]);
+  }, [documentVisible, media, visible]);
 
   const changePosition = (sliding: boolean) => (newValue: number) => {
     !sliding && controls.seek(newValue);

@@ -1,9 +1,11 @@
 {
   "ui.date": "Date",
+  "ui.dark": "Dark",
   "ui.close": "Close",
   "ui.owner": "Owner",
   "ui.email": "Email",
   "ui.genre": "Genre",
+  "ui.light": "Light",
   "ui.search": "Search",
   "ui.genres": "Genres",
   "ui.explore": "Explore",
@@ -28,5 +30,8 @@
   "explore.popularPodcasts": "Popular podcasts",
   "explore.popularEpisodes": "Popular episodes",
 
-  "podcast.lastEpisodes": "Last episodes"
+  "podcast.lastEpisodes": "Last episodes",
+
+  "settings.location": "Location",
+  "settings.appearence": "Appearence"
 }

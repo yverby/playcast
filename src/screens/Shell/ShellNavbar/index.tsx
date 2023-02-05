@@ -1,7 +1,8 @@
+import { Stack } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { Stack, useMantineColorScheme } from '@mantine/core';
 
 import { Logo, Section } from 'src/components/UI';
+import { useSettings } from 'src/store/settings/hooks';
 
 import { ShellRoutes } from './ShellRoutes';
 import { ShellOptions } from './ShellOptions';
@@ -9,8 +10,8 @@ import { ShellOptions } from './ShellOptions';
 import { useStyles } from './styles';
 
 export function ShellNavbar() {
+  const settings = useSettings();
   const { theme, classes } = useStyles();
-  const { toggleColorScheme } = useMantineColorScheme();
 
   const md = useMediaQuery(`(max-width: ${theme.breakpoints.md}px)`);
   const sm = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
@@ -19,7 +20,13 @@ export function ShellNavbar() {
     <Section>
       {!sm && (
         <Section.Header className={classes.header}>
-          <Logo short={md} align="center" onClick={() => toggleColorScheme()} />
+          <Logo
+            short={md}
+            align="center"
+            {...(!settings.loading && {
+              indicator: settings.values.locale.country.toUpperCase(),
+            })}
+          />
         </Section.Header>
       )}
 

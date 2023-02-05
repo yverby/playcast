@@ -1,10 +1,20 @@
 import Head from 'next/head';
+import { Center, Loader } from '@mantine/core';
 
 import type { ReactNode } from 'react';
 
 import { Shell } from 'src/screens/Shell';
+import { useSettings } from 'src/store/settings/hooks';
 
 export function AppProvider({ children }: { children: ReactNode }) {
+  const settings = useSettings();
+
+  const loader = (
+    <Center sx={{ height: '100vh' }}>
+      <Loader />
+    </Center>
+  );
+
   return (
     <>
       <Head>
@@ -14,7 +24,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         />
       </Head>
 
-      <Shell>{children}</Shell>
+      <Shell>{settings.loading ? loader : children}</Shell>
     </>
   );
 }

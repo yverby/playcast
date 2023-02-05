@@ -18,8 +18,10 @@ export function humanizeTime(time: string | number | null, options?: Options) {
 }
 
 export function specifyTime(time: string | number) {
-  const [s = 0, m = 0, h = 0] = String(time).split(':').map(Number).reverse();
-  const sec = String(time).endsWith('000') ? s / 1000 : s + m * 60 + h * 3600;
+  const value = Math.round(Number(time));
+
+  const [s = 0, m = 0, h = 0] = String(value).split(':').map(Number).reverse();
+  const sec = String(value).endsWith('000') ? s / 1000 : s + m * 60 + h * 3600;
 
   return [
     Math.floor(sec / 3600),
