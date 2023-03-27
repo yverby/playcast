@@ -10,13 +10,13 @@ export const useStyles = createStyles((theme, { top }: { top: number }) => ({
     top,
     zIndex: 9998,
     width: '100%',
-    height: '100vh',
+    height: '100dvh',
     overflow: 'hidden',
     willChange: 'auto',
-    ...theme.other.backdrop(theme),
+    backgroundColor: theme.other.variable(theme, 'colorBgDrawer'),
 
     [theme.fn.smallerThan('sm')]: {
-      height: 'calc(100vh - 65px)',
+      height: 'calc(100dvh - 65px)',
     },
   },
   closer: {

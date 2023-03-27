@@ -4,7 +4,7 @@ export const useStyles = createStyles((theme) => ({
   shell: {
     display: 'flex',
     maxWidth: theme.breakpoints.lg,
-    minHeight: '100vh',
+    minHeight: '100svh',
     margin: '0 auto',
 
     [theme.fn.smallerThan('lg')]: {
@@ -26,7 +26,7 @@ export const useStyles = createStyles((theme) => ({
     zIndex: 9999,
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
+    height: '100dvh',
     overflow: 'hidden',
     overflowY: 'auto',
   },
@@ -67,7 +67,7 @@ export const useStyles = createStyles((theme) => ({
     },
 
     [theme.fn.smallerThan('sm')]: {
-      height: 'calc(100vh - 65px)',
+      height: 'calc(100dvh - 65px)',
     },
 
     [theme.fn.smallerThan('xs')]: {

@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { isEqual } from 'lodash';
 
 import { ENTITY } from 'src/constants';

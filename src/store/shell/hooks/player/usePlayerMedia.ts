@@ -1,5 +1,5 @@
 import { createRef, createElement } from 'react';
-import create from 'zustand';
+import { create } from 'zustand';
 
 import type {
   MediaElement,

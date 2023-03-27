@@ -22,29 +22,27 @@ export function PodcastCard({ id, name, image, artist }: Podcast) {
   const src = useMemo(() => values(image).reverse().find(Boolean), [image]);
 
   return (
-    <Link href={href} passHref>
-      <Paper component="a" className={classes.podcast}>
-        <Stack>
-          <AspectRatio ratio={1 / 1} className={classes.image}>
-            <Image src={src} withPlaceholder placeholder={<Logo short />} />
-          </AspectRatio>
+    <Paper component={Link} href={href} className={classes.podcast}>
+      <Stack>
+        <AspectRatio ratio={1 / 1} className={classes.image}>
+          <Image src={src} withPlaceholder placeholder={<Logo short />} />
+        </AspectRatio>
 
-          <Stack spacing={3} className={classes.info}>
-            <Text size="sm" title={name} lineClamp={1} className={classes.name}>
-              {name}
-            </Text>
+        <Stack spacing={3} className={classes.info}>
+          <Text size="sm" title={name} lineClamp={1} className={classes.name}>
+            {name}
+          </Text>
 
-            <Text
-              size="xs"
-              lineClamp={1}
-              title={artist?.name}
-              className={classes.artist}
-            >
-              {artist?.name}
-            </Text>
-          </Stack>
+          <Text
+            size="xs"
+            lineClamp={1}
+            title={artist?.name}
+            className={classes.artist}
+          >
+            {artist?.name}
+          </Text>
         </Stack>
-      </Paper>
-    </Link>
+      </Stack>
+    </Paper>
   );
 }

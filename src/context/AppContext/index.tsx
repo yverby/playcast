@@ -10,7 +10,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const settings = useSettings();
 
   const loader = (
-    <Center sx={{ height: '100vh' }}>
+    <Center sx={{ height: '100svh' }}>
       <Loader />
     </Center>
   );

@@ -37,6 +37,16 @@ export function configureTheme({
         h6: { fontSize: 14 },
       },
     },
+    globalStyles() {
+      return {
+        body: {
+          overflowY: 'scroll',
+        },
+        '*': {
+          scrollbarWidth: 'thin',
+        },
+      };
+    },
     other: {
       border(theme) {
         return `1px solid ${theme.other.variable(theme, 'colorCard')}`;
@@ -44,7 +54,6 @@ export function configureTheme({
       backdrop(theme) {
         return {
           backgroundColor: theme.other.variable(theme, 'colorBgDrop'),
-          // backdropFilter: 'blur(5px) saturate(180%)',
         };
       },
       variable(theme, variable) {

@@ -33,9 +33,9 @@ export function EpisodeDrawerPreview(episode: Episode) {
         </Text>
 
         <Text className={classes.collection}>
-          <Link href={href} passHref>
-            <Anchor>{collection?.name}</Anchor>
-          </Link>
+          <Anchor component={Link} href={href}>
+            {collection?.name}
+          </Anchor>
         </Text>
       </Stack>
     </Stack>

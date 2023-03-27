@@ -8,7 +8,7 @@ import {
   SettingsContext,
 } from 'src/context';
 
-import 'src/assets/styles/global.css';
+import 'src/assets/styles/fonts.css';
 
 export default function App({ pageProps, Component }: AppProps) {
   return (

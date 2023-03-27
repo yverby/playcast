@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
-import { useMediaQuery } from '@mantine/hooks';
+import { useMediaQuery, useScrollLock } from '@mantine/hooks';
 import { Stack, Title, useMantineTheme } from '@mantine/core';
 
 import { Section } from 'src/components/UI';
@@ -12,13 +12,20 @@ import { ShellPlaylist } from './ShellPlaylist';
 export function ShellSidebar() {
   const intl = useIntl();
   const theme = useMantineTheme();
-  const sidebar = useShellSidebar(({ actions }) => actions);
+  const sidebar = useShellSidebar();
 
+  const [, lockScroll] = useScrollLock(false);
+  
   const lg = useMediaQuery(`(max-width: ${theme.breakpoints.lg}px)`);
+  const xs = useMediaQuery(`(max-width: ${theme.breakpoints.xs}px)`);
 
   useEffect(() => {
-    sidebar.toggle(!lg);
+    sidebar.actions.toggle(!lg);
   }, [lg]);
+
+  useEffect(() => {
+    lockScroll(xs && sidebar.state.visible);
+  }, [xs, sidebar.state.visible]);
 
   return (
     <Section>
